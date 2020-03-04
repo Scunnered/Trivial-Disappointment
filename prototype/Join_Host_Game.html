@@ -17,6 +17,7 @@
     <link href="css/lightbox.min.css" rel="stylesheet">
     <!-- Main Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/slidingbackground.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="APItest.js"></script>
 </head>
@@ -52,14 +53,25 @@
         </header><!-- Header End -->
     
 <!-- /// HERO SECTION /// -->
-<div id="hero-section" class="small-margin">
-        <div class="row hero-unit">
+<div class = "wrapper"></div>
+    <div id="hero-section" class="small-margin">
+        <div class = "sliding-background">
+            <!-- <img src="images/bg.jpg" alt=""> -->
+            <div class="row hero-unit">
+                <div class="hero-overlay"></div>
+            </div>
+        </div>
+        <!--<div class="container"></div> -->
+    </div>
+    
+        <!--<div class="row hero-unit">
             <div class="hero-overlay"></div>
             <video autoplay loop muted poster="images/poster.jpg" id="bgvid" class="img-fluid">
-                <source src="images/bg-vid.mp4" type="video/mp4"><!-- We dont have much to show you on this page so here is a video of a kitten. Once completed this page will host the games -->
-            </video>
+                <source src="images/bg-vid.mp4" type="video/mp4"> We dont have much to show you on this page so here is a video of a kitten. Once completed this page will host the games
+            </video> 
+                
             <div class="container"></div>
-        </div>
+        </div>-->
     </div><!-- This is a quick testing zone for the API. Currently it has limited function -->
 	<p id = "display-resources"></p>
 	<p id = "question"></p>
@@ -69,9 +81,52 @@
 	<p id = "choice4"></p>
 	
 	<button type="button" id = "retrieve-resources">Get Stuff</button>
-	<button type="button" id = "next">Next Question</button>
+    <button type="button" id = "next">Next Question</button>
+    
+    <select id="categories">
+        <option value=0>Any Category</option>
+        <option value=9>General Knowledge</option>
+        <option value=10>Entertainment: Books</option>
+        <option value=11>Entertainment: Film</option>
+        <option value=12>Entertainment: Music</option>
+        <option value=13>Entertainment: Musicals & Theatres</option>
+        <option value=14>Entertainment: Television</option>
+        <option value=15>Entertainment: Video Games</option>
+        <option value=16>Entertainment: Board Games</option>
+        <option value=17>Science & Nature</option>
+        <option value=18>Science: Computers</option>
+        <option value=19>Science: Mathematics</option>
+        <option value=20>Mythology</option>
+        <option value=21>Sports</option>
+        <option value=22>Geography</option>
+        <option value=23>History</option>
+        <option value=24>Politics</option>
+        <option value=25>Art</option>
+        <option value=26>Celebrities</option>
+        <option value=27>Animals</option>
+        <option value=28>Vehicles</option>
+        <option value=29>Entertainment Comics</option>
+        <option value=30>Science: Gadgets</option>
+        <option value=31>Entertainment: Japanese Anime & Manga</option>
+        <option value=32>Entertainment: Cartoon & Animations</option>
+    </select>
+    <select id="difficulty">
+        <option value="easy" selected>Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+    </select>
+    <select id="amount">
+        <option value=10 selected>10 Questions</option>
+        <option value=15>15 Questions</option>
+        <option value=20>20 Questions</option>
+    </select>
+    <!--
+    <div class = "wrapper">
+        <div class = "sliding-background"><img src="images/bg.jpg" alt=""></div>
+    </div>
+    -->
 	
-        <!-- footer-->
+    <!-- footer-->
     <div id="footer">
         <div class="container">
             <div class="row text-center">

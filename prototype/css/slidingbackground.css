@@ -1,0 +1,19 @@
+.wrapper {
+    overflow: hidden;
+}
+  
+.sliding-background {
+    background: url("images/bg.jpg") repeat-y;
+    height: 5076px;
+    display: block;
+    animation: slide 60s linear infinite;
+}
+  
+@keyframes slide{
+    0%{
+        transform: translate3d(0, 0, 0);
+    }
+    100%{
+        transform: translate3d(0, -240px, 0);
+    }
+}
