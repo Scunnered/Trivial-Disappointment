@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Style -->
+	
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="css/fontawesome.min.css" rel="stylesheet">
+    <link href="css/all.min.css" rel="stylesheet">
+    <!-- Video Modal -->
+    <link href="css/modal-video.min.css" rel="stylesheet">
+    <!-- Animations -->
+    <link href="css/animations.css" rel="stylesheet">
+    <!-- Lightbox -->
+    <link href="css/lightbox.min.css" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="APItest.js"></script>
+</head>
+<body>
+	
+<script type="text/javascript" src="js/Konami.js"></script>
+<script type="text/javascript" src="js/APItest.js"></script>
+
+	        <!-- header-->
+        <header id="main-header">
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a id="main-logo" class="navbar-brand" href="#">Dynamic Deb Wevelopment</a>
+
+					<!-- Hamburger menu-->
+                    <button id="hamburger" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item"></li>
+                            <li class="nav-item"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Back to main page</a>
+                            </li>
+							
+                            <!-- Dropdown -->
+                            <li class="nav-item">
+                            </li>
+                      </ul>
+                  </div>
+              </div>
+            </nav>
+        </header><!-- Header End -->
+    
+<!-- /// HERO SECTION /// -->
+<div id="hero-section" class="small-margin">
+        <div class="row hero-unit">
+            <div class="hero-overlay"></div>
+            <video autoplay loop muted poster="images/poster.jpg" id="bgvid" class="img-fluid">
+                <source src="images/bg-vid.mp4" type="video/mp4"><!-- We dont have much to show you on this page so here is a video of a kitten. Once completed this page will host the games -->
+            </video>
+            <div class="container"></div>
+        </div>
+    </div><!-- This is a quick testing zone for the API. Currently it has limited function -->
+	<p id = "display-resources"></p>
+	<p id = "question"></p>
+	<p id = "choice1"></p>
+	<p id = "choice2"></p>
+	<p id = "choice3"></p>
+	<p id = "choice4"></p>
+	
+	<button type="button" id = "retrieve-resources">Get Stuff</button>
+	<button type="button" id = "next">Next Question</button>
+	
+        <!-- footer-->
+    <div id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div class="row brands">
+                      <div class="col-md-4"><a href="#"><img src="images/API.png" width="168" height="77" class="img-fluid"></a></div></div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <p id="copyright">&copy;RGU - Alex, Andras, Kacper and Ross <a href="#"></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- //// SCRIPTS //// -->
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/blazy.min.js"></script>
+    <script src="js/jquery-modal-video.min.js"></script>
+    <script src="js/lightbox.min.js"></script>
+    <script src="js/validator.min.js"></script>
+    <script src="js/TP.js"></script>
+</body>
+</html>

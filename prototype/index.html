@@ -1,88 +1,217 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<!-- STYLESHEETS -->
+	<!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="css/fontawesome.min.css" rel="stylesheet">
+    <link href="css/all.min.css" rel="stylesheet">
+    <!-- Video Modal -->
+    <link href="css/modal-video.min.css" rel="stylesheet">
+    <!-- Animations -->
+    <link href="css/animations.css" rel="stylesheet">
+    <!-- Lightbox -->
+    <link href="css/lightbox.min.css" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+	
+</head>
+<body>
+        <!-- header-->
+        <header id="main-header">
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a id="main-logo" class="navbar-brand" href="#">Dynamic Deb Wevelopment</a>
 
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
+					<!-- menu-->
+                    <button id="hamburger" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#questions">Sample questions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#features">Features</a>
+                            </li>
+							
+                            <!-- dropdown -->          
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle page-scroll" data-toggle="dropdown" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Play the game</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="Join_Host_Game.html"><span class="item-text">Play</span></a></li> <!-- Dropdown function has been included for possibly host HTML -->
+                            <li class="nav-item">
+                            </li>
+                      </ul>
+                  </div>
+              </div>
+            </nav>
+        </header>
+	
+        <!-- introduction-->
+        <div id="hero-section" class="small-margin">
+            <div class="row hero-unit">
+                <div class="container"><script type="text/javascript" src="js/TP.js"></script>
 
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+                  <div class="hero-caption">
+                      <p>&nbsp;</p>
+                      <p>INTRODUCING</p>
+                      <p>A Battle Royal triva game designed to test you </p>
+                    <p>&nbsp;</p>
+				    <h1 id = "title">TRIVIAL </p>
+					  DISAPPOINTMENT</h1>
+						<i><p>/ˈtrɪvɪəl/ <em>adjective</em> - of little value or importance. </p>
+						<p>/dɪsəˈpɔɪntm(ə)nt/ <em>noun</em> - sadness or displeasure caused by the non-fulfilment of one's hopes or expectations.</p></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="container">
+    
+        <!-- about section-->
+        <div id="about-section">
+            <a id="about"></a>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h1>Trivial Disappointment is a last person standing trivia game that is free to play and can be run on any internet ready smart device. The rules are simple, be the last one remaining or the fastest in the game. Answer just one wrong question and you are out the game (In which case you should feel bad). The game ends when there is one last person in the game or in the case of a tie the fastest. This person will be the ultimate champion of knowledge whilst the loser(s) will be trivially disappointed. Questions are split into categories and are complety random thanks to the free to use trivia database API</h1>
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 video-box animation-element fade-in"><img src="images/placeholder.jpg" data-src="images/phone.jpg" class="img-fluid b-lazy" alt=""><span class="overlay"><a href="#" class="js-video-button" data-video-id="RRNanbmD1xk?t=26" data-channel="youtube"><img src="images/play-button.svg" alt="play-button" height="83%" class="play-button"></a></span></div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-12 reviews">
+                    <div>
+                        <h2><strong>Easy to play</strong> - Players can use an internet ready smart device and join / host a room.</h2>
+                        <h3>Get a question wrong and you lose the game.</h3> <br>
+                    </div>
 
-        <div class="header-container">
-            <header class="wrapper clearfix">
-                <h1 class="title">h1.title</h1>
-                <nav>
+                    <div>
+                        <h2><strong>Choose a category</strong> - Hosts can choose out of 23 categories to tailor games.</h2>
+                        <h3>Or choose to play questions from all categories.</h3> <br>
+                    </div>
+
+                    <div>
+                        <h2><strong>Games modes can be selected</strong> - Fancy a quick game?</h2>
+                        <h3>Hosts can select games with 1 question or 50 where the fastest player wins</h3>
+                    </div>
+                </div>
+             </div>
+        </div>
+		
+        <!-- Sample questions -->
+        <div id="Sample-questions" class="small-margin">
+            <a id="questions"></a>
+            <div class="grid-gallery">
+                <div class="row">
+                    <div class="col-md-4 gallery-item">
+                        <a href="images/img.jpg" data-lightbox="studio_gallery">
+                            <img src="images/placeholder.jpg" data-src="images/img.jpg" class="img-fluid b-lazy" alt="">
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-item">
+                        <a href="images/img2.jpg" data-lightbox="studio_gallery">
+                            <img src="images/placeholder.jpg" data-src="images/img2.jpg" class="img-fluid b-lazy" alt="">
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-item">
+                        <a href="images/img3.jpg" data-lightbox="studio_gallery">
+                            <img src="images/placeholder.jpg" data-src="images/img3.jpg" class="img-fluid b-lazy" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 gallery-item">
+                        <a href="images/img4.jpg" data-lightbox="studio_gallery">
+                            <img src="images/placeholder.jpg" data-src="images/img4.jpg" class="img-fluid b-lazy" alt="">
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-item">
+                        <a href="images/img5.jpg" data-lightbox="studio_gallery">
+                            <img src="images/placeholder.jpg" data-src="images/img5.jpg" class="img-fluid b-lazy" alt="">
+                        </a>
+                    </div>
+                    <div class="col-md-4 gallery-item">
+                        <a href="images/img6.jpg" data-lightbox="studio_gallery">
+                            <img src="images/placeholder.jpg" data-src="images/img6.jpg" class="img-fluid b-lazy" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+        <!-- features -->
+        <div id="features-section" class="small-margin">
+            <a id="features"></a>
+            <div class="row features tiny-margin">
+                <div class="col-md-7">
+                    <h1><strong id="docs-internal-guid-c2f2e49a-7fff-ede0-6008-40783ce7ad9c2">Trivial Disappointment</strong> - Dissapointing people since 2020</h1>
+                  <p><strong>Players will be competing in a trivia last person standing game -</strong> the game will be hosted on a smart device and players will use a room code to join a game. If they lose they will be removed from that room until another game begins. The game ends when one player remains in the room.</p>
                     <ul>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
+                        <li><strong>Players - </strong>in the game will be given a random username which will be taken from a database of random colours and animals. The last user still in the game wins. This way no users have no custom input when playing with others.</li>
+                        <br>
+                        <li><strong>Currently 3,558 Verified Questions -</strong> and 3,508 questions currently pending with the Open Trivia Database API. Meaning the game will continually grow alonside the API as users add more verified questions. <u></u><a href="https://opentdb.com/api_config.php">https://opentdb.com/api_config.php</a></li>
+                        <u></u>
+                        <br>
+                        <li><strong>Requirements -</strong>currently the game is free and can be played through wifi. A host will start a room and players will join that room with the hosts code. </li>
+                        <br>
+                        <li><strong>The Reason for making this -</strong>each team member making TRIVIAL DISAPPOINTMENT gets together weekly to play couch co-op games. We miss the age of playing games in the same room so we decided to go ahead with this project which can be played locally or online </li>
                     </ul>
-                </nav>
-            </header>
+                </div>
+                <div class="col-md-5 text-center">
+                    <img src="images/aside.png" class="img-fluid animation-element slide-in-right" alt="feature-image">
+                </div>
+            </div>
+
+        </div>
+            <div class="row cta text-center tiny-margin">
+                <div class="col-md-12">
+                   
+                    <h2>SHARE THE DISAPPOINTMENT</h2>
+                    <ul class="social-links">
+                      <li><a href="https://www.facebook.com/trivialdisappointment/"><i class="fab fa-facebook-square fa-3x icon-social"></i></a></li> <!-- facebook icon-->
+                        <li><a href="https://twitter.com/TrivialDis"><i class="fab fa-twitter-square  fa-3x icon-social"></i></a></li> <!-- twitter icon-->
+                        <li><a href="https://www.instagram.com/trivial_disappointment/"><i class="fab fa-instagram fa-3x icon-social"></i></a> <!-- insta icon-->
+                        <li><a href="https://www.youtube.com/channel/UC_ROYlXwJlika6QTHSbG-ZA"><i class="fab fa-youtube fa-3x icon-social"></i></a> <!-- youtube icon-->
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="main-container">
-            <div class="main wrapper clearfix">
-
-                <article>
-                    <header>
-                        <h1>article header h1</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
-                    </header>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <footer>
-                        <h3>article footer h3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
-                    </footer>
-                </article>
-
-                <aside>
-                    <h3>aside</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices.</p>
-                </aside>
-
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
-
-        <div class="footer-container">
-            <footer class="wrapper">
-                <h3>footer</h3>
-            </footer>
+    <!-- footer -->
+    <div id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <div class="row brands">
+                      <div class="col-md-4"><a href="https://opentdb.com/api_config.php"><img src="images/API.png" width="168" height="77"></a></div></div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <p id="copyright">&copy;RGU - Alex, Andras, Kacper and Ross <a href="#"></a></p>
+                </div>
+            </div>
         </div>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-        <script src="js/main.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-        </script>
-    </body>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/blazy.min.js"></script>
+    <script src="js/jquery-modal-video.min.js"></script>
+    <script src="js/lightbox.min.js"></script>
+    <script src="js/validator.min.js"></script>
+    <script src="js/TP.js"></script>
+	<script type="text/javascript" src="js/Konami.js"></script>
+	
+</body>
 </html>
