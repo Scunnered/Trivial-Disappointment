@@ -2,7 +2,7 @@
 var quotes = [{
   "quote": "A new way to procrastinate"
 }, {
-  "quote": "A game that's too hard for Kotaku", 
+  "quote": "A game that's too hard - Kotaku", 
 }, {
   "quote": "The reason why I drink"
 }, {
@@ -12,11 +12,13 @@ var quotes = [{
 }, {
   "quote": "The reason why your dad doesn't like you"
 }, {
-  "quote": "Raid: Shadow Legends (not sponsored... but willing to be)"
+  "quote": "Not sponsored by Raid: Shadow Legends"
 }, {
-  "quote": "A jackbox games rip off kinda!"
+  "quote": "Not a jackbox game"
 }, {
-  "quote": "A project by 4 guys who don't know what the hell is going on"
+  "quote": "A project by four guys who don't know what the hell is going on"
+	}, {
+  "quote": "Truly awful 9.5 / 10 - IGN"
 }];
 
 var chosenQuote;
