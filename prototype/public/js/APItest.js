@@ -86,7 +86,6 @@ function createURL() {
     var difficulty = "&difficulty=" + selectedDiff;
     url1 = url1 + difficulty;
     url1 = url1 + "&type=multiple";
-    //$("#url").html(url1)
     return url1;
 }
 
