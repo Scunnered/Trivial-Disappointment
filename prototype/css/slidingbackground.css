@@ -6,7 +6,7 @@
     background: url("images/bg.jpg") repeat-y;
     height: 576px;
     display: block;
-    animation: slide 1000s linear infinite;
+    animation: slide 500s linear infinite;
 }
   
 @keyframes slide{
