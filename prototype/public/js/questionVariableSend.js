@@ -28,8 +28,9 @@ function send(val) {
     console.log("in send funct")
     $.ajax({
         type: "POST",
-        url: "/getUrl",
+        url: "/Join_Host_Game.html",
         data: val,
+
         success: function() {alert('sucess');}
     });
 }

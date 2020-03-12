@@ -20,7 +20,7 @@ var url1
 })*/
 
 
-request('/getUrl', function (response) {
+request('/Join_Host_Game.html', function (response) {
   console.log(response); // Print the response status code if a response was received
 });
 
