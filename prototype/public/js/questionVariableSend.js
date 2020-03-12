@@ -29,7 +29,7 @@ function send(val) {
     $.ajax({
         type: "POST",
         url: "/getUrl",
-        data: jsonValues,
+        data: val,
         success: function() {alert('sucess');}
     });
 }
