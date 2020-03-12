@@ -20,6 +20,27 @@ var url1
     getQuestions(url1);
 })*/
 
+$(document).ready(function() {
+    $("#startGame").click(function() {
+        var displayResources = $("#display-resources")
+        displayResources.html("Loading data from JSON source...")
+        url1 = createURL()
+        $.ajax({
+            type: "GET",
+            url: url1,
+            success: function(result) {
+                console.log("Response Code: " + result.response_code)
+                if (result.response_code == 0) {
+                    response = result.results;
+                    displayResources.html("Loaded")
+                    qCount = -1;
+                    nextQ()
+                }
+            }
+        })
+    })
+})
+
 
 getJSON('/Join_Host_Game.html', function(error, response){
     console.log(error);
