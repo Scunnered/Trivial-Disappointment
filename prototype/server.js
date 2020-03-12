@@ -8,6 +8,7 @@ const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
 var json = require('json');
+var bodyParser = require('body-parser')
 
 //Variables
 var url1
