@@ -1,7 +1,11 @@
 var express = require('express');
 var app = express();
 
-app.get("/startGame", function(req, res) {
+app.get("/Join_Host_Game", function(req, res) {
+    getQuestions();
+})
+
+function getQuestions() {
     console.log("Loading data from JSON source...")
     url1 = createURL()
     $.ajax({
@@ -13,12 +17,29 @@ app.get("/startGame", function(req, res) {
                 response = result.results;
                 console.log("Loaded")
                 qCount = -1;
-                nextQ()
             }
         }
     })
     console.log(result.results);
-})
+}
+
+function createURL() {
+    var url1 = "https://opentdb.com/api.php"
+    var selectedAmount = $("#amount").children("option:selected").val();
+    globAmount = selectedAmount;
+    var selectedCat = $("#categories").children("option:selected").val();
+    var selectedDiff = $("#difficulty").children("option:selected").val();
+    var amount = "?amount=" + selectedAmount;
+    url1 = url1 + amount;
+    if (selectedCat !== 0) {
+        var category = "&category=" + selectedCat;
+        url1 = url1 + category
+    }
+    var difficulty = "&difficulty=" + selectedDiff;
+    url1 = url1 + difficulty;
+    url1 = url1 + "&type=multiple";
+    return url1;
+}
 
 app.use(express.static('public'))
 app.listen(8080); 
