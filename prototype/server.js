@@ -14,8 +14,8 @@ var url1
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    console.log(req.data)
-    console.log(res.data)
+    console.log(req)
+    console.log(res)
     console.log(res.response)
     console.log(req.response)
 })
