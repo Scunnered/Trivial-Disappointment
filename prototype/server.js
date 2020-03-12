@@ -18,13 +18,6 @@ app.post('/Join_Host_Game.html', function (req, res) {
     console.log(JSON.parse(req))
 })
 
-app.get('/Join_Host_Game.html', function (req, res) {
-    console.log("we double did it reddit")
-    console.log(JSON.parse(res))
-    console.log(JSON.parse(req))
-})
-
-
 /*app.get("/getUrl", function(req, res) {
     url1 = createURL()
     console.log(url1)
