@@ -7,6 +7,7 @@ const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
+var getJSON = require('get-json')
 
 //Variables
 var url1
@@ -19,9 +20,9 @@ var url1
     getQuestions(url1);
 })*/
 
-var getJSON = require('get-json')
- 
-getJSON('/getUrl', function(error, response){
+
+
+getJSON.getJSON('/getUrl', function(error, response){
     console.log(error);
  
     console.log(response);
