@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 //THIS REQUIRES "npm install jquery"
-var $ = require('jQuery');
+var $ = require('jquery');
 //THIS REQUIRES "npm install jsdom"
 var jsdom = require('jsdom')
 
