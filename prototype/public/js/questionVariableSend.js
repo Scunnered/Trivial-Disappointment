@@ -26,11 +26,12 @@ function makeJSON(amount, difficulty, category){
 
 function send(val) {
     console.log("in send funct")
-    console.log(val)
+    console.log("response="+val)
     $.ajax({
         type: "POST",
         url: "/Join_Host_Game.html",
         data: val,
+        dataType: 'json',
 
         success: function() {alert('sucess');}
     });
