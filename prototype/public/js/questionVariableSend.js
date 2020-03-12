@@ -2,6 +2,7 @@ import { json } from "body-parser";
 
 
 $(document).ready(function() {
+    console.log("in ready")
     $("#startGame").click(function(){
         console.log("in send file")
         getSelections();
