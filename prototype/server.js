@@ -15,6 +15,7 @@ var url1
 app.post('/Join_Host_Game.html', function (req, res) {
     res.send('Got a POST request')
     console.log(req)
+    console.log(JSON.parse(req))
 })
 
 
