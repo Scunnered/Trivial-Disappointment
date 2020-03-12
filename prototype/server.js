@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+//THIS REQUIRES "npm install jQuery"
+var $ = require('jQuery');
 
 app.get("/Join_Host_Game.html", function(req, res) {
     getQuestions();
