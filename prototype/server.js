@@ -14,12 +14,8 @@ var url1
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    
-    var result = JSON.parse(res)
-    console.log(result.amount)
-    console.log(result.category)
-    console.log(result.difficulty)
     console.log(res.get("amount"));
+    console.log(req.get("amount"))
 })
 
 
