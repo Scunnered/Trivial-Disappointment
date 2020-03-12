@@ -7,15 +7,15 @@ const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
-var getJSON = require('get-json')
+var json = require('json');
 
 //Variables
 var url1
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    console.log(JSON.parse(res))
-    console.log(JSON.parse(req))
+    console.log(req.amount)
+    console.log(res.amount)
 })
 
 /*app.get("/getUrl", function(req, res) {
