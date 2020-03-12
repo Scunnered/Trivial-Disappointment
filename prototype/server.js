@@ -17,11 +17,13 @@ app.get("/Join_Host_Game.html", function(req, res) {
 function getQuestions() {
     console.log("Loading data from JSON source...")
     url1 = createURL()
+    console.log(url1)
     $.ajax({
         type: "GET",
         url: url1,
         success: function(result) {
             console.log("Response Code: " + result.response_code)
+            console.log(result)
             if (result.response_code == 0) {
                 response = result.results;
                 console.log("Loaded")
@@ -47,6 +49,7 @@ function createURL() {
     var difficulty = "&difficulty=" + selectedDiff;
     url1 = url1 + difficulty;
     url1 = url1 + "&type=multiple";
+    console.log(url1)
     return url1;
 }
 
