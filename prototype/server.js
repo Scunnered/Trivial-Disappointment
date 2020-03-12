@@ -13,9 +13,10 @@ var getJSON = require('get-json')
 var url1
 
 app.post('/Join_Host_Game.html', function (req, res) {
-    res.send('Got a POST request')
-    console.log(req)
-    console.log(JSON.parse(req))
+    console.log("we did it reddit")
+    console.log(req.amount)
+    console.log(req.category)
+    console.log(req.difficulty)
 })
 
 
