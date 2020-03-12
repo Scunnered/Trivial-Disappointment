@@ -7,7 +7,8 @@ const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
-const request = require('request');
+var getJSON = require('get-json')
+
 //Variables
 var url1
 
@@ -20,9 +21,11 @@ var url1
 })*/
 
 
-request('/Join_Host_Game.html', function (response) {
-  console.log(response); // Print the response status code if a response was received
-});
+getJSON('/Join_Host_Game.html', function(error, response){
+    console.log(error);
+ 
+    console.log(response);
+})
 
 function getQuestions(url1) {
     console.log("Loading data from JSON source...")
