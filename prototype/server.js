@@ -21,10 +21,11 @@ var url1
 })*/
 
 $(document).ready(function() {
+    console.log("hey we here bizz")
     $("#startGame").click(function() {
         var displayResources = $("#display-resources")
         displayResources.html("Loading data from JSON source...")
-        url1 = createURL()
+        url1 = "https://opentdb.com/api.php?amount=10" //createURL()
         $.ajax({
             type: "GET",
             url: url1,
