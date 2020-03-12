@@ -13,10 +13,18 @@ var url1
 
 
 
-app.get("/Join_Host_Game.html", function(req, res) {
+/*app.get("/getUrl", function(req, res) {
     url1 = createURL()
     console.log(url1)
     getQuestions(url1);
+})*/
+
+var getJSON = require('get-json')
+ 
+getJSON('/getUrl', function(error, response){
+    console.log(error);
+ 
+    console.log(response);
 })
 
 function getQuestions(url1) {
