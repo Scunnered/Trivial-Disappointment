@@ -1,6 +1,7 @@
 import { json } from "body-parser";
 
 $("#startGame").click(function(){
+    console.log("in send file")
     getSelections();
 });
 
@@ -8,6 +9,7 @@ function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();
     var selectedCat = $("#categories").children("option:selected").val();
     var selectedDiff = $("#difficulty").children("option:selected").val();
+    console.log("in getselects")
     makeJSON(selectedAmount, selectedDiff, selectedCat);
 }
 
@@ -17,10 +19,12 @@ function makeJSON(amount, difficulty, category){
     myObj.difficulty = difficulty;
     myObj.category = category;
     var jsonValues = JSON.stringify(myObj);
+    console.log("in make json")
     send(jsonValues)
 }
 
 function send(val) {
+    console.log("in send funct")
     $.ajax({
         type: "POST",
         url: "/getUrl",
