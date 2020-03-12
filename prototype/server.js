@@ -1,23 +1,26 @@
 var express = require('express');
 var app = express();
 //THIS REQUIRES "npm install jquery + jsdom"
-console.log("here")
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
-console.log("There")
 var $ = jQuery = require('jquery')(window);
-console.log("jquery install")
+
+//Variables
+var url1
+
+
+
 app.get("/Join_Host_Game.html", function(req, res) {
+    url1 = createURL()
+    console.log(url1)
     getQuestions();
 })
 
 function getQuestions() {
     console.log("Loading data from JSON source...")
-    url1 = createURL()
-    console.log(url1)
     $.ajax({
         type: "GET",
         url: url1,
@@ -31,7 +34,7 @@ function getQuestions() {
             }
         }
     })
-    console.log(result.results);
+    //console.log(result.results);
 }
 
 function createURL() {
