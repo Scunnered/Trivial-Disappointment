@@ -16,10 +16,10 @@ var url1
 app.get("/Join_Host_Game.html", function(req, res) {
     url1 = createURL()
     console.log(url1)
-    getQuestions();
+    getQuestions(url1);
 })
 
-function getQuestions() {
+function getQuestions(url1) {
     console.log("Loading data from JSON source...")
     $.ajax({
         type: "GET",
@@ -41,6 +41,7 @@ function createURL() {
     console.log("HERE")
     var url1 = "https://opentdb.com/api.php"
     var selectedAmount = $("#amount").children("option:selected").val();
+    console.log($("#amount"))
     console.log(selectedAmount)
     globAmount = selectedAmount;
     var selectedCat = $("#categories").children("option:selected").val();
