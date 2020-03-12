@@ -15,10 +15,7 @@ var url1
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    console.log(bodyParser.res)
-    console.log(res)
-    console.log(bodyParser.req)
-    console.log(req)
+    console.log(JSON.stringify(req.body))
 })
 
 /*app.get("/getUrl", function(req, res) {
