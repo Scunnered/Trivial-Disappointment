@@ -1,3 +1,5 @@
+import { json } from "body-parser";
+
 $(document).ready(function() {
     console.log("in ready")
     $("#startGame").click(function(){
@@ -15,12 +17,14 @@ function getSelections() {
 }
 
 function makeJSON(amount, difficulty, category){
-    var myObj = new Object();
-    myObj.amount = amount;
-    myObj.difficulty = difficulty;
-    myObj.category = category;
+    var myObj = {
+        AMOUNT : amount, 
+        DIFFICULTY : difficulty,
+        CATEGORY : category
+    }
     var jsonValues = JSON.stringify(myObj);
     console.log("in make json")
+    console.log(jsonValues)
     send(jsonValues)
 }
 
