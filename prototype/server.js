@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-app.get("/Join_Host_Game", function(req, res) {
+app.get("/Join_Host_Game.html", function(req, res) {
     getQuestions();
 })
 
