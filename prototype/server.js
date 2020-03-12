@@ -12,6 +12,10 @@ var getJSON = require('get-json')
 //Variables
 var url1
 
+app.post('/Join_Host_Game.html', function (req, res) {
+    res.send('Got a POST request')
+    console.log(req)
+})
 
 
 /*app.get("/getUrl", function(req, res) {
@@ -19,35 +23,6 @@ var url1
     console.log(url1)
     getQuestions(url1);
 })*/
-
-$(document).ready(function() {
-    console.log("hey we here bizz")
-    $("#startGame").click(function() {
-        var displayResources = $("#display-resources")
-        displayResources.html("Loading data from JSON source...")
-        url1 = "https://opentdb.com/api.php?amount=10" //createURL()
-        $.ajax({
-            type: "GET",
-            url: url1,
-            success: function(result) {
-                console.log("Response Code: " + result.response_code)
-                if (result.response_code == 0) {
-                    response = result.results;
-                    displayResources.html("Loaded")
-                    qCount = -1;
-                    nextQ()
-                }
-            }
-        })
-    })
-})
-
-
-getJSON('/Join_Host_Game.html', function(error, response){
-    console.log(error);
- 
-    console.log(response);
-})
 
 function getQuestions(url1) {
     console.log("Loading data from JSON source...")
