@@ -1,8 +1,11 @@
 import { json } from "body-parser";
 
-$("#startGame").click(function(){
-    console.log("in send file")
-    getSelections();
+
+$(document).ready(function() {
+    $("#startGame").click(function(){
+        console.log("in send file")
+        getSelections();
+    });
 });
 
 function getSelections() {
