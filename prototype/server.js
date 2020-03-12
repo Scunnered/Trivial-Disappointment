@@ -37,9 +37,12 @@ function getQuestions() {
 function createURL() {
     var url1 = "https://opentdb.com/api.php"
     var selectedAmount = $("#amount").children("option:selected").val();
+    console.log(selectedAmount)
     globAmount = selectedAmount;
     var selectedCat = $("#categories").children("option:selected").val();
     var selectedDiff = $("#difficulty").children("option:selected").val();
+    console.log(selectedCat)
+    console.log(selectedDiff)
     var amount = "?amount=" + selectedAmount;
     url1 = url1 + amount;
     if (selectedCat !== 0) {
