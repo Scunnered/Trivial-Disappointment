@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 //THIS REQUIRES "npm install jQuery"
 var $ = require('jQuery');
+//THIS REQUIRES "npm install jsdom"
+var jsdom = require('jsdom')
 
 app.get("/Join_Host_Game.html", function(req, res) {
     getQuestions();
