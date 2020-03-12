@@ -38,6 +38,7 @@ function getQuestions() {
 }
 
 function createURL() {
+    console.log("HERE")
     var url1 = "https://opentdb.com/api.php"
     var selectedAmount = $("#amount").children("option:selected").val();
     console.log(selectedAmount)
