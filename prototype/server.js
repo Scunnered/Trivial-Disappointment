@@ -9,11 +9,12 @@ global.document = document;
 var $ = jQuery = require('jquery')(window);
 var bodyParser = require('body-parser')
 app.use(bodyParser.json());
-
-
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-io.on('connection', () => { console.log("connected") });
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+});
 server.listen(8080);
 
 //Global Variables
