@@ -1,6 +1,7 @@
 //Variables
 var buttArr = ["#choice1", "#choice2", "#choice3", "#choice4"];
 var correctButton = "";
+var socket = io();
 
 $(document).ready(function() {
     $("#startGame").click(function(){
