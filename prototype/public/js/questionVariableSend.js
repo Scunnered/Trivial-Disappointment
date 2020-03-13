@@ -27,6 +27,7 @@ function send(val) {
         url: "/Join_Host_Game.html",
         data: val,
         dataType: 'json',
+        contentType : 'application/json',
 
         success: function() {alert('sucess');}
     });
