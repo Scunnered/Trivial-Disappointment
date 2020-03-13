@@ -10,6 +10,12 @@ var $ = jQuery = require('jquery')(window);
 var bodyParser = require('body-parser')
 app.use(bodyParser.json());
 
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', () => { console.log("connected") });
+server.listen(8080);
+
 //Global Variables
 var response;
 var qCounter = 0;
@@ -76,7 +82,6 @@ function createURL() {
     return url1;
 }
 */
-
 
 app.use(express.static('public'))
 app.listen(8080); 
