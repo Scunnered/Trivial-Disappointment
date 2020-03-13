@@ -33,7 +33,6 @@ function getQuestions(url1) {
             if (result.response_code == 0) {
                 response = result.results;
                 console.log("Loaded")
-                console.log(response)
             }
         }
     })
