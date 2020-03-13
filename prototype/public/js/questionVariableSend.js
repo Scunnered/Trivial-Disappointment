@@ -1,3 +1,7 @@
+//Variables
+var buttArr = ["#choice1", "#choice2", "#choice3", "#choice4"];
+var correctButton = "";
+
 $(document).ready(function() {
     $("#startGame").click(function(){
         getSelections();
@@ -29,6 +33,32 @@ function send(val) {
         dataType: 'json',
         contentType : 'application/json',
 
-        success: function(res) {console.log(res)}
+        success: function(res) {
+            console.log(res)
+            setQuestion(res)
+        }
     });
+}
+
+function shuffle(array) {
+    var currentIndex = array.length
+    var tempVal = 0
+    var randInd = 0
+    while (currentIndex !== 0) {
+        randInd = Math.floor(Math.random() * currentIndex)
+        currentIndex -= 1
+        tempVal = array[currentIndex]
+        array[currentIndex] = array[randInd]
+        array[randInd] = tempVal
+    }
+}
+
+function setQuestion(question) {
+    shuffle(buttArr)
+    $("#question").html(question.question)
+    $(buttArr[0]).html(question.correct_answer);
+    correctButton = buttArr[0];
+    $(buttArr[1]).html(question.incorrect_answers[0])
+    $(buttArr[2]).html(question.incorrect_answers[1])
+    $(buttArr[3]).html(question.incorrect_answers[2])
 }

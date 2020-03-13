@@ -11,8 +11,9 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.json());
 
 //Global Variables
-var response
+var response;
 var qCounter = 0;
+
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")

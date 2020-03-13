@@ -41,8 +41,7 @@ $(document).ready(function() {
     });
 })
 
-function setQuestion(counter) {
-    res = response[counter]
+function setQuestion() {
     shuffle(buttArr)
     $("#question").html(res.question)
     $(buttArr[0]).html(res.correct_answer);
