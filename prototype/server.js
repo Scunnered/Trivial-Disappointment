@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 io.on('connection', () => { console.log("connected") });
-server.listen(3000);
+server.listen(8080);
 
 //Global Variables
 var response;
@@ -84,4 +84,4 @@ function createURL() {
 */
 
 app.use(express.static('public'))
-app.listen(8080); 
+//app.listen(8080); 
