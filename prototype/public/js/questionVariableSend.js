@@ -53,12 +53,12 @@ function shuffle(array) {
     }
 }
 
-function setQuestion(question) {
+function setQuestion(question1) {
     shuffle(buttArr)
-    $("#question").html(question.question)
-    $(buttArr[0]).html(question.correct_answer);
+    $("#question").html(question1.question)
+    $(buttArr[0]).html(question1.correct_answer);
     correctButton = buttArr[0];
-    $(buttArr[1]).html(question.incorrect_answers[0])
-    $(buttArr[2]).html(question.incorrect_answers[1])
-    $(buttArr[3]).html(question.incorrect_answers[2])
+    $(buttArr[1]).html(question1.incorrect_answers[0])
+    $(buttArr[2]).html(question1.incorrect_answers[1])
+    $(buttArr[3]).html(question1.incorrect_answers[2])
 }
