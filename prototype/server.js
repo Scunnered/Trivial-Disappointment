@@ -8,7 +8,7 @@ const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
 var bodyParser = require('body-parser')
-//const io = require('socket.io')(app);
+const io = require('socket.io')(app);
 
 
 //Global Variables
