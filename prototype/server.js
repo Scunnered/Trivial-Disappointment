@@ -9,13 +9,14 @@ global.document = document;
 var $ = jQuery = require('jquery')(window);
 var json = require('json');
 var bodyParser = require('body-parser')
+app.use(bodyParser.json);
 
 //Variables
 var url1
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    console.log(JSON.parse(req))
+    console.log(req.body)
     
 })
 
