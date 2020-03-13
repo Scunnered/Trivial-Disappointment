@@ -12,9 +12,7 @@ app.use(bodyParser.json());
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-});
+io.on('connection', console.log("a user connected"));
 server.listen(8080);
 
 //Global Variables
