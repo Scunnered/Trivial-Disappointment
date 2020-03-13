@@ -9,7 +9,7 @@ global.document = document;
 var $ = jQuery = require('jquery')(window);
 var json = require('json');
 var bodyParser = require('body-parser')
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 
 //Variables
 var url1
