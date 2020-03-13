@@ -1,9 +1,6 @@
 //Variables
 var buttArr = ["#choice1", "#choice2", "#choice3", "#choice4"];
 var correctButton = "";
-var socket = io();
-
-socket.on("connect", () => socket.emit("hello"));
 
 $(document).ready(function() {
     console.log("we ready")
