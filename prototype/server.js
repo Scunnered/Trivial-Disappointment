@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-//THIS REQUIRES "npm install jquery, npm install jsdom, npm install bodyParser, npm install socket.io"
+//THIS REQUIRES "npm install jquery, npm install jsdom, npm install body-parser, npm install socket.io"
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
@@ -8,8 +8,7 @@ const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
 var bodyParser = require('body-parser')
-//const io = require('socket.io')(app);
-
+app.use(bodyParser.json());
 
 //Global Variables
 var response;
@@ -80,6 +79,6 @@ function createURL() {
 }
 */
 
-app.use(bodyParser.json());
+
 app.use(express.static('public'))
 app.listen(8080); 
