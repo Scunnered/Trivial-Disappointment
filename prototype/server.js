@@ -1,33 +1,24 @@
 var express = require('express');
 var app = express();
-//THIS REQUIRES "npm install jquery + jsdom"
+//THIS REQUIRES "npm install jquery, npm install jsdom, npm install bodyParser"
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
-var json = require('json');
 var bodyParser = require('body-parser')
 app.use(bodyParser.json());
 
-//Variables
-var url1
-
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    console.log(req.body.AMOUNT)
+    url1 = createURL(req.body.AMOUNT, req.body.DIFFICULTY, req.body.CATEGORY)
+    QAPIRESPONSE = getQuestions(url1);
     
 })
 
-/*app.get("/getUrl", function(req, res) {
-    url1 = createURL()
-    console.log(url1)
-    getQuestions(url1);
-})*/
-
 function getQuestions(url1) {
-    console.log("Loading data from JSON source...")
+    console.log("Loading The Q's & the A's")
     $.ajax({
         type: "GET",
         url: url1,
@@ -37,13 +28,28 @@ function getQuestions(url1) {
             if (result.response_code == 0) {
                 response = result.results;
                 console.log("Loaded")
-                qCount = -1;
+                console.log(response)
             }
         }
     })
-    //console.log(result.results);
+    return response
 }
 
+function createURL(amount, difficulty, category) {
+    var url1 = "https://opentdb.com/api.php"
+    var amount = "?amount=" + amount;
+    url1 = url1 + amount;
+    if (category !== 0) {
+        var categoryUrl = "&category=" + category;
+        url1 = url1 + categoryUrl
+    }
+    var difficultyUrl = "&difficulty=" + difficulty;
+    url1 = url1 + difficultyUrl;
+    url1 = url1 + "&type=multiple";
+    return url1;
+}
+
+/*
 function createURL() {
     console.log("HERE")
     var url1 = "https://opentdb.com/api.php"
@@ -67,6 +73,6 @@ function createURL() {
     console.log(url1)
     return url1;
 }
-
+*/
 app.use(express.static('public'))
 app.listen(8080); 
