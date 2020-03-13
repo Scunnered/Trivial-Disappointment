@@ -29,6 +29,6 @@ function send(val) {
         dataType: 'json',
         contentType : 'application/json',
 
-        success: function() {alert('sucess');}
+        success: function(res) {console.log(res)}
     });
 }
