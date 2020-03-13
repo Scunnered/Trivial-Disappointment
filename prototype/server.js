@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-//THIS REQUIRES "npm install jquery, npm install jsdom, npm install bodyParser"
+//THIS REQUIRES "npm install jquery, npm install jsdom, npm install bodyParser, npm install socket.io"
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
@@ -8,12 +8,12 @@ const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
 var bodyParser = require('body-parser')
-app.use(bodyParser.json());
+const io = require('socket.io')(app);
+
 
 //Global Variables
 var response;
 var qCounter = 0;
-
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
@@ -29,7 +29,6 @@ function getQuestions(url1) {
         url: url1,
         success: function(result) {
             console.log("Response Code: " + result.response_code)
-            console.log(result)
             if (result.response_code == 0) {
                 response = result.results;
                 console.log("Loaded")
@@ -78,5 +77,7 @@ function createURL() {
     return url1;
 }
 */
+
+app.use(bodyParser.json());
 app.use(express.static('public'))
 app.listen(8080); 
