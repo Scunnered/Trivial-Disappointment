@@ -17,9 +17,10 @@ var qCounter = 0;
 
 app.post('/Join_Host_Game.html', function (req, res) {
     console.log("we did it reddit")
-    url1 = createURL(req.body.AMOUNT, req.body.DIFFICULTY, req.body.CATEGORY)
-    QAPIRESPONSE = getQuestions(url1);
-    res.send(QAPIRESPONSE[qCounter])
+    console.log(req.body)
+    //url1 = createURL(req.body.AMOUNT, req.body.DIFFICULTY, req.body.CATEGORY)
+    //QAPIRESPONSE = getQuestions(url1);
+    //res.send(QAPIRESPONSE[qCounter])
 })
 
 function getQuestions(url1) {
