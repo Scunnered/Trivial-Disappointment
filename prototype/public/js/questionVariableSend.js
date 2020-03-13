@@ -26,6 +26,7 @@ function makeJSON(amount, difficulty, category){
 }
 
 function send(val) {
+    console.log("Sending")
     $.ajax({
         type: "POST",
         url: "/Join_Host_Game.html",
