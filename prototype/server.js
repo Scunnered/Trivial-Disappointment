@@ -14,7 +14,7 @@ var io = require('socket.io')(server);
 //Global Variables
 var response;
 var qCounter = 0;
-let onlineClients = new Set();
+let hosts = new Set();
 
 app.use(bodyParser.json());
 app.use(express.static('public'))
@@ -22,30 +22,35 @@ app.use(express.static('public'))
 server.listen(8080);
 
 io.on('connection', function (socket) {
-    socket.emit('getSelects', { Host: 'joining' });
+    socket.emit('getSelects', { Host: 'Becoming Host' });
     socket.on('sendSelects', function (data) {
         var selects = JSON.parse(data.selections);
         console.log(selects)
-        onlineClients.add(selects.ROOMCODE);
+        hosts.add(selects.ROOMCODE);
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         var questions = getQuestions(url1);
         console.log(questions)
+        socket.join(selects.ROOMCODE)
+        io.in(selects.ROOMCODE).emit('joinedGame', { Host: 'Joining: ' + selects.ROOMCODE })
     });
     socket.emit('joinGame', { Client: 'joining' });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode);
         console.log("client code: " + clientRoomCode)
-        
+        if (hosts.has(clientRoomCode)) {
+            console.log("connecting")
+            socket.join(clientRoomCode);
+            io.in(clientRoomCode).emit('joinedGame', { Client: 'Joining: ' + clientRoomCode })
+        }
+        else {
+            console.log("no such host exists")
+        }
     });
+    socket.on('joinedGame', function (data) {
+        console.log(data);
+    })
 });
-
-app.post('/Join_Host_Game.html', function (req, res) {
-    //console.log("we did it reddit")
-    url1 = createURL(req.body.AMOUNT, req.body.DIFFICULTY, req.body.CATEGORY)
-    QAPIRESPONSE = getQuestions(url1);
-    res.send(QAPIRESPONSE[qCounter])
-})
 
 function getQuestions(url1) {
     //console.log("Loading The Q's & the A's")
@@ -76,31 +81,3 @@ function createURL(amount, difficulty, category) {
     url1 = url1 + "&type=multiple";
     return url1;
 }
-
-/*
-function createURL() {
-    console.log("HERE")
-    var url1 = "https://opentdb.com/api.php"
-    var selectedAmount = $("#amount").children("option:selected").val();
-    console.log($("#amount"))
-    console.log(selectedAmount)
-    globAmount = selectedAmount;
-    var selectedCat = $("#categories").children("option:selected").val();
-    var selectedDiff = $("#difficulty").children("option:selected").val();
-    console.log(selectedCat)
-    console.log(selectedDiff)
-    var amount = "?amount=" + selectedAmount;
-    url1 = url1 + amount;
-    if (selectedCat !== 0) {
-        var category = "&category=" + selectedCat;
-        url1 = url1 + category
-    }
-    var difficulty = "&difficulty=" + selectedDiff;
-    url1 = url1 + difficulty;
-    url1 = url1 + "&type=multiple";
-    console.log(url1)
-    return url1;
-}
-*/
-
-

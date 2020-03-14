@@ -5,23 +5,26 @@ var correctButton = "";
 $(document).ready(function() {
     $("#hostGame").click(function(){
         console.log(roomCode)
-        var socket = io.connect();
+        var socket = io();
         socket.on('getSelects', function (data) {
             console.log(data);
             console.log(socket.id);
             socket.emit('sendSelects', { selections: getSelections() });
         });
-        generateRoomCode();
     });
     $("#joinGame").click(function(){
         console.log(roomCode)
-        var socket = io.connect();
+        var socket = io();
         socket.on('joinGame', function (data) {
             console.log(data);
             console.log(socket.id);
             socket.emit('sendRoomCode', { roomCode: getRoomCode()});
         });
     });
+    var socket = io();
+    socket.on('joinedGame', function (data) {
+        console.log(data);
+    })
 });
 
 function getSelections() {
