@@ -4,9 +4,15 @@ var correctButton = "";
 
 $(document).ready(function() {
     console.log("we ready")
-    $("#startGame").click(function(){
-        console.log("Start game pressed")
-        getSelections();
+    $("#hostGame").click(function(){
+        console.log(roomCode)
+        var socket = io.connect();
+        socket.on('getSelects', function (data) {
+            console.log(data);
+            console.log(socket.id);
+            socket.emit('sendSelects', { selections: getSelections() });
+        });
+        generateRoomCode();
     });
 });
 
@@ -14,7 +20,8 @@ function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();
     var selectedCat = $("#categories").children("option:selected").val();
     var selectedDiff = $("#difficulty").children("option:selected").val();
-    makeJSON(selectedAmount, selectedDiff, selectedCat);
+    var jsonFile = makeJSON(selectedAmount, selectedDiff, selectedCat);
+    return jsonFile;
 }
 
 function makeJSON(amount, difficulty, category){
@@ -24,7 +31,8 @@ function makeJSON(amount, difficulty, category){
         CATEGORY : category
     }
     var jsonValues = JSON.stringify(myObj);
-    send(jsonValues)
+    return jsonValues
+    //send(jsonValues)
 }
 
 function send(val) {

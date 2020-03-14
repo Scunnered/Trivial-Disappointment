@@ -1,5 +1,4 @@
 var express = require('express');
-var app = express();
 //THIS REQUIRES "npm install jquery, npm install jsdom, npm install body-parser, npm install socket.io"
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -8,21 +7,38 @@ const { document } = (new JSDOM('')).window;
 global.document = document;
 var $ = jQuery = require('jquery')(window);
 var bodyParser = require('body-parser')
-app.use(bodyParser.json());
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 //Global Variables
 var response;
 var qCounter = 0;
 
+app.use(bodyParser.json());
+app.use(express.static('public'))
+//app.listen(8080);
+
+server.listen(8080);
+// WARNING: app.listen(80) will NOT work here!
+
+io.on('connection', function (socket) {
+  socket.emit('getSelects', { hello: 'world' });
+  socket.on('sendSelects', function (data) {
+    var selects = JSON.parse(data.selections);
+    console.log(selects)
+  });
+});
+
 app.post('/Join_Host_Game.html', function (req, res) {
-    console.log("we did it reddit")
+    //console.log("we did it reddit")
     url1 = createURL(req.body.AMOUNT, req.body.DIFFICULTY, req.body.CATEGORY)
     QAPIRESPONSE = getQuestions(url1);
     res.send(QAPIRESPONSE[qCounter])
 })
 
 function getQuestions(url1) {
-    console.log("Loading The Q's & the A's")
+    //console.log("Loading The Q's & the A's")
     $.ajax({
         type: "GET",
         url: url1,
@@ -77,5 +93,4 @@ function createURL() {
 }
 */
 
-app.use(express.static('public'))
-app.listen(8080); 
+
