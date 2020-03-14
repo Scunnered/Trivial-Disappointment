@@ -22,6 +22,7 @@
     <script src="js/APItest.js"></script>
     <script src="js/questionVariableSend.js"></script>
     <script src="/js/generateRoomCode.js"></script>
+    <script src="/js/UIChanger.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
@@ -80,11 +81,14 @@
 	<p id = "choice4"></p>
 	
     <!--<button type="button" id = "retrieve-resources">Get Stuff</button> -->
-    <p id = "displayCode"></p>
-    <button type="button" id = "hostGame">Host Game</button>
-    <button type="button" id = "next">Next Question</button>
-    
-    <select id="categories">
+    <button type="button" id = "hostGameShow">Show Host Options</button>
+    <form action="" class = "clientSelects">
+        <label for = "Room Code"></label>
+        <input type="text" id = "enteredCode">
+        <button type="button" id = "joinGame">Join Game</button> <!-- CHANGE TO SUBMIT! -->
+    </form>
+    <p id = "displayCode" class = "hostSelects"></p>
+    <select id="categories" class = "hostSelects">
         <option value=0>Any Category</option>
         <option value=9>General Knowledge</option>
         <option value=10>Entertainment: Books</option>
@@ -111,16 +115,18 @@
         <option value=31>Entertainment: Japanese Anime & Manga</option>
         <option value=32>Entertainment: Cartoon & Animations</option>
     </select>
-    <select id="difficulty">
+    <select id="difficulty" class = "hostSelects">
         <option value="easy" selected>Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
     </select>
-    <select id="amount">
+    <select id="amount" class = "hostSelects">
         <option value=10 selected>10 Questions</option>
         <option value=15>15 Questions</option>
         <option value=20>20 Questions</option>
     </select>
+
+    <button type="button" id = "hostGame" class = "hostSelects">Host Game</button>
     <!--
     <div class = "wrapper">
         <div class = "sliding-background"><img src="images/bg.jpg" alt=""></div>

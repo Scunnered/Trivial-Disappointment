@@ -3,7 +3,6 @@ var buttArr = ["#choice1", "#choice2", "#choice3", "#choice4"];
 var correctButton = "";
 
 $(document).ready(function() {
-    console.log("we ready")
     $("#hostGame").click(function(){
         console.log(roomCode)
         var socket = io.connect();
@@ -14,21 +13,37 @@ $(document).ready(function() {
         });
         generateRoomCode();
     });
+    $("#joinGame").click(function(){
+        console.log(roomCode)
+        var socket = io.connect();
+        socket.on('joinGame', function (data) {
+            console.log(data);
+            console.log(socket.id);
+            socket.emit('sendRoomCode', { roomCode: getRoomCode()});
+        });
+    });
 });
 
 function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();
     var selectedCat = $("#categories").children("option:selected").val();
     var selectedDiff = $("#difficulty").children("option:selected").val();
-    var jsonFile = makeJSON(selectedAmount, selectedDiff, selectedCat);
+    var toSendRoomCode = roomCode;
+    var jsonFile = makeJSON(selectedAmount, selectedDiff, selectedCat, toSendRoomCode);
     return jsonFile;
 }
 
-function makeJSON(amount, difficulty, category){
+function getRoomCode() {
+    var clientRoomCode = $("#enteredCode").val();
+    return clientRoomCode
+}
+
+function makeJSON(amount, difficulty, category, toSendRoomCode){
     var myObj = {
         AMOUNT : amount, 
         DIFFICULTY : difficulty,
-        CATEGORY : category
+        CATEGORY : category,
+        ROOMCODE : toSendRoomCode
     }
     var jsonValues = JSON.stringify(myObj);
     return jsonValues

@@ -14,20 +14,30 @@ var io = require('socket.io')(server);
 //Global Variables
 var response;
 var qCounter = 0;
+let onlineClients = new Set();
 
 app.use(bodyParser.json());
 app.use(express.static('public'))
-//app.listen(8080);
 
 server.listen(8080);
-// WARNING: app.listen(80) will NOT work here!
 
 io.on('connection', function (socket) {
-  socket.emit('getSelects', { hello: 'world' });
-  socket.on('sendSelects', function (data) {
-    var selects = JSON.parse(data.selections);
-    console.log(selects)
-  });
+    socket.emit('getSelects', { Host: 'joining' });
+    socket.on('sendSelects', function (data) {
+        var selects = JSON.parse(data.selections);
+        console.log(selects)
+        onlineClients.add(selects.ROOMCODE);
+        url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
+        console.log(url1)
+        var questions = getQuestions(url1);
+        console.log(questions)
+    });
+    socket.emit('joinGame', { Client: 'joining' });
+    socket.on('sendRoomCode', function (data) {
+        var clientRoomCode = JSON.parse(data.roomCode);
+        console.log("client code: " + clientRoomCode)
+        
+    });
 });
 
 app.post('/Join_Host_Game.html', function (req, res) {
