@@ -4,7 +4,6 @@ var correctButton = "";
 
 $(document).ready(function() {
     $("#hostGame").click(function(){
-        console.log(roomCode)
         var socket = io();
         socket.on('getSelects', function (data) {
             console.log(data);
@@ -13,7 +12,6 @@ $(document).ready(function() {
         });
     });
     $("#joinGame").click(function(){
-        console.log(roomCode)
         var socket = io();
         socket.on('joinGame', function (data) {
             console.log(data);
@@ -21,11 +19,21 @@ $(document).ready(function() {
             socket.emit('sendRoomCode', { roomCode: getRoomCode()});
         });
     });
-    var socket = io();
-    socket.on('joinedGame', function (data) {
-        console.log(data);
-    })
+    $("#startGame").click(function(){
+        var socket = io();
+        socket.on('questionSent', function (question) {
+            console.log("Setting Questions")
+            setQuestion(question);
+        })
+        socket.emit('begin', { game: "started"});
+    });
 });
+
+var socket = io();
+
+socket.on('joinedGame', function () {
+    console.log("Whats up, we joined here")
+})
 
 function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();

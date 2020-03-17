@@ -1,6 +1,5 @@
 
 $(document).ready(function() {
-    console.log("welcome")
     $(".hostSelects").hide();
     $("#hostGameShow").click(function(){
         $(".clientSelects").hide();
