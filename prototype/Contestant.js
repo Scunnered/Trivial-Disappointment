@@ -17,6 +17,7 @@ class Contestants {
   
   get isReady() { return this._ready: }
   set isReady(contestantsReady) { this._ready = newReady; }
+  // For players to get ready. Once confirmed all players have selected ready the game can start. (So no excuses)
 }
 
 module.exports = Contestants
