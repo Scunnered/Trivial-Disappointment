@@ -1,3 +1,5 @@
+//Contestants.js is a file created to test players enetering the game. This includes more functionality like custom names
+
 class Contestants {
   constructor(name = "Tall Boi Andras", colour = 'black') {
 //Created this for testing. Here players will be able to add custom names in lieu of assigned ones which is the plan.
