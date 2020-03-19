@@ -8,4 +8,7 @@ class Contestant {
 }
   
   get name() {return this._name; }
+  set name(newName) { this._name = newName; }
+  // Gets name inputted by player
+  
   get colour
