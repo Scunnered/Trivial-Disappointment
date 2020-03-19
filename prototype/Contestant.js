@@ -1,0 +1,2 @@
+class Contestant {
+  constructor 
