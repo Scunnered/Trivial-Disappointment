@@ -54,9 +54,6 @@ io.on('connection', function (socket) {
             console.log("no such host exists")
         }
     });
-    socket.on('joinedGame', function () {
-        console.log("Whats up, we joined here")
-    })
     socket.on('begin', function (data) {
         console.log(data);
         console.log("Sending question")
