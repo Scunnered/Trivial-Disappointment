@@ -29,12 +29,6 @@ $(document).ready(function() {
     });
 });
 
-var socket = io();
-
-socket.on('joinedGame', function () {
-    console.log("Whats up, we joined here")
-})
-
 function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();
     var selectedCat = $("#categories").children("option:selected").val();

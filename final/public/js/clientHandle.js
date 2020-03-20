@@ -18,22 +18,16 @@ $(document).ready(function() {
             console.log(socket.id);
             socket.emit('sendRoomCode', { roomCode: getRoomCode()});
         });
-    });
-    $("#startGame").click(function(){
-        var socket = io();
         socket.on('questionSent', function (question) {
             console.log("Setting Questions")
             setQuestion(question);
         })
+    });
+    $("#startGame").click(function(){
+        var socket = io();
         socket.emit('begin', { game: "started"});
     });
 });
-
-var socket = io();
-
-socket.on('joinedGame', function () {
-    console.log("Whats up, we joined here")
-})
 
 function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();

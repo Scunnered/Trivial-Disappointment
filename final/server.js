@@ -15,6 +15,7 @@ var io = require('socket.io')(server);
 var response;
 var qCounter = 0;
 let hosts = new Set();
+var rooms = new Map();
 var questions;
 var ROOMCODE;
 
@@ -29,15 +30,12 @@ io.on('connection', function (socket) {
         var selects = JSON.parse(data.selections);
         console.log("SERVER ID" + socket.id)
         hosts.add(selects.ROOMCODE.toString());
+        rooms.set(selects.ROOMCODE.toString(), [socket.id])
         ROOMCODE = selects.ROOMCODE.toString();
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         questions = getQuestions(url1);
         console.log(questions)
-        socket.join(selects.ROOMCODE)
-        console.log("pre emitted")
-        io.sockets.in(ROOMCODE.toString()).emit('joinedGame')
-        console.log(selects.ROOMCODE)
     });
     socket.emit('joinGame', { Client: 'joining' });
     socket.on('sendRoomCode', function (data) {
@@ -45,10 +43,12 @@ io.on('connection', function (socket) {
         console.log(clientRoomCode)
         if (hosts.has(clientRoomCode)) {
             console.log("connecting")
-            socket.join(clientRoomCode);
-            io.sockets.in(ROOMCODE.toString()).emit('joinedGame')
-            console.log(clientRoomCode)
-            console.log(io.sockets.adapter.rooms)
+            console.log("Before!!\n" + rooms)
+            users = rooms.get(clientRoomCode.toString())
+            users.push(socket.id)
+            console.log(users)
+            rooms.set(clientRoomCode.toString(), users)
+            console.log("After!!\n" + rooms)
         }
         else {
             console.log("no such host exists")
@@ -62,11 +62,19 @@ io.on('connection', function (socket) {
         console.log("Sending question")
         console.log(questions[qCounter])
         console.log(ROOMCODE.toString())
-        io.sockets.in(ROOMCODE.toString()).emit('questionSent', questions[qCounter])
+        sendQuestion(questions[qCounter], ROOMCODE)
         qCounter += 1;
         console.log("Sent question")
     })
 });
+
+function sendQuestion(question, roomCode) {
+    users = rooms.get(roomCode)
+    for (user in users) {
+        console.log("Sending to: " + users[user])
+        io.to(users[user]).emit('questionSent', question)
+    }
+}
 
 function getQuestions(url1) {
     console.log("Loading The Q's & the A's")
