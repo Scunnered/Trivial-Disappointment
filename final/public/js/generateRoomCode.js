@@ -9,3 +9,5 @@ function generateRoomCode() {
     var code = $("#displayCode")
     code.html("Room Code: " + roomCode)
 }
+
+/* Will pull in random 7 digit code for unique room ID */
