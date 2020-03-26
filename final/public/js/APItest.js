@@ -100,3 +100,5 @@ function shuffle(array) {
         array[randInd] = tempVal
     }
 }
+
+/* API test which will act as a placeholder until we get the actual game components finished */
