@@ -15,8 +15,7 @@ function KonamiCode(keyCode){
         if(position==10){
             //Enter code that triggers after konami code here.
             $('#title').html('<h1>Rest in peace Saul Rennie</h1>');
-				window.open('https://www.youtube.com/watch?v=1SiylvmFI_8/', '_blank');
-				//Changes main title text to display a RIP message for Saul Rennie. He is not dead he just dropped out after first year. Forever in our hearts. Youtube video will be taken out on final relase.
+				//Changes main title text to display a RIP message for Saul Rennie. He is not dead he just dropped out after first year. Forever in our hearts. Removed Youtube video..
         }
     }
     else{
