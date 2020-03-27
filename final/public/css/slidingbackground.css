@@ -6,7 +6,7 @@
     background: url("images/bg.jpg") repeat-y;
     height: 576px; /* Height of reworked background image */
     display: block;
-    animation: slide 500s linear infinite; /* 500s (speed in which background scrolls upwards in game) */
+    animation: slide 10s linear infinite; /* 500s (speed in which background scrolls upwards in game) */
 }
   
 @keyframes slide{

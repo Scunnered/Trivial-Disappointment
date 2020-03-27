@@ -1,31 +1,47 @@
 //Variables
 var buttArr = ["#choice1", "#choice2", "#choice3", "#choice4"];
 var correctButton = "";
+var clientSocket;
+var hostSocket;
 
 $(document).ready(function() {
     $("#hostGame").click(function(){
-        var socket = io();
-        socket.on('getSelects', function (data) {
+        hostSocket = io();
+        hostSocket.on('getSelects', function (data) {
             console.log(data);
-            console.log(socket.id);
-            socket.emit('sendSelects', { selections: getSelections() });
+            console.log(hostSocket.id);
+            hostSocket.emit('sendSelects', { selections: getSelections() });
         });
     });
+    $("#startGame").click(function(){
+        hostSocket.emit('begin', { game: "started"});
+    });
     $("#joinGame").click(function(){
-        var socket = io();
-        socket.on('joinGame', function (data) {
+        clientSocket = io();
+        clientSocket.on('joinGame', function (data) {
             console.log(data);
-            console.log(socket.id);
-            socket.emit('sendRoomCode', { roomCode: getRoomCode()});
+            console.log(clientSocket.id);
+            clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         });
-        socket.on('questionSent', function (question) {
+        clientSocket.on('questionSent', function (question) {
             console.log("Setting Questions")
             setQuestion(question);
         })
+        clientSocket.on('loseGame', function () {
+            loseGame();
+        })
     });
-    $("#startGame").click(function(){
-        var socket = io();
-        socket.emit('begin', { game: "started"});
+    $("#choice1").click(function(){
+        clientSocket.emit('answer', { answer: $("#choice1").text()});
+    });
+    $("#choice2").click(function(){
+        clientSocket.emit('answer', { answer: $("#choice2").text()});
+    });
+    $("#choice3").click(function(){
+        clientSocket.emit('answer', { answer: $("#choice3").text()});
+    });
+    $("#choice4").click(function(){
+        clientSocket.emit('answer', { answer: $("#choice4").text()});
     });
 });
 
@@ -52,22 +68,6 @@ function makeJSON(amount, difficulty, category, toSendRoomCode){
     }
     var jsonValues = JSON.stringify(myObj);
     return jsonValues
-    //send(jsonValues)
-}
-
-function send(val) {
-    console.log(val)
-    $.ajax({
-        type: "POST",
-        url: "/Join_Host_Game.html",
-        data: val,
-        dataType: 'json',
-        contentType : 'application/json',
-        success: function(res) {
-            console.log(res)
-            setQuestion(res)
-        }
-    });
 }
 
 function shuffle(array) {

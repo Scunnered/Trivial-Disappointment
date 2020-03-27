@@ -18,6 +18,7 @@ let hosts = new Set();
 var rooms = new Map();
 var questions;
 var ROOMCODE;
+var currQAnswer;
 
 app.use(bodyParser.json());
 app.use(express.static('public'))
@@ -63,10 +64,21 @@ io.on('connection', function (socket) {
         qCounter += 1;
         console.log("Sent question")
     })
+    socket.on('answer', function (data) {
+        console.log("Data given: " + data.answer)
+        console.log("Server data given: " + currQAnswer)
+        if (data.answer !== currQAnswer) {
+            users = rooms.get(ROOMCODE)
+            updatedUsers = removeFromArray(users, socket.id)
+            rooms.set(ROOMCODE, updatedUsers)
+            io.to(socket.id).emit("loseGame");
+        }
+    })
 });
 
 function sendQuestion(question, roomCode) {
     users = rooms.get(roomCode)
+    currQAnswer = question.correct_answer;
     for (user in users) {
         console.log("Sending to: " + users[user])
         io.to(users[user]).emit('questionSent', question)
@@ -87,6 +99,17 @@ function getQuestions(url1) {
         }
     })
     return response
+}
+
+function removeFromArray(array1, toRemove) {
+    var retArray = [];
+    console.log("To Remove: " + toRemove)
+    for (item in array1) {
+        if (array1[item] != toRemove) {
+            retArray.push(array1[item]);
+        }
+    }
+    return retArray
 }
 
 function createURL(amount, difficulty, category) {
