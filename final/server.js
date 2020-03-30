@@ -29,6 +29,11 @@ app.use(express.static('public'))
 
 server.listen(8080);
 
+MongoClient.connect(url, function(err, database){
+    if(err) throw err;
+    db = database;
+});
+
 io.on('connection', function (socket) {
     socket.emit('getSelects', { Host: 'Becoming Host' });
     socket.on('sendSelects', function (data) {
@@ -42,7 +47,7 @@ io.on('connection', function (socket) {
         questions = getQuestions(url1);
         console.log(questions)
     });
-    socket.emit('joinGame', { Client: 'joining' });
+    socket.emit('joinGame', { Client: 'joining', username: generateUsername() });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
         console.log(clientRoomCode)
@@ -127,4 +132,44 @@ function createURL(amount, difficulty, category) {
     var difficultyUrl = "&difficulty=" + difficulty;
     url1 = url1 + difficultyUrl;
     return url1;
+}
+
+//This function generates & returns a username, and puts it in the alreadyUsed array to avoid duplicates.
+function generateUsername(){
+    db.collection('colours').find().toArray(function(err, result1) {
+        if (err) throw err;
+        db.collection('animals').find().toArray(function(err, result2) {
+            if (err) throw err;
+            //Nested find().toArray() because of the use of two collections.
+
+            do{
+                //initializes output to be returned later & boolean of wether generated username is a duplicate
+                var output = "";
+                var used = false;
+
+                //adds random colour & name to output, thus making the username
+                output += result1[Math.floor(Math.random() * result1.length)].colour;
+                output += result2[Math.floor(Math.random() * result2.length)].name;
+            
+                //conpares it to each username already generated, and if it already exits, repeates the while loop
+                for(var i=0;i<alreadyUsed.length;i++){
+                    if(alreadyUsed[i]===output){
+                        used = true;
+                    }
+                }
+            }
+            while(used) //This only repeats if there is a duplicate
+
+            //adds non-duplicate to the array of already used usernames
+            alreadyUsed.push(output)
+        });
+    });
+
+    //returns the just now added username
+    return alreadyUsed[alreadyUsed.length-1];
+}
+
+function resetUsername(){
+    //empties already used array to allow new game to have new usernames
+    alreadyUsed.splice(0, alreadyUsed.length)
 }
