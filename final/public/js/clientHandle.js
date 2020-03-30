@@ -1,5 +1,6 @@
 //Variables
 var buttArr = ["#choice1", "#choice2", "#choice3", "#choice4"];
+var boolArr = ["#choice2", "#choice3"];
 var correctButton = "";
 var clientSocket;
 var hostSocket;
@@ -25,7 +26,13 @@ $(document).ready(function() {
         });
         clientSocket.on('questionSent', function (question) {
             console.log("Setting Questions")
-            setQuestion(question);
+            if (question.type === "boolean") {
+                console.log("BOOLEAN TYPE")
+                setQuestionBool(question);
+            }
+            else {
+                setQuestion(question);
+            }
         })
         clientSocket.on('loseGame', function () {
             loseGame();
@@ -91,4 +98,14 @@ function setQuestion(question1) {
     $(buttArr[1]).html(question1.incorrect_answers[0])
     $(buttArr[2]).html(question1.incorrect_answers[1])
     $(buttArr[3]).html(question1.incorrect_answers[2])
+}
+
+function setQuestionBool(question1) {
+    shuffle(boolArr)
+    $("#question").html(question1.question)
+    $("#choice1").html("")
+    $(boolArr[0]).html(question1.correct_answer)
+    correctButton = buttArr[1];
+    $(boolArr[1]).html(question1.incorrect_answers[0])
+    $("#choice4").html("")
 }

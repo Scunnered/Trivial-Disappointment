@@ -122,6 +122,5 @@ function createURL(amount, difficulty, category) {
     }
     var difficultyUrl = "&difficulty=" + difficulty;
     url1 = url1 + difficultyUrl;
-    url1 = url1 + "&type=multiple";
     return url1;
 }
