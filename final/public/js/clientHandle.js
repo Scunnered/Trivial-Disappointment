@@ -4,6 +4,8 @@ var boolArr = ["#choice2", "#choice3"];
 var correctButton = "";
 var clientSocket;
 var hostSocket;
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/coloured-animals";
 
 var username;
 
