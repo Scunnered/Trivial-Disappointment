@@ -11,6 +11,10 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+//ADDED THIS FOR MONGODB. CHECK FOR NECCESITY
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/coloured-animals";
+
 //Global Variables
 var response;
 var qCounter = 0;

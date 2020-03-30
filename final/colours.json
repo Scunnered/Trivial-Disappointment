@@ -1,0 +1,12 @@
+//Contains colours used to make usernames during a game. 
+//This file is just to make populating the database fast and easy
+{"colour":"Red"}
+{"colour":"Blue"}
+{"colour":"Yellow"}
+{"colour":"Orange"}
+{"colour":"Green"}
+{"colour":"Purple"}
+{"colour":"Pink"}
+{"colour":"Grey"}
+{"colour":"White"}
+{"colour":"Black"}
