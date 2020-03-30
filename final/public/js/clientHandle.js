@@ -7,7 +7,18 @@ var hostSocket;
 
 var username;
 
+var db;
+
+//this array contains all the usernames already generated, to avoid duplicates
+var alreadyUsed = [];
+
 $(document).ready(function() {
+    //Dont know if the below is needed here or server.js Keeping it here for now
+    MongoClient.connect(url, function(err, database){
+        if(err) throw err;
+        db = database;
+        app.listen(8080);
+    });
     $("#hostGame").click(function(){
         hostSocket = io();
         hostSocket.on('getSelects', function (data) {
@@ -112,4 +123,44 @@ function setQuestionBool(question1) {
     correctButton = buttArr[1];
     $(boolArr[1]).html(question1.incorrect_answers[0])
     $("#choice4").html("")
+}
+
+//This function generates & returns a username, and puts it in the alreadyUsed array to avoid duplicates.
+function generateUsername(){
+    db.collection('colours').find().toArray(function(err, result1) {
+        if (err) throw err;
+        db.collection('animals').find().toArray(function(err, result2) {
+            if (err) throw err;
+            //Nested find().toArray() because of the use of two collections.
+
+            do{
+                //initializes output to be returned later & boolean of wether generated username is a duplicate
+                var output = "";
+                var used = false;
+
+                //adds random colour & name to output, thus making the username
+                output += result1[Math.floor(Math.random() * result1.length)].colour;
+                output += result2[Math.floor(Math.random() * result2.length)].name;
+            
+                //conpares it to each username already generated, and if it already exits, repeates the while loop
+                for(var i=0;i<alreadyUsed.length;i++){
+                    if(alreadyUsed[i]===output){
+                        used = true;
+                    }
+                }
+            }
+            while(used) //This only repeats if there is a duplicate
+
+            //adds non-duplicate to the array of already used usernames
+            alreadyUsed.push(output)
+        });
+    });
+
+    //returns the just now added username
+    return alreadyUsed[alreadyUsed.length-1];
+}
+
+function resetUsername(){
+    //empties already used array to allow new game to have new usernames
+    alreadyUsed.splice(0, alreadyUsed.length)
 }
