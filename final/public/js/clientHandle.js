@@ -4,6 +4,8 @@ var correctButton = "";
 var clientSocket;
 var hostSocket;
 
+var username;
+
 $(document).ready(function() {
     $("#hostGame").click(function(){
         hostSocket = io();
@@ -30,6 +32,8 @@ $(document).ready(function() {
         clientSocket.on('loseGame', function () {
             loseGame();
         })
+        username = generateUsername()
+        $("#username").html(username)
     });
     $("#choice1").click(function(){
         clientSocket.emit('answer', { answer: $("#choice1").text()});
