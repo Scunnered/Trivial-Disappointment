@@ -22,10 +22,10 @@ $(document).ready(function() {
     });
     $("#joinGame").click(function(data){
         clientSocket = io();
-        username = data.username
-        $("#username").html(username)
         clientSocket.on('joinGame', function (data) {
             console.log(data);
+            username = data.username
+            $("#username").html(username)
             console.log(clientSocket.id);
             clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         });

@@ -50,6 +50,7 @@ io.on('connection', function (socket) {
         questions = getQuestions(url1);
         console.log(questions)
     });
+    console.log(generateUsername())
     socket.emit('joinGame', { Client: 'joining', username: generateUsername() });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
