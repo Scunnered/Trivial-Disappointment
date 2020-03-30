@@ -15,6 +15,9 @@ var io = require('socket.io')(server);
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/coloured-animals";
 
+//this array contains all the usernames already generated, to avoid duplicates
+var alreadyUsed = [];
+
 //Global Variables
 var response;
 var qCounter = 0;

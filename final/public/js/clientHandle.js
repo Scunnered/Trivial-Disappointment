@@ -6,8 +6,7 @@ var clientSocket;
 var hostSocket;
 var username;
 
-//this array contains all the usernames already generated, to avoid duplicates
-var alreadyUsed = [];
+
 
 $(document).ready(function() {
     $("#hostGame").click(function(){
