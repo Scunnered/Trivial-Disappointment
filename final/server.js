@@ -17,11 +17,12 @@ const url = "mongodb://localhost:27017/coloured-animals";
 
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = [];
+//contains the players
+var leaderboard = [];
 
 //Global Variables
 var response;
 var qCounter = 0;
-let hosts = new Set();
 var rooms = new Map();
 var questions;
 var ROOMCODE;
@@ -42,8 +43,7 @@ io.on('connection', function (socket) {
     socket.on('sendSelects', function (data) {
         var selects = JSON.parse(data.selections);
         console.log("SERVER ID" + socket.id)
-        hosts.add(selects.ROOMCODE.toString());
-        rooms.set(selects.ROOMCODE.toString(), [socket.id])
+        rooms.set(selects.ROOMCODE.toString(), [[socket.id, "host"]])
         ROOMCODE = selects.ROOMCODE.toString();
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
@@ -51,15 +51,17 @@ io.on('connection', function (socket) {
         console.log(questions)
     });
     console.log(generateUsername())
-    socket.emit('joinGame', { Client: 'joining', username: generateUsername() });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
+        var user = generateUsername();
+        socket.emit('joinGame', { Client: 'joining', username: user});
         console.log(clientRoomCode)
         if (hosts.has(clientRoomCode)) {
             console.log("connecting")
             console.log("Before!!\n" + rooms)
             users = rooms.get(clientRoomCode.toString())
-            users.push(socket.id)
+            users.push([socket.id, user])
+            leaderboard.push(user)
             console.log(users)
             rooms.set(clientRoomCode.toString(), users)
             console.log("After!!\n" + rooms)
@@ -82,19 +84,35 @@ io.on('connection', function (socket) {
         console.log("Server data given: " + currQAnswer)
         if (data.answer !== currQAnswer) {
             users = rooms.get(ROOMCODE)
-            updatedUsers = removeFromArray(users, socket.id)
+            updatedUsers = removeFrom2DArray(users, socket.id)
+            for (item in users) {
+                if(users[item][0] == socket.id){
+                    leaderboard = removeFromArray(leaderboard, users[item][1])
+                }
+            }
+            console.log(leaderboard)
             rooms.set(ROOMCODE, updatedUsers)
             io.to(socket.id).emit("loseGame");
         }
     })
 });
 
+//Potential way of showing the leaderboard during the game.
+/*
+var output = "<h1>Leaderboard</h1>";
+for (var i = 0; i < leaderboard.length; i++) {
+    output += "<div>"
+    output += "<p>" + leaderboard[i] + "</p>"
+    output += "</div>"
+}
+*/
+
 function sendQuestion(question, roomCode) {
     users = rooms.get(roomCode)
     currQAnswer = question.correct_answer;
     for (user in users) {
         console.log("Sending to: " + users[user])
-        io.to(users[user]).emit('questionSent', question)
+        io.to(users[user][0]).emit('questionSent', question)
     }
 }
 
@@ -112,6 +130,17 @@ function getQuestions(url1) {
         }
     })
     return response
+}
+
+function removeFrom2DArray(array1, toRemove) {
+    var retArray = [];
+    console.log("To Remove: " + toRemove)
+    for (item in array1) {
+        if (array1[item][0] != toRemove) {
+            retArray.push(array1[item]);
+        }
+    }
+    return retArray
 }
 
 function removeFromArray(array1, toRemove) {
