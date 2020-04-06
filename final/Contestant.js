@@ -14,10 +14,10 @@ class Contestants {
   // Gets name inputted by player
   
   get colour() { return this._colour; }
-  set colour(new colour) { this._colour = newColour; }
+  set colour(newColour) { this._colour = newColour; }
   // For player colour (We might use a colour API for this or pull it in from a DB on Mongo)
   
-  get isReady() { return this._ready: }
+  get isReady() { return this._ready; }
   set isReady(contestantsReady) { this._ready = newReady; }
   // For players to get ready. Once confirmed all players have selected ready the game can start. (So no excuses)
 }

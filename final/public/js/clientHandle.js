@@ -5,7 +5,7 @@ var correctButton = "";
 var clientSocket;
 var hostSocket;
 var username;
-
+var clicked= false;
 
 
 $(document).ready(function() {
@@ -27,8 +27,8 @@ $(document).ready(function() {
             username = data.username
             $("#username").html(username)
             console.log(clientSocket.id);
-            clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         });
+        clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         clientSocket.on('questionSent', function (question) {
             console.log("Setting Questions")
             if (question.type === "boolean") {
@@ -39,22 +39,35 @@ $(document).ready(function() {
                 setQuestion(question);
             }
         })
+        clientSocket.on('timerStart', function(data) {
+            console.log("Timer starting")
+            timer(data);
+        })
+
         clientSocket.on('loseGame', function () {
             loseGame();
+        })
+
+        clientSocket.on('winGame', function () {
+            winGame();
         })
         $("#username").html(username)
     });
     $("#choice1").click(function(){
         clientSocket.emit('answer', { answer: $("#choice1").text()});
+        clicked=true;
     });
     $("#choice2").click(function(){
         clientSocket.emit('answer', { answer: $("#choice2").text()});
+        clicked=true;
     });
     $("#choice3").click(function(){
         clientSocket.emit('answer', { answer: $("#choice3").text()});
+        clicked=true;
     });
     $("#choice4").click(function(){
         clientSocket.emit('answer', { answer: $("#choice4").text()});
+        clicked=true;
     });
 });
 
@@ -114,4 +127,39 @@ function setQuestionBool(question1) {
     correctButton = buttArr[1];
     $(boolArr[1]).html(question1.incorrect_answers[0])
     $("#choice4").html("")
+}
+
+function timer(data) {
+    var delay= data
+    console.log(data)
+    var timeLeft= delay;
+    
+    var countdown= setInterval(function(){
+        //document.getElementById("timer").innerHTML= timeLeft--;
+        timeLeft--
+        $("#timer").html(timeLeft)
+        console.log(timeLeft)
+        if(timeLeft <= 0 && clicked==true){
+            clearInterval(countdown) //stop countdown
+            //document.getElementById("timer").innerHTML= 0;
+            clicked=false;
+        }
+        else if(timeLeft <= 0 && clicked!=true){
+            clearInterval(countdown)
+            //document.getElementById("timer").innerHTML= 0;
+            clientSocket.emit('answer', { answer: ""});
+        }
+    },1000);
+}
+
+function loseGame() {
+    console.log("LOSER")
+    $("#resultImg").attr("src", "images/Loser.jpg")
+    //document.getElementById("resultImg").src= "images/Loser.jpg"; //create for this ID
+}
+
+function winGame() {
+    console.log("WINNER")
+    $("#resultImg").attr("src", "images/Winner.jpg")
+    //document.getElementById("resultImg").src= "images/Winner.jpg"; //create for this ID
 }
