@@ -164,7 +164,6 @@ io.on('connection', function (socket) {
             
             users = rooms.get(ROOMCODE)
             if(users.length===1){
-                
                 removeFromGame(hostSocket,false)
             }
         }

@@ -51,7 +51,6 @@ $(document).ready(function() {
         clientSocket.on('winGame', function () {
             winGame();
         })
-        $("#username").html(username)
     });
     $("#choice1").click(function(){
         clientSocket.emit('answer', { answer: $("#choice1").text()});
@@ -135,18 +134,15 @@ function timer(data) {
     var timeLeft= delay;
     
     var countdown= setInterval(function(){
-        //document.getElementById("timer").innerHTML= timeLeft--;
         timeLeft--
         $("#timer").html(timeLeft)
         console.log(timeLeft)
         if(timeLeft <= 0 && clicked==true){
             clearInterval(countdown) //stop countdown
-            //document.getElementById("timer").innerHTML= 0;
             clicked=false;
         }
         else if(timeLeft <= 0 && clicked!=true){
             clearInterval(countdown)
-            //document.getElementById("timer").innerHTML= 0;
             clientSocket.emit('answer', { answer: ""});
         }
     },1000);
@@ -155,11 +151,9 @@ function timer(data) {
 function loseGame() {
     console.log("LOSER")
     $("#resultImg").attr("src", "images/Loser.jpg")
-    //document.getElementById("resultImg").src= "images/Loser.jpg"; //create for this ID
 }
 
 function winGame() {
     console.log("WINNER")
     $("#resultImg").attr("src", "images/Winner.jpg")
-    //document.getElementById("resultImg").src= "images/Winner.jpg"; //create for this ID
 }
