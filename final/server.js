@@ -68,7 +68,6 @@ io.on('connection', function (socket) {
     });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
-        console.log("CUSTUSERNAME: " + data.custUsername)
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (mongo) {

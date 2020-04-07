@@ -12,8 +12,6 @@ $(document).ready(function() {
     $("#hostGame").click(function(){
         hostSocket = io();
         hostSocket.on('getSelects', function (data) {
-            console.log(data);
-            console.log(hostSocket.id);
             hostSocket.emit('sendSelects', { selections: getSelections() });
         });
     });
@@ -22,8 +20,7 @@ $(document).ready(function() {
     });
     $("#joinGame").click(function(data){
         clientSocket = io();
-        console.log()
-        if (getUsername() === undefined) {
+        if (getUsername() === null) {
             clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         }
         else {
@@ -36,9 +33,7 @@ $(document).ready(function() {
             console.log(clientSocket.id);
         });
         clientSocket.on('questionSent', function (question) {
-            console.log("Setting Questions")
             if (question.type === "boolean") {
-                console.log("BOOLEAN TYPE")
                 setQuestionBool(question);
             }
             else {
@@ -91,7 +86,12 @@ function getRoomCode() {
 }
 
 function getUsername() {
-    var custUsername = $("#usernameInput").val();
+    if (!$("#usernameInput").val()) {
+        var custUsername = null;
+    }
+    else {
+        var custUsername = $("#usernameInput").val();
+    }
     return custUsername
 }
 
@@ -160,11 +160,9 @@ function timer(data) {
 }
 
 function loseGame() {
-    console.log("LOSER")
     $("#resultImg").attr("src", "images/Loser.jpg")
 }
 
 function winGame() {
-    console.log("WINNER")
     $("#resultImg").attr("src", "images/Winner.jpg")
 }
