@@ -22,13 +22,19 @@ $(document).ready(function() {
     });
     $("#joinGame").click(function(data){
         clientSocket = io();
+        console.log()
+        if (getUsername() === undefined) {
+            clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
+        }
+        else {
+            clientSocket.emit('sendRoomCode', { roomCode: getRoomCode(), custUsername: getUsername()});
+        }
         clientSocket.on('joinGame', function (data) {
             console.log(data);
             username = data.username
             $("#username").html(username)
             console.log(clientSocket.id);
         });
-        clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         clientSocket.on('questionSent', function (question) {
             console.log("Setting Questions")
             if (question.type === "boolean") {
@@ -82,6 +88,11 @@ function getSelections() {
 function getRoomCode() {
     var clientRoomCode = $("#enteredCode").val();
     return clientRoomCode
+}
+
+function getUsername() {
+    var custUsername = $("#usernameInput").val();
+    return custUsername
 }
 
 function makeJSON(amount, difficulty, category, toSendRoomCode){

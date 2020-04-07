@@ -1,19 +1,9 @@
+//THIS REQUIRES "npm install express, npm install socket.io, npm install mongodb, npm install request"
 var express = require('express');
-//THIS REQUIRES "npm install jquery, npm install jsdom, npm install body-parser, npm install socket.io, npm install mongodb"
-var jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-const { window } = new JSDOM();
-const { document } = (new JSDOM('')).window;
-global.document = document;
-var $ = jQuery = require('jquery')(window);
-var bodyParser = require('body-parser')
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
-//ADDED THIS FOR MONGODB. CHECK FOR NECCESITY
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/coloured-animals";
+var request = require('request');
 
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = [];
@@ -38,15 +28,26 @@ var timeLeft;
 var countdown; //initialised for future clearInterval from outside timer
 var hostSocket;
 
-app.use(bodyParser.json());
+//testvars 
+var mongo = false;
+var testnum = 0;
+
+//ADDED THIS FOR MONGODB. CHECK FOR NECCESITY
+if (mongo) {
+    const MongoClient = require('mongodb').MongoClient;
+    const url = "mongodb://localhost:27017/coloured-animals";
+}
+
+//app.use(bodyParser.json());
 app.use(express.static('public'))
 
 server.listen(8080);
-
-MongoClient.connect(url, function(err, database){
-    if(err) throw err;
-    db = database;
-});
+if (mongo) {
+    MongoClient.connect(url, function(err, database){
+        if(err) throw err;
+        db = database;
+    });
+}
 
 io.on('connection', function (socket) {
     socket.emit('getSelects', { Host: 'Becoming Host' });
@@ -60,13 +61,41 @@ io.on('connection', function (socket) {
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         questions = getQuestions(url1);
+        console.log("Returned Q's")
         console.log(questions)
         qTotal= selects.AMOUNT;
         console.log("NUMBER OF QUESTIONS: "+qTotal)
     });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
-        var user = generateUsername();
+        console.log("CUSTUSERNAME: " + data.custUsername)
+        if (data.custUsername === undefined) {
+            console.log("Username being made by database")
+            if (mongo) {
+                var user = generateUsername();
+            }
+            else {
+                var user = "user" + testnum
+                testnum++
+            }
+        }
+        else {
+            console.log("Username input by user")
+            console.log(data.custUsername)
+            if (alreadyUsed.includes(data.custUsername)) {
+                if (mongo) {
+                    var user = generateUsername();
+                }
+                else {
+                    var user = "user" + testnum
+                    testnum++
+                }
+            }
+            else {
+                user = data.custUsername
+                alreadyUsed.push(user)
+            }
+        }
         socket.emit('joinGame', { Client: 'joining', username: user});
         console.log(clientRoomCode)
         if (hosts.has(clientRoomCode)) {
@@ -194,6 +223,7 @@ function sendQuestion(question, roomCode) {
 
 function getQuestions(url1) {
     console.log("Loading The Q's & the A's")
+    /*
     $.ajax({
         type: "GET",
         url: url1,
@@ -205,6 +235,25 @@ function getQuestions(url1) {
             }
         }
     })
+    return response
+    */
+    request.get({
+        url: url1,
+        json: true
+    }, (err, res, data) => {
+        if (err) {
+            console.log('Error:', err);
+        } else if (res.statusCode !== 200) {
+            console.log('Status:', res.statusCode);
+        } else {
+            console.log("DATA")
+            console.log(data)
+            console.log("data.results")
+            console.log(data.results)
+            response = data.results;
+            console.log(response[0])
+        }
+    });
     return response
 }
 
@@ -242,39 +291,42 @@ function createURL(amount, difficulty, category) {
     url1 = url1 + difficultyUrl;
     return url1;
 }
+
+if (mongo) {
 //This function generates & returns a username, and puts it in the alreadyUsed array to avoid duplicates.
-function generateUsername(){
-    db.collection('colours').find().toArray(function(err, result1) {
-        if (err) throw err;
-        db.collection('animals').find().toArray(function(err, result2) {
+    function generateUsername(){
+        db.collection('colours').find().toArray(function(err, result1) {
             if (err) throw err;
-            //Nested find().toArray() because of the use of two collections.
+            db.collection('animals').find().toArray(function(err, result2) {
+                if (err) throw err;
+                //Nested find().toArray() because of the use of two collections.
 
-            do{
-                //initializes output to be returned later & boolean of wether generated username is a duplicate
-                var output = "";
-                var used = false;
+                do{
+                    //initializes output to be returned later & boolean of wether generated username is a duplicate
+                    var output = "";
+                    var used = false;
 
-                //adds random colour & name to output, thus making the username
-                output += result1[Math.floor(Math.random() * result1.length)].colour;
-                output += result2[Math.floor(Math.random() * result2.length)].name;
-            
-                //conpares it to each username already generated, and if it already exits, repeates the while loop
-                for(var i=0;i<alreadyUsed.length;i++){
-                    if(alreadyUsed[i]===output){
-                        used = true;
+                    //adds random colour & name to output, thus making the username
+                    output += result1[Math.floor(Math.random() * result1.length)].colour;
+                    output += result2[Math.floor(Math.random() * result2.length)].name;
+                
+                    //conpares it to each username already generated, and if it already exits, repeates the while loop
+                    for(var i=0;i<alreadyUsed.length;i++){
+                        if(alreadyUsed[i]===output){
+                            used = true;
+                        }
                     }
                 }
-            }
-            while(used) //This only repeats if there is a duplicate
+                while(used) //This only repeats if there is a duplicate
 
-            //adds non-duplicate to the array of already used usernames
-            alreadyUsed.push(output)
+                //adds non-duplicate to the array of already used usernames
+                alreadyUsed.push(output)
+            });
         });
-    });
 
-    //returns the just now added username
-    return alreadyUsed[alreadyUsed.length-1];
+        //returns the just now added username
+        return alreadyUsed[alreadyUsed.length-1];
+    }
 }
 
 function resetUsername(){
