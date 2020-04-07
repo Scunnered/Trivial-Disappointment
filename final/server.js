@@ -12,8 +12,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 //ADDED THIS FOR MONGODB. CHECK FOR NECCESITY
-//const MongoClient = require('mongodb').MongoClient;
-//const url = "mongodb://localhost:27017/coloured-animals";
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/coloured-animals";
 
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = [];
@@ -38,19 +38,16 @@ var timeLeft;
 var countdown; //initialised for future clearInterval from outside timer
 var hostSocket;
 
-//testvar 
-var testnum = 0;
-
 app.use(bodyParser.json());
 app.use(express.static('public'))
 
 server.listen(8080);
-/*
+
 MongoClient.connect(url, function(err, database){
     if(err) throw err;
     db = database;
 });
-*/
+
 io.on('connection', function (socket) {
     socket.emit('getSelects', { Host: 'Becoming Host' });
     socket.on('sendSelects', function (data) {
@@ -69,9 +66,7 @@ io.on('connection', function (socket) {
     });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
-        //var user = generateUsername();
-        user = "user" + testnum
-        testnum++;
+        var user = generateUsername();
         socket.emit('joinGame', { Client: 'joining', username: user});
         console.log(clientRoomCode)
         if (hosts.has(clientRoomCode)) {
@@ -248,7 +243,6 @@ function createURL(amount, difficulty, category) {
     url1 = url1 + difficultyUrl;
     return url1;
 }
-/*
 //This function generates & returns a username, and puts it in the alreadyUsed array to avoid duplicates.
 function generateUsername(){
     db.collection('colours').find().toArray(function(err, result1) {
@@ -283,7 +277,7 @@ function generateUsername(){
     //returns the just now added username
     return alreadyUsed[alreadyUsed.length-1];
 }
-*/
+
 function resetUsername(){
     //empties already used array to allow new game to have new usernames
     alreadyUsed.splice(0, alreadyUsed.length)
