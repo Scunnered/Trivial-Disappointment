@@ -54,19 +54,27 @@ $(document).ready(function() {
         })
     });
     $("#choice1").click(function(){
-        clientSocket.emit('answer', { answer: $("#choice1").text()});
+        if (clicked === false) {
+            clientSocket.emit('answer', { answer: $("#choice1").text()});
+        }        
         clicked=true;
     });
     $("#choice2").click(function(){
-        clientSocket.emit('answer', { answer: $("#choice2").text()});
+        if (clicked === false) {
+            clientSocket.emit('answer', { answer: $("#choice2").text()});
+        }        
         clicked=true;
     });
     $("#choice3").click(function(){
-        clientSocket.emit('answer', { answer: $("#choice3").text()});
+        if (clicked === false) {
+            clientSocket.emit('answer', { answer: $("#choice3").text()});
+        }        
         clicked=true;
     });
     $("#choice4").click(function(){
-        clientSocket.emit('answer', { answer: $("#choice4").text()});
+        if (clicked === false) {
+            clientSocket.emit('answer', { answer: $("#choice4").text()});
+        }
         clicked=true;
     });
 });
@@ -122,21 +130,21 @@ function shuffle(array) {
 function setQuestion(question1) {
     shuffle(buttArr)
     $("#question").html(question1.question)
-    $(buttArr[0]).html(question1.correct_answer);
+    $(buttArr[0]).html(question1.correct_answer).show()
     correctButton = buttArr[0];
     $(buttArr[1]).html(question1.incorrect_answers[0])
     $(buttArr[2]).html(question1.incorrect_answers[1])
-    $(buttArr[3]).html(question1.incorrect_answers[2])
+    $(buttArr[3]).html(question1.incorrect_answers[2]).show()
 }
 
 function setQuestionBool(question1) {
     shuffle(boolArr)
     $("#question").html(question1.question)
-    $("#choice1").html("")
+    $("#choice1").hide()
     $(boolArr[0]).html(question1.correct_answer)
     correctButton = buttArr[1];
     $(boolArr[1]).html(question1.incorrect_answers[0])
-    $("#choice4").html("")
+    $("#choice4").hide()
 }
 
 function timer(data) {
