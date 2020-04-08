@@ -5,6 +5,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var request = require('request');
 
+//LINK TO WEBSITE https://freddie-transit-8080.codio.io/Join_Host_Game.html
+
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = [];
 //contains the players
@@ -27,6 +29,7 @@ var prevQwinner= null;
 var timeLeft;
 var countdown; //initialised for future clearInterval from outside timer
 var hostSocket;
+var maxUsers = 100;
 
 //testvars 
 var mongo = false;
@@ -43,14 +46,15 @@ app.use(express.static('public'))
 
 server.listen(8080);
 if (mongo) {
-    MongoClient.connect(url, function(err, database){
+    MongoClient.connect(url, function(err, database ){
         if(err) throw err;
         db = database;
     });
 }
-
+//Result:
+//It works, no changes in the questions not being sent through the first time though. 
+//The host game button still needs to be pressed twice to work. 
 io.on('connection', function (socket) {
-    socket.emit('getSelects', { Host: 'Becoming Host' });
     socket.on('sendSelects', function (data) {
         var selects = JSON.parse(data.selections);
         console.log("SERVER ID" + socket.id)
@@ -60,16 +64,28 @@ io.on('connection', function (socket) {
         hostSocket = socket;
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
-        questions = getQuestions(url1);
-        console.log("Returned Q's")
-        console.log(questions)
-        qTotal= selects.AMOUNT;
-        console.log("NUMBER OF QUESTIONS: "+qTotal)
+        //your get questions may take a while to retun so we can immediatly emit anything or create your array.
+        //what we do is create a call back function...
+        getQuestions(url1, function(questions){
+            //this is now a call back that will not run untill we tell it to.
+            if (questions === undefined) {
+            socket.emit("WARNING", "Press the host game button again please")
+            }
+            else {
+            socket.emit("WARNING", "Questions loaded correctly")
+            }
+            console.log("Returned Q's")
+            console.log(questions)
+            qTotal = selects.AMOUNT;
+            console.log("NUMBER OF QUESTIONS: "+qTotal)   
+        });
+        
     });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
+            socket.emit("WARNING", "Creating a randomised name")
             if (mongo) {
                 var user = generateUsername();
             }
@@ -82,6 +98,7 @@ io.on('connection', function (socket) {
             console.log("Username input by user")
             console.log(data.custUsername)
             if (alreadyUsed.includes(data.custUsername)) {
+                socket.emit("WARNING", "Name has already been used, randomising username now")
                 if (mongo) {
                     var user = generateUsername();
                 }
@@ -101,14 +118,21 @@ io.on('connection', function (socket) {
             console.log("connecting")
             console.log("Before!!\n" + rooms)
             users = rooms.get(clientRoomCode.toString())
-            users.push([socket.id, user])
-            leaderboard.push(user)
-            console.log(users)
-            rooms.set(clientRoomCode.toString(), users)
-            console.log("After!!\n" + rooms)
+            if (users.length <= maxUsers) {
+                users.push([socket.id, user])
+                leaderboard.push(user)
+                console.log(users)
+                rooms.set(clientRoomCode.toString(), users)
+                console.log("After!!\n" + rooms)
+            }
+            else {
+                socket.emit("WARNING", "Too many players in current game")
+                socket.disconnect()
+            }
         }
         else {
             console.log("no such host exists")
+            socket.emit("WARNING", "No such host exists")
         }
     });
     socket.on('begin', function (data) {
@@ -220,7 +244,8 @@ function sendQuestion(question, roomCode) {
     }
 }
 
-function getQuestions(url1) {
+//get questions now has the URL parameter and a parameter that represents our callback function 
+function getQuestions(url1, callback) {
     console.log("Loading The Q's & the A's")
     /*
     $.ajax({
@@ -236,6 +261,7 @@ function getQuestions(url1) {
     })
     return response
     */
+    //this is an async call so your old code won't wait for this to complete before returning 
     request.get({
         url: url1,
         json: true
@@ -245,15 +271,18 @@ function getQuestions(url1) {
         } else if (res.statusCode !== 200) {
             console.log('Status:', res.statusCode);
         } else {
+            //if we get here we have a successfull retrival of the questions from the api.
             console.log("DATA")
             console.log(data)
             console.log("data.results")
             console.log(data.results)
             response = data.results;
             console.log(response[0])
+            //so we just call our callback with the results
+            callback(response);
         }
     });
-    return response
+    //return response
 }
 
 function removeFrom2DArray(array1, toRemove) {
@@ -331,7 +360,7 @@ if (mongo) {
 function resetUsername(){
     //empties already used array to allow new game to have new usernames
     alreadyUsed.splice(0, alreadyUsed.length)
-}
+} 
 
 
 

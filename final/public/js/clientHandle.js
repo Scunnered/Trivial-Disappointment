@@ -9,50 +9,66 @@ var clicked= false;
 
 
 $(document).ready(function() {
+    //create sockets first. These are the same thing but creating two references means you can keep track later
+
+    clientSocket = io();
+    hostSocket = io();
+
     $("#hostGame").click(function(){
-        hostSocket = io();
-        hostSocket.on('getSelects', function (data) {
-            hostSocket.emit('sendSelects', { selections: getSelections() });
-        });
+        
+        hostSocket.emit('sendSelects', { selections: getSelections() });
+        
     });
     $("#startGame").click(function(){
         hostSocket.emit('begin', { game: "started"});
     });
     $("#joinGame").click(function(data){
-        clientSocket = io();
         if (getUsername() === null) {
             clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
         }
         else {
             clientSocket.emit('sendRoomCode', { roomCode: getRoomCode(), custUsername: getUsername()});
         }
-        clientSocket.on('joinGame', function (data) {
-            console.log(data);
-            username = data.username
-            $("#username").html(username)
-            console.log(clientSocket.id);
-        });
-        clientSocket.on('questionSent', function (question) {
-            if (question.type === "boolean") {
-                setQuestionBool(question);
-            }
-            else {
-                setQuestion(question);
-            }
-        })
-        clientSocket.on('timerStart', function(data) {
-            console.log("Timer starting")
-            timer(data);
-        })
-
-        clientSocket.on('loseGame', function () {
-            loseGame();
-        })
-
-        clientSocket.on('winGame', function () {
-            winGame();
-        })
     });
+
+    //create all listeners
+    //this one is listening for a "WARNING" that shoudl be sent from your server
+    
+    hostSocket.on('WARNING', function (data) {
+            console.log(data);
+            setWarning(data);
+    });
+
+    clientSocket.on('joinGame', function (data) {
+        console.log(data);
+        username = data.username
+        $("#username").html(username)
+        console.log(clientSocket.id);
+    });
+    clientSocket.on('questionSent', function (question) {
+        if (question.type === "boolean") {
+            setQuestionBool(question);
+        }
+        else {
+            setQuestion(question);
+        }
+    })
+    clientSocket.on('timerStart', function(data) {
+        console.log("Timer starting")
+        timer(data);
+    })
+
+    clientSocket.on('loseGame', function () {
+        loseGame();
+    })
+
+    clientSocket.on('winGame', function () {
+        winGame();
+    })
+    clientSocket.on('WARNING', function (data) {
+        console.log(data);
+        setWarning(data);
+    })
     $("#choice1").click(function(){
         if (clicked === false) {
             clientSocket.emit('answer', { answer: $("#choice1").text()});
@@ -125,6 +141,10 @@ function shuffle(array) {
         array[currentIndex] = array[randInd]
         array[randInd] = tempVal
     }
+}
+
+function setWarning(data) {
+    $("#warning").text(data);
 }
 
 function setQuestion(question1) {
