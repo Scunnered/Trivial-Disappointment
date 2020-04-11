@@ -1,19 +1,22 @@
-//THIS REQUIRES "npm install express, npm install socket.io, npm install mongodb, npm install request"
-var express = require('express');
-var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var request = require('request');
+//THIS REQUIRES "npm install express, npm install socket.io, npm install mongodb, npm install request, npm install html-entities"
+const express = require('express');
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const request = require('request');
+const Entities = require('html-entities').XmlEntities;
+const entities = new Entities();
 
 //LINK TO WEBSITE https://freddie-transit-8080.codio.io/Join_Host_Game.html
 
 //this array contains all the usernames already generated, to avoid duplicates
-var alreadyUsed = [];
+var alreadyUsed = ["host"];
 //contains the players
 var leaderboard = [];
 
 //Global Variables
 var response;
+var questions;
 var qCounter = 0;
 var rooms = new Map();
 var hosts = new Set();
@@ -66,15 +69,16 @@ io.on('connection', function (socket) {
         console.log(url1)
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
-        getQuestions(url1, function(questions){
+        getQuestions(url1, function(returnedQs){
             //this is now a call back that will not run untill we tell it to.
             if (questions === undefined) {
-            socket.emit("WARNING", "Press the host game button again please")
+                socket.emit("WARNING", "Press the host game button again please")
             }
             else {
-            socket.emit("WARNING", "Questions loaded correctly")
+                socket.emit("WARNING", "Questions loaded correctly")
             }
             console.log("Returned Q's")
+            questions = returnedQs
             console.log(questions)
             qTotal = selects.AMOUNT;
             console.log("NUMBER OF QUESTIONS: "+qTotal)   
@@ -138,7 +142,7 @@ io.on('connection', function (socket) {
     socket.on('begin', function (data) {
         console.log(data);
         console.log("Sending question")
-        console.log(questions[qCounter])
+        console.log(questions)
         console.log(ROOMCODE.toString())
         sendQuestion(questions[qCounter], ROOMCODE)
         
@@ -235,7 +239,7 @@ for (var i = 0; i < leaderboard.length; i++) {
 
 function sendQuestion(question, roomCode) {
     users = rooms.get(roomCode)
-    currQAnswer = question.correct_answer;
+    currQAnswer = entities.decode(question.correct_answer);
     for (user in users) {
         console.log("Sending to: " + users[user])
         io.to(users[user][0]).emit('questionSent', question)
@@ -247,20 +251,6 @@ function sendQuestion(question, roomCode) {
 //get questions now has the URL parameter and a parameter that represents our callback function 
 function getQuestions(url1, callback) {
     console.log("Loading The Q's & the A's")
-    /*
-    $.ajax({
-        type: "GET",
-        url: url1,
-        success: function(result) {
-            console.log("Response Code: " + result.response_code)
-            if (result.response_code == 0) {
-                response = result.results;
-                console.log("Loaded")
-            }
-        }
-    })
-    return response
-    */
     //this is an async call so your old code won't wait for this to complete before returning 
     request.get({
         url: url1,

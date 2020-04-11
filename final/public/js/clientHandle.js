@@ -70,25 +70,25 @@ $(document).ready(function() {
         setWarning(data);
     })
     $("#choice1").click(function(){
-        if (clicked === false) {
+        if (!clicked) {
             clientSocket.emit('answer', { answer: $("#choice1").text()});
         }        
         clicked=true;
     });
     $("#choice2").click(function(){
-        if (clicked === false) {
+        if (!clicked) {
             clientSocket.emit('answer', { answer: $("#choice2").text()});
         }        
         clicked=true;
     });
     $("#choice3").click(function(){
-        if (clicked === false) {
+        if (!clicked) {
             clientSocket.emit('answer', { answer: $("#choice3").text()});
         }        
         clicked=true;
     });
     $("#choice4").click(function(){
-        if (clicked === false) {
+        if (!clicked) {
             clientSocket.emit('answer', { answer: $("#choice4").text()});
         }
         clicked=true;
@@ -152,8 +152,8 @@ function setQuestion(question1) {
     $("#question").html(question1.question)
     $(buttArr[0]).html(question1.correct_answer).show()
     correctButton = buttArr[0];
-    $(buttArr[1]).html(question1.incorrect_answers[0])
-    $(buttArr[2]).html(question1.incorrect_answers[1])
+    $(buttArr[1]).html(question1.incorrect_answers[0]).show()
+    $(buttArr[2]).html(question1.incorrect_answers[1]).show()
     $(buttArr[3]).html(question1.incorrect_answers[2]).show()
 }
 
