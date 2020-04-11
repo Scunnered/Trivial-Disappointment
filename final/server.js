@@ -262,12 +262,9 @@ function getQuestions(url1, callback) {
             console.log('Status:', res.statusCode);
         } else {
             //if we get here we have a successfull retrival of the questions from the api.
-            console.log("DATA")
-            console.log(data)
-            console.log("data.results")
+            console.log("Result from API: ")
             console.log(data.results)
             response = data.results;
-            console.log(response[0])
             //so we just call our callback with the results
             callback(response);
         }
