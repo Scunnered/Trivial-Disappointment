@@ -5,9 +5,6 @@ $(document).ready(function() {
 })
 
 function generateRoomCode() {
-    roomCode = Math.round(Math.random() * 1000000)
-    var code = $("#displayCode")
-    code.html("Room Code: " + roomCode)
+    roomCode = (Math.round(Math.random() * 900000) + 100000)
+    var code = $("#displayCode").html("Room Code: " + roomCode)
 }
-
-/* Will pull in random 7 digit code for unique room ID */
