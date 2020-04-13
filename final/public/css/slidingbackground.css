@@ -6,7 +6,7 @@
     background: url("images/bg2.jpg") repeat-x;
     height: 576px;
     display: block;
-    animation: slide 60s linear infinite;
+    animation: slide 900s linear infinite;
 }
   
 @keyframes slide{
@@ -14,6 +14,6 @@
         transform: translate3d(0, 0, 0);
     }
     100%{
-        transform: translate3d(-240px, 0, 0);
+        transform: translate3d(-19487px, 0, 0);
     }
 }
