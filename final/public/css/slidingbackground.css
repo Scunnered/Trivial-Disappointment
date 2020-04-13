@@ -3,7 +3,7 @@
 }
   
 .sliding-background {
-    background: url("images/bg2.jpg") repeat-x;
+    background: url("images/bg2.jpg") repeat-x; /* Image bg2 created. Much longer thn standard bg image. Located in images folder */
     height: 680px; /* Can change if needed. Increase number if background clips over game */
     display: block;
     animation: slide 900s linear infinite; /* Smooth slide with resize capabilities */
