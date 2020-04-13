@@ -3,7 +3,7 @@
 }
   
 .sliding-background {
-    background: url("images/bg.jpg") repeat-x;
+    background: url("images/bg2.jpg") repeat-x;
     height: 576px;
     display: block;
     animation: slide 60s linear infinite;
