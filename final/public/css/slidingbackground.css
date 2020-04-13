@@ -4,7 +4,7 @@
   
 .sliding-background {
     background: url("images/bg2.jpg") repeat-x;
-    height: 680px;
+    height: 680px; /* Can change if needed. Increase number if background clips over game */
     display: block;
     animation: slide 900s linear infinite;
 }
