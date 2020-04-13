@@ -4,7 +4,7 @@
   
 .sliding-background {
     background: url("images/bg.jpg") repeat-x;
-    height: 576px; /* Height of reworked background image */
+    height: 576px;
     display: block;
     animation: slide 10s linear infinite; /* 500s (speed in which background scrolls upwards in game) */
 }
