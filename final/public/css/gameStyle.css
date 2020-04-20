@@ -1,0 +1,52 @@
+#choice1, #choice2, #choice3, #choice4 {
+    margin: 2% 6% 2% 6%;
+    display: inline-block;
+    width: 88%;
+    text-align: center;
+}
+
+#hostGameShow {
+    margin: 2% 2% 2% 2%;
+    display: inline-block;
+    text-align: center;
+}
+
+#usernameInput, #enteredCode, #joinGame {
+    margin: 0% 2% 2% 2%;
+    display: inline-block;
+    width: 28.5%;
+    text-align: center;
+}
+
+#categories, #difficulty, #amount, #hostGame, #startGame {
+    margin: 0% 2% 2% 2%;
+    display: inline-block;
+    width: 15.5%;
+    text-align: center;
+}
+
+@media (max-width : 769px) {
+    #choice1, #choice2, #choice3, #choice4 {
+        width: 16%;
+        margin: 6%;
+    }
+    
+    #hostGameShow {
+        margin: 4% 4% 4% 4%;
+    }
+    
+    #usernameInput, #enteredCode, #joinGame {
+        width: 24%;
+        margin: 0% 4% 4% 4%;
+    }
+    
+    #categories, #difficulty, #amount{
+        width: 24%;
+        margin: 0% 4% 4% 4%;
+    }
+
+    #hostGame, #startGame {
+        width: 41%;
+        margin: 0% 4% 4% 4%;
+    }
+}
