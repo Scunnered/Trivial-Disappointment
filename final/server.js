@@ -7,8 +7,6 @@ const request = require('request');
 const Entities = require('html-entities').XmlEntities;
 const entities = new Entities();
 
-//LINK TO WEBSITE https://freddie-transit-8080.codio.io/Join_Host_Game.html
-
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = ["host"];
 //contains the players and game state ["player",true/false]
@@ -211,6 +209,7 @@ io.on('connection', function (socket) {
             users = rooms.get(ROOMCODE)
             if(users.length===1){
                 removeFromGame(hostSocket,false)
+                resetGame()
             }
             
         }
@@ -222,6 +221,7 @@ io.on('connection', function (socket) {
             users = rooms.get(ROOMCODE)
             if(users.length===1){
                 removeFromGame(hostSocket,false)
+                resetGame()
             }
         }
 
@@ -350,6 +350,21 @@ function resetUsername(){
     alreadyUsed.splice(0, alreadyUsed.length)
 } 
 
+function resetGame() {
+    //reset game vars after game has ended
+    var qTotal;
+    var fCorrect= true;
+    var prevQwinner= null;
+    var timeLeft;
+    var countdown;
+    var hostSocket;
+    var leaderboard = new Map();
+    var response;
+    var questions;
+    var qCounter = 0;
+    var questions;
+    var currQAnswer;
+}
 
 
 function checkForCorrect(socket) {
@@ -365,6 +380,7 @@ function checkForCorrect(socket) {
             if(users.length===1){
                 clearInterval(countdown)
                 removeFromGame(hostSocket,false)
+                resetGame()
             }
         }
         else {
@@ -372,6 +388,7 @@ function checkForCorrect(socket) {
             clearInterval(countdown)//remove
             removeFromGame(socket,true)
             removeFromGame(hostSocket,false)
+            resetGame()
         }
     }
     //else if anyone answered correctly then remove user

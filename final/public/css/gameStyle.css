@@ -39,8 +39,6 @@
 /*Style for different sized screens*/
 @media (max-width : 769px) {
     #choice1, #choice2, #choice3, #choice4 {
-        width: 16%;
-        margin: 6%;
     }
     
     #hostGameShow {

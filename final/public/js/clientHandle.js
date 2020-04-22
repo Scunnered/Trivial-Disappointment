@@ -66,7 +66,9 @@ $(document).ready(function() {
     clientSocket.on('loseGame', function () {
         loseGame();
     })
-
+    clientSocket.on('resetGame', function() {
+        resetGame();
+    })
     clientSocket.on('winGame', function () {
         winGame();
     })
@@ -194,10 +196,20 @@ function timer(data) {
 
 function loseGame() {
     $("#resultImg").attr("src", "images/Loser.jpg")
+    resetGame()
 }
 
 function winGame() {
     $("#resultImg").attr("src", "images/Winner.jpg")
+    resetGame()
+}
+
+function resetGame() {
+    var correctButton = "";
+    var clientSocket;
+    var hostSocket;
+    var username;
+    var clicked= false;
 }
 
 function setLeaderboard(leaderboard) {
