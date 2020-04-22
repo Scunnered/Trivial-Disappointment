@@ -45,8 +45,9 @@
 
 #resultImg{
     margin: 0% 2% 2% 2%;
-    display: inline-block;
-    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*Style for different sized screens*/
