@@ -11,8 +11,8 @@ const entities = new Entities();
 
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = ["host"];
-//contains the players
-var leaderboard = [];
+//contains the players and game state ["player",true/false]
+var leaderboard = new Map();
 
 //Global Variables
 var response;
@@ -124,7 +124,8 @@ io.on('connection', function (socket) {
             users = rooms.get(clientRoomCode.toString())
             if (users.length <= maxUsers) {
                 users.push([socket.id, user])
-                leaderboard.push(user)
+                leaderboard.set(user,true) //add new user to map with "true" to indicate participation
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard)) //send leaderboard to host socket as array
                 console.log(users)
                 rooms.set(clientRoomCode.toString(), users)
                 console.log("After!!\n" + rooms)
@@ -385,10 +386,18 @@ function removeFromGame(socket,win) {
     updatedUsers = removeFrom2DArray(users, socket.id)
     for (item in users) {
         if(users[item][0] == socket.id){
-            leaderboard = removeFromArray(leaderboard, users[item][1])
+            //if user to be removed isnt host, set the the user to false & update leaderboard
+            if(socket.id != users[0][0]){
+                leaderboard.set(users[item][1],false) //set user as "false" in leaderboard to indicate loss
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard))
+            }
+            //else just update the leaderboard
+            else {
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard))
+            }
         }
     }
-    console.log("Leaderboard: " + leaderboard)
+    //console.log("Leaderboard: " + leaderboard)
     rooms.set(ROOMCODE, updatedUsers)
     users = rooms.get(ROOMCODE)
     console.log("USERS: " + users)

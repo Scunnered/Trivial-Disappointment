@@ -39,6 +39,11 @@ $(document).ready(function() {
             setWarning(data);
     });
 
+    hostSocket.on("setLeaderboard", function(data) {
+        console.log("UPDATE LEADERBOARD")
+        setLeaderboard(data);
+    })
+
     clientSocket.on('joinGame', function (data) {
         console.log(data);
         username = data.username
@@ -193,4 +198,23 @@ function loseGame() {
 
 function winGame() {
     $("#resultImg").attr("src", "images/Winner.jpg")
+}
+
+function setLeaderboard(leaderboard) {
+    //take the leaderboard data and make it a map back from an array
+    leaderboard= new Map(leaderboard)
+    
+    //empty all the child components inside the wrapper
+    $("#usersWrapper").empty();
+    //for each user in leaderboard
+    for(let [key,val] of leaderboard) {
+        console.log("UPDATING LEADERBOARD")
+        //if the user is set to "false", their colour is set to red, else blue & their username is added back into the wrapper
+        if(val!=true) {
+            $("#usersWrapper").append( $("<p></p>").text(key).css("color","red").css('display','inline-block') );
+        }
+        else {
+            $("#usersWrapper").append( $("<p></p>").text(key).css("color","blue").css('display','inline-block') );
+        }
+    }
 }
