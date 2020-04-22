@@ -39,7 +39,8 @@
 #warning, #displayCode{
     margin: 0% 2% 2% 2%;
     display: inline-block;
-    text-align: center;
+    text-align: left;
+    width: 90%;
 }
 
 /*Style for different sized screens*/
