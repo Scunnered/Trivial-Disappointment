@@ -43,6 +43,12 @@
     width: 90%;
 }
 
+#resultImg{
+    margin: 0% 2% 2% 2%;
+    display: inline-block;
+    text-align: center;
+}
+
 /*Style for different sized screens*/
 @media (max-width : 769px) {
     #choice1, #choice2, #choice3, #choice4 {
