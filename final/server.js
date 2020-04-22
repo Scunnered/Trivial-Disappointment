@@ -14,11 +14,11 @@ var leaderboard = new Map();
 
 //Global Variables
 var rooms = new Map();
-var hosts = new Set();
+var hosts = new Map();
+var roomCodeVals = new Map();
 var response;
 var questions;
 var qCounter = 0;
-var questions;
 var ROOMCODE;
 var currQAnswer;
 
@@ -61,8 +61,8 @@ io.on('connection', function (socket) {
         console.log("SERVER ID" + socket.id)
         rooms.set(selects.ROOMCODE.toString(), [[socket.id, "host"]])
         ROOMCODE = selects.ROOMCODE.toString();
-        hosts.add(ROOMCODE)
         hostSocket = socket;
+        hosts.set(hostSocket, ROOMCODE)
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
@@ -116,7 +116,7 @@ io.on('connection', function (socket) {
         }
         socket.emit('joinGame', { Client: 'joining', username: user});
         console.log(clientRoomCode)
-        if (hosts.has(clientRoomCode)) {
+        if (hosts.containsKey(clientRoomCode)) {
             console.log("connecting")
             console.log("Before!!\n" + rooms)
             users = rooms.get(clientRoomCode.toString())
