@@ -13,11 +13,11 @@ var alreadyUsed = ["host"];
 var leaderboard = new Map();
 
 //Global Variables
+var rooms = new Map();
+var hosts = new Set();
 var response;
 var questions;
 var qCounter = 0;
-var rooms = new Map();
-var hosts = new Set();
 var questions;
 var ROOMCODE;
 var currQAnswer;
