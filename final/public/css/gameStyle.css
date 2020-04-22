@@ -1,3 +1,4 @@
+/*Style for the buttons*/
 #choice1, #choice2, #choice3, #choice4 {
     margin: 2% 6% 2% 6%;
     display: inline-block;
@@ -5,12 +6,14 @@
     text-align: center;
 }
 
+/*Style for host button*/
 #hostGameShow {
     margin: 2% 2% 2% 2%;
     display: inline-block;
     text-align: center;
 }
 
+/*Style for join/username options*/
 #usernameInput, #enteredCode, #joinGame {
     margin: 0% 2% 2% 2%;
     display: inline-block;
@@ -18,6 +21,7 @@
     text-align: center;
 }
 
+/*Style for host options*/
 #categories, #difficulty, #amount, #hostGame, #startGame {
     margin: 0% 2% 2% 2%;
     display: inline-block;
@@ -25,12 +29,14 @@
     text-align: center;
 }
 
+/*Sytle for game information*/
 #username, #timer, #question{
     margin: 0% 2% 2% 2%;
     display: inline-block;
     text-align: center;
 }
 
+/*Style for different sized screens*/
 @media (max-width : 769px) {
     #choice1, #choice2, #choice3, #choice4 {
         width: 16%;
