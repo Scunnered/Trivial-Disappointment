@@ -48,9 +48,18 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    height: 800px;
+    width: 800px;
 }
 
 /*Style for different sized screens*/
+@media (max-width : 996px){
+    #resultImg{
+        height: 80%;
+        width: 80%;
+    }
+}
+
 @media (max-width : 769px) {
     #choice1, #choice2, #choice3, #choice4 {
     }
