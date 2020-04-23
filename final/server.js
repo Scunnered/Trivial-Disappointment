@@ -7,20 +7,18 @@ const request = require('request');
 const Entities = require('html-entities').XmlEntities;
 const entities = new Entities();
 
-//LINK TO WEBSITE https://freddie-transit-8080.codio.io/Join_Host_Game.html
-
 //this array contains all the usernames already generated, to avoid duplicates
 var alreadyUsed = ["host"];
-//contains the players
-var leaderboard = [];
+//contains the players and game state ["player",true/false]
+var leaderboard = new Map();
 
 //Global Variables
+var rooms = new Map();
+var hosts = new Map();
+var roomCodeVals = new Map();
 var response;
 var questions;
 var qCounter = 0;
-var rooms = new Map();
-var hosts = new Set();
-var questions;
 var ROOMCODE;
 var currQAnswer;
 
@@ -63,8 +61,8 @@ io.on('connection', function (socket) {
         console.log("SERVER ID" + socket.id)
         rooms.set(selects.ROOMCODE.toString(), [[socket.id, "host"]])
         ROOMCODE = selects.ROOMCODE.toString();
-        hosts.add(ROOMCODE)
         hostSocket = socket;
+        hosts.set(hostSocket, ROOMCODE)
         url1 = createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
@@ -118,13 +116,14 @@ io.on('connection', function (socket) {
         }
         socket.emit('joinGame', { Client: 'joining', username: user});
         console.log(clientRoomCode)
-        if (hosts.has(clientRoomCode)) {
+        if (hosts.containsKey(clientRoomCode)) {
             console.log("connecting")
             console.log("Before!!\n" + rooms)
             users = rooms.get(clientRoomCode.toString())
             if (users.length <= maxUsers) {
                 users.push([socket.id, user])
-                leaderboard.push(user)
+                leaderboard.set(user,true) //add new user to map with "true" to indicate participation
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard)) //send leaderboard to host socket as array
                 console.log(users)
                 rooms.set(clientRoomCode.toString(), users)
                 console.log("After!!\n" + rooms)
@@ -210,6 +209,7 @@ io.on('connection', function (socket) {
             users = rooms.get(ROOMCODE)
             if(users.length===1){
                 removeFromGame(hostSocket,false)
+                resetGame()
             }
             
         }
@@ -221,6 +221,7 @@ io.on('connection', function (socket) {
             users = rooms.get(ROOMCODE)
             if(users.length===1){
                 removeFromGame(hostSocket,false)
+                resetGame()
             }
         }
 
@@ -349,6 +350,21 @@ function resetUsername(){
     alreadyUsed.splice(0, alreadyUsed.length)
 } 
 
+function resetGame() {
+    //reset game vars after game has ended
+    var qTotal;
+    var fCorrect= true;
+    var prevQwinner= null;
+    var timeLeft;
+    var countdown;
+    var hostSocket;
+    var leaderboard = new Map();
+    var response;
+    var questions;
+    var qCounter = 0;
+    var questions;
+    var currQAnswer;
+}
 
 
 function checkForCorrect(socket) {
@@ -364,6 +380,7 @@ function checkForCorrect(socket) {
             if(users.length===1){
                 clearInterval(countdown)
                 removeFromGame(hostSocket,false)
+                resetGame()
             }
         }
         else {
@@ -371,6 +388,7 @@ function checkForCorrect(socket) {
             clearInterval(countdown)//remove
             removeFromGame(socket,true)
             removeFromGame(hostSocket,false)
+            resetGame()
         }
     }
     //else if anyone answered correctly then remove user
@@ -385,10 +403,18 @@ function removeFromGame(socket,win) {
     updatedUsers = removeFrom2DArray(users, socket.id)
     for (item in users) {
         if(users[item][0] == socket.id){
-            leaderboard = removeFromArray(leaderboard, users[item][1])
+            //if user to be removed isnt host, set the the user to false & update leaderboard
+            if(socket.id != users[0][0]){
+                leaderboard.set(users[item][1],false) //set user as "false" in leaderboard to indicate loss
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard))
+            }
+            //else just update the leaderboard
+            else {
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard))
+            }
         }
     }
-    console.log("Leaderboard: " + leaderboard)
+    //console.log("Leaderboard: " + leaderboard)
     rooms.set(ROOMCODE, updatedUsers)
     users = rooms.get(ROOMCODE)
     console.log("USERS: " + users)
