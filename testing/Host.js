@@ -1,12 +1,7 @@
 const request = require('request');
 const Entities = require('html-entities').XmlEntities;
 const entities = new Entities();
-const express = require('express');
-const app = require('express')();
-const server = require('http').Server(app);
-//const io = require('socket.io')(server);
 var rooms = new Map();
-
 
 class Host{
     

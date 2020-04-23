@@ -7,7 +7,6 @@ var hostSocket;
 var username;
 var clicked= false;
 
-
 $(document).ready(function() {
     //create sockets first. These are the same thing but creating two references means you can keep track later
 
