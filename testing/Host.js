@@ -140,8 +140,8 @@ class Host{
         console.log(this.timeLeft--)
 
         this.countdown= this.setInterval(function(){
-            //this.timeLeft = this.timeLeft - 1;
-            //console.log(this.timeLeft)
+            this.timeLeft = this.timeLeft - 1;
+            console.log(this.timeLeft)
 
             this.timeLeft= this.delay+1;
             //if timer<=0 and it isnt the last question then reset timer and boolean variables + send next question to users
