@@ -1,0 +1,19 @@
+.container {
+    overflow: hidden;
+}
+  
+.sliding-background {
+    background: url("images/bg2.jpg") repeat-x; /* Image bg2 created. Much longer thn standard bg image. Located in images folder */
+    height: 680px; /* Can change if needed. Increase number if background clips over game */
+    display: block;
+    animation: slide 900s linear infinite; /* Smooth slide with resize capabilities */
+}
+  
+@keyframes slide{
+    0%{
+        transform: translate3d(0, 0, 0);
+    }
+    100%{
+        transform: translate3d(-19487px, 0, 0);
+    }
+}
