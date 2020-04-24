@@ -1,4 +1,20 @@
 /*Style for the buttons*/
+button {
+    margin: 2% 6% 2% 6%;
+    display: inline-block;
+    text-align: center;
+    font-family: Quicksand, sans-serif;
+    font-weight: bold;
+    color: #222;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background: none;
+    outline: none;
+	transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;    .
+}
+
 #choice1, #choice2, #choice3, #choice4 {
     margin: 2% 6% 2% 6%;
     display: inline-block;
@@ -18,7 +34,8 @@
 
 #backgroundImg {
     height: 100%;
-
+    border: 2px solid #333;
+    border-radius: 4px;
 }
 
 .backgroundImgContent {
