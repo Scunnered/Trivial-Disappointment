@@ -9,7 +9,13 @@ $(document).ready(function() {
         $("#startGame").hide();
     })
     $("#joinGame").click(function(){
-        showJoinGameButtons();
+        $(".hostSelects").hide();
+        $("#hostGame").hide();
+        $("#hostGameShow").hide();
+        showButtons();
+        $("#usernameInput").hide();
+        $("#enteredCode").hide();
+        $("#joinGame").hide();
     })
 
     $("#hostGame").click(function() {
@@ -23,13 +29,13 @@ $(document).ready(function() {
 })
 
 function showJoinGameButtons() {
-    $(".hostSelects").hide();
-    $("#hostGame").hide();
-    $("#hostGameShow").hide();
-    showButtons();
-    $("#usernameInput").hide();
-    $("#enteredCode").hide();
-    $("#joinGame").hide();
+    $(".hostSelects").show();
+    $("#hostGame").show();
+    $("#hostGameShow").show();
+    hideButtons();
+    $("#usernameInput").show();
+    $("#enteredCode").show();
+    $("#joinGame").show();
 }
 
 function hideButtons () {

@@ -19,9 +19,8 @@
 /*Style for host button*/
 #hostGameShow {
     margin: 2% 2% 2% 2%;
-    display: inline-block;
+    display: block;
     text-align: left;
-    width: 80%;
 }
 
 /*Style for join/username options*/
@@ -45,13 +44,21 @@
     margin: 0% 2% 2% 2%;
     display: inline-block;
     text-align: center;
+    width: 40%;
 }
 
 #question{
     margin: 0% 2% 2% 2%;
-    display: inline-block;
+    display: block;
     text-align: left;
     width: 80%;
+}
+
+#usersWrapper{
+    margin: 0% 2% 2% 2%;
+    display: inline-block;
+    text-align: center;
+    width: 40%;
 }
 
 #warning, #displayCode{
