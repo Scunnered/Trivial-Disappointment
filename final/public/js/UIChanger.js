@@ -35,14 +35,14 @@ function showJoinGameButtons() {
     $("#joinGame").show();
 }
 
-function hideButtons () {
+function hideButtons() {
     $("#choice1").hide();
     $("#choice2").hide();
     $("#choice3").hide();
     $("#choice4").hide();
 }
 
-function showButtons () {
+function showButtons() {
     $("#choice1").show();
     $("#choice2").show();
     $("#choice3").show();

@@ -65,7 +65,6 @@ $(document).ready(function() {
         else {
             setQuestion(question);
         }
-        console.log(question.category)
         changeBackground(question.category)
     })
     clientSocket.on('timerStart', function(data) {
@@ -75,12 +74,14 @@ $(document).ready(function() {
 
     clientSocket.on('loseGame', function () {
         loseGame();
+        hideButtons()
     })
     clientSocket.on('resetGame', function() {
         resetGame();
     })
     clientSocket.on('winGame', function () {
         winGame();
+        hideButtons()
     })
     clientSocket.on('WARNING', function (data) {
         console.log(data);
