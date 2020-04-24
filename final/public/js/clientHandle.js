@@ -7,7 +7,6 @@ var hostSocket;
 var username;
 var clicked= false;
 
-
 $(document).ready(function() {
     //create sockets first. These are the same thing but creating two references means you can keep track later
 
@@ -57,6 +56,8 @@ $(document).ready(function() {
         else {
             setQuestion(question);
         }
+        console.log(question.category)
+        changeBackground(question.category)
     })
     clientSocket.on('timerStart', function(data) {
         console.log("Timer starting")
@@ -195,12 +196,12 @@ function timer(data) {
 }
 
 function loseGame() {
-    $("#resultImg").attr("src", "images/Loser.jpg")
+    changeBackgroundResult(false)
     resetGame()
 }
 
 function winGame() {
-    $("#resultImg").attr("src", "images/Winner.jpg")
+    changeBackgroundResult(true)
     resetGame()
 }
 

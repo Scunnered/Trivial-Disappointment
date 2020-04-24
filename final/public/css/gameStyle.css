@@ -43,7 +43,7 @@
     width: 90%;
 }
 
-#resultImg{
+#backgroundImg{
     margin: 0% 2% 2% 2%;
     display: block;
     margin-left: auto;
@@ -53,7 +53,7 @@
 
 /*Style for different sized screens*/
 @media (max-width : 996px){
-    #resultImg{
+    #backgroundImg{
         height: 80%;
         width: 80%;
     }
