@@ -68,15 +68,14 @@ io.on('connection', function (socket) {
         //what we do is create a call back function...
         getQuestions(url1, function(returnedQs){
             //this is now a call back that will not run untill we tell it to.
+            console.log("Returned Q's")
+            questions = returnedQs
             if (questions === undefined) {
                 socket.emit("WARNING", "Press the host game button again please")
             }
             else {
                 socket.emit("WARNING", "Questions loaded correctly")
             }
-            console.log("Returned Q's")
-            questions = returnedQs
-            console.log(questions)
             qTotal = selects.AMOUNT;
             console.log("NUMBER OF QUESTIONS: "+qTotal)   
         });

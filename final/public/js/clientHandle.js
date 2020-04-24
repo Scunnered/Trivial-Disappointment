@@ -14,9 +14,7 @@ $(document).ready(function() {
     hostSocket = io();
 
     $("#hostGame").click(function(){
-        
         hostSocket.emit('sendSelects', { selections: getSelections() });
-        
     });
     $("#startGame").click(function(){
         hostSocket.emit('begin', { game: "started"});
@@ -37,6 +35,17 @@ $(document).ready(function() {
             console.log(data);
             setWarning(data);
     });
+
+    hostSocket.on('questionSent', function (question) {
+        if (question.type === "boolean") {
+            setQuestionBool(question);
+        }
+        else {
+            setQuestion(question);
+        }
+        disableButtonsHost();
+        changeBackground(question.category);
+    })
 
     hostSocket.on("setLeaderboard", function(data) {
         console.log("UPDATE LEADERBOARD")
@@ -153,6 +162,7 @@ function shuffle(array) {
 
 function setWarning(data) {
     $("#warning").text(data);
+    setTimeout(function(){$("#warning").text("");},5000);
 }
 
 function setQuestion(question1) {
