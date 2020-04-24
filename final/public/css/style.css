@@ -101,6 +101,12 @@ hr {
     background: #808080; /* Light Grey */
     margin: 10px 0;
 }
+
+.testBorder {
+    border: #121212;
+    border-radius: 4em;
+}
+
 button {
     outline: none !important;
 }
