@@ -9,13 +9,7 @@ $(document).ready(function() {
         $("#startGame").hide();
     })
     $("#joinGame").click(function(){
-        $(".hostSelects").hide();
-        $("#hostGame").hide();
-        $("#hostGameShow").hide();
-        showButtons();
-        $("#usernameInput").hide();
-        $("#enteredCode").hide();
-        $("#joinGame").hide();
+        showJoinGameButtons();
     })
 
     $("#hostGame").click(function() {
@@ -27,6 +21,16 @@ $(document).ready(function() {
         $(".hostSelects").hide();
     })
 })
+
+function showJoinGameButtons() {
+    $(".hostSelects").hide();
+    $("#hostGame").hide();
+    $("#hostGameShow").hide();
+    showButtons();
+    $("#usernameInput").hide();
+    $("#enteredCode").hide();
+    $("#joinGame").hide();
+}
 
 function hideButtons () {
     $("#choice1").hide();

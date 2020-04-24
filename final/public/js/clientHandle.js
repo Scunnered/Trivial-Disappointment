@@ -162,6 +162,9 @@ function shuffle(array) {
 
 function setWarning(data) {
     $("#warning").text(data);
+    if (data === "No such host exists") {
+        showJoinGameButtons();
+    }
     setTimeout(function(){$("#warning").text("");},5000);
 }
 

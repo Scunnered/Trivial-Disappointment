@@ -79,7 +79,6 @@ io.on('connection', function (socket) {
             qTotal = selects.AMOUNT;
             console.log("NUMBER OF QUESTIONS: "+qTotal)   
         });
-        
     });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
@@ -132,7 +131,7 @@ io.on('connection', function (socket) {
             }
         }
         else {
-            console.log("no such host exists")
+            console.log("No such host exists")
             socket.emit("WARNING", "No such host exists")
         }
     });

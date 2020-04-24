@@ -4,13 +4,24 @@
     display: inline-block;
     width: 88%;
     text-align: center;
+    font-family: Quicksand, sans-serif;
+    font-weight: bold;
+    color: #222;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background: none;
+    outline: none;
+	transition: all 0.2s ease;
+    cursor: pointer;
+    text-align: center;
 }
 
 /*Style for host button*/
 #hostGameShow {
     margin: 2% 2% 2% 2%;
     display: inline-block;
-    text-align: center;
+    text-align: left;
+    width: 80%;
 }
 
 /*Style for join/username options*/
@@ -30,10 +41,17 @@
 }
 
 /*Sytle for game information*/
-#username, #timer, #question{
+#username, #timer{
     margin: 0% 2% 2% 2%;
     display: inline-block;
     text-align: center;
+}
+
+#question{
+    margin: 0% 2% 2% 2%;
+    display: inline-block;
+    text-align: left;
+    width: 80%;
 }
 
 #warning, #displayCode{
