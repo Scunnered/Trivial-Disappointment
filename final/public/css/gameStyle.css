@@ -42,8 +42,8 @@
 /*Sytle for game information*/
 #username, #timer{
     margin: 0% 2% 2% 2%;
-    display: block;
-    text-align: center;
+    display: inline-block;
+    text-align: left;
 }
 
 #question{
@@ -56,8 +56,7 @@
 #usersWrapper{
     margin: 0% 2% 2% 2%;
     display: inline-block;
-    text-align: center;
-    width: 40%;
+    text-align: left;
 }
 
 #warning, #displayCode{
