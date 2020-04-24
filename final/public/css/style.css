@@ -420,6 +420,7 @@ button {
 .social-links li a :hover {
     color: #808080;
 }
+
 #footer {
     width: 100%;
     min-height: 50px;
@@ -430,6 +431,7 @@ button {
     padding: 0;
     font-size: 14px;
     line-height: 20px;
+    bottom: 0;
 }
 #footer ul {
     margin: 10px 0;
