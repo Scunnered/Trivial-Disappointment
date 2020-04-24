@@ -82,48 +82,48 @@ io.on('connection', function (socket) {
     });
     socket.on('sendRoomCode', function (data) {
         var clientRoomCode = JSON.parse(data.roomCode).toString();
-        if (data.custUsername === undefined) {
-            console.log("Username being made by database")
-            socket.emit("WARNING", "Creating a randomised name")
-            if (mongo) {
-                var user = generateUsername();
-            }
-            else {
-                var user = "user" + testnum
-                testnum++
-            }
-        }
-        else {
-            console.log("Username input by user")
-            console.log(data.custUsername)
-            if (alreadyUsed.includes(data.custUsername)) {
-                socket.emit("WARNING", "Name has already been used, randomising username now")
-                if (mongo) {
-                    var user = generateUsername();
-                }
-                else {
-                    var user = "user" + testnum
-                    testnum++
-                }
-            }
-            else {
-                user = data.custUsername
-                alreadyUsed.push(user)
-            }
-        }
-        socket.emit('joinGame', { Client: 'joining', username: user});
         console.log(clientRoomCode)
         if (hosts.has(clientRoomCode)) {
             console.log("connecting")
             console.log("Before!!\n" + rooms)
             users = rooms.get(clientRoomCode.toString())
             if (users.length <= maxUsers) {
+                if (data.custUsername === undefined) {
+                    console.log("Username being made by database")
+                    socket.emit("WARNING", "Creating a randomised name")
+                    if (mongo) {
+                        var user = generateUsername();
+                    }
+                    else {
+                        var user = "user" + testnum
+                        testnum++
+                    }
+                }
+                else {
+                    console.log("Username input by user")
+                    console.log(data.custUsername)
+                    if (alreadyUsed.includes(data.custUsername)) {
+                        socket.emit("WARNING", "Name has already been used, randomising username now")
+                        if (mongo) {
+                            var user = generateUsername();
+                        }
+                        else {
+                            var user = "user" + testnum
+                            testnum++
+                        }
+                    }
+                    else {
+                        user = data.custUsername
+                        alreadyUsed.push(user)
+                    }
+                }
                 users.push([socket.id, user])
                 leaderboard.set(user,true) //add new user to map with "true" to indicate participation
                 io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard)) //send leaderboard to host socket as array
                 console.log(users)
                 rooms.set(clientRoomCode.toString(), users)
                 console.log("After!!\n" + rooms)
+                socket.emit('joinGame', { Client: 'joining', username: user});
             }
             else {
                 socket.emit("WARNING", "Too many players in current game")
@@ -134,6 +134,7 @@ io.on('connection', function (socket) {
             console.log("No such host exists")
             socket.emit("WARNING", "No such host exists")
         }
+        
     });
     socket.on('begin', function (data) {
         console.log(data);

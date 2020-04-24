@@ -35,16 +35,15 @@
 #categories, #difficulty, #amount, #hostGame, #startGame {
     margin: 0% 2% 2% 2%;
     display: inline-block;
-    width: 15.5%;
+    width: 20%;
     text-align: center;
 }
 
 /*Sytle for game information*/
 #username, #timer{
     margin: 0% 2% 2% 2%;
-    display: inline-block;
+    display: block;
     text-align: center;
-    width: 40%;
 }
 
 #question{

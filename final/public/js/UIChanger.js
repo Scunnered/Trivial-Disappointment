@@ -29,9 +29,6 @@ $(document).ready(function() {
 })
 
 function showJoinGameButtons() {
-    $(".hostSelects").show();
-    $("#hostGame").show();
-    $("#hostGameShow").show();
     hideButtons();
     $("#usernameInput").show();
     $("#enteredCode").show();
