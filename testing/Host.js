@@ -2,6 +2,7 @@ const request = require('request');
 const Entities = require('html-entities').XmlEntities;
 const entities = new Entities();
 var rooms = new Map();
+var currentGames = new Map();
 
 class Host{
     
@@ -10,16 +11,16 @@ class Host{
         this.selections = selections;
         this.socket = socket;
         this.alreadyUsed = ["host"];
-        this.leaderboard = new Map();
+        //this.leaderboard = new Map();
         this.questions = null;
-        this.qCounter = 0;
+        //this.qCounter = 0;
         this.ROOMCODE;
-        this.currQAnswer;
-        this.qTotal; //total number of q
-        this.delay= 15; //delay for the timers
-        this.fCorrect= true; //var used to check who was first to answer correctly
+        //this.currQAnswer;
+        //this.qTotal; //total number of q
+        //this.delay= 15; //delay for the timers
+        //this.fCorrect= true; //var used to check who was first to answer correctly
         this.prevQwinner= null;
-        this.timeLeft;
+        //this.timeLeft;
         this.countdown; //initialised for future clearInterval from outside timer
         this.hostSocket;
         this.maxUsers = 100;
@@ -31,9 +32,12 @@ class Host{
         var selects = JSON.parse(this.selections);
         console.log(selects)
         console.log("SERVER ID" + this.socket.id)
-        rooms.set(this.roomcode.toString(), [[this.socket.id, "host"]])
-        this.ROOMCODE = this.roomcode.toString();
         this.hostSocket = this.socket;
+        rooms.set(this.roomcode.toString(), [[this.socket.id, "host"]])
+        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map()})
+        var currentGame = currentGames.get(this.ROOMCODE)
+        console.log(currentGame)
+        this.ROOMCODE = this.roomcode.toString();
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         if (this.mongo) {
@@ -47,15 +51,16 @@ class Host{
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
         this.getQuestions(url1, function(returnedQs, hostObject){
+            var currentGame = currentGames.get(hostObject.ROOMCODE)
             //this is now a call back that will not run untill we tell it to.
             console.log("Returned Q's")
             console.log(returnedQs)
-            console.log(hostObject.questions)
-            hostObject.questions = returnedQs
-            console.log(hostObject.questions)
-            hostObject.qTotal = selects.AMOUNT;
-            console.log("NUMBER OF QUESTIONS: "+hostObject.qTotal)
-            if (hostObject.questions === undefined) {
+            console.log(currentGame.questions)
+            currentGame.questions = returnedQs
+            console.log(currentGame.questions)
+            currentGame.qTotal = selects.AMOUNT;
+            console.log("NUMBER OF QUESTIONS: "+currentGame.qTotal)
+            if (currentGame.questions === undefined) {
                 hostObject.hostSocket.emit("WARNING", "Press the host game button again please")
             }
             else {
@@ -64,6 +69,8 @@ class Host{
         });
     }
     sendRoomCode(data, socket, io) {
+        var currentGame = currentGames.get(this.ROOMCODE)
+        console.log(currentGame)
         console.log("in send room code")
         //var clientRoomCode = JSON.parse(data.roomcode).toString();
         console.log(data)
@@ -104,8 +111,8 @@ class Host{
             var users = rooms.get(clientRoomCode.toString())
             if (users.length <= this.maxUsers) {
                 users.push([socket.id, user])
-                this.leaderboard.set(user,true) //add new user to map with "true" to indicate participation
-                io.to(users[0][0]).emit('setLeaderboard',Array.from(this.leaderboard)) //!!!! IO
+                currentGame.leaderboard.set(user,true) //add new user to map with "true" to indicate participation
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(currentGame.leaderboard)) //!!!! IO
                 console.log(users)
                 rooms.set(clientRoomCode.toString(), users)
                 console.log("After!!\n" + rooms)
@@ -121,88 +128,83 @@ class Host{
         }
     }
     begin(data, io) {
+        var currentGame = currentGames.get(this.ROOMCODE)
         console.log(data);
         console.log("Sending question")
         console.log(this.questions)
         console.log(this.ROOMCODE.toString())
-        console.log(this.questions[this.qCounter])
-        this.sendQuestion(this.questions[this.qCounter], this.ROOMCODE, io)
+        currentGame.currQAnswer = sendQuestion(currentGame.questions[currentGame.qCounter], currentGame.ROOMCODE, io, currentGame.delay)
         
         console.log("Sent question & started timer")
+        currentGame.timeLeft = currentGame.delay+1
 
-        this.timeLeft= this.delay+1;
-        console.log(this.timeLeft + ":" + this.delay)
-        console.log(this.timeLeft--)
-
-        this.countdown= this.setInterval(function(){
-            this.timeLeft = this.timeLeft - 1;
-            console.log(this.timeLeft)
-
-            this.timeLeft= this.delay+1;
-            //if timer<=0 and it isnt the last question then reset timer and boolean variables + send next question to users
-            if(this.timeLeft <= 0 && this.qCounter+1<this.qTotal){
-                this.fCorrect= true;
+        var roomcode = this.ROOMCODE;
+        currentGame.countdown= setInterval(function(roomcode){
+            var currentGame = currentGames.get(roomcode)
+            currentGame.timeLeft = currentGame.timeLeft-1;
+            //this.timeLeft = this.timeLeft - 1;
+            console.log(currentGame.timeLeft)
             
-                this.timeLeft= this.delay+1;
+            //if timer<=0 and it isnt the last question then reset timer and boolean variables + send next question to users
+            if(currentGame.timeLeft <= 0 && currentGame.qCounter+1<currentGame.qTotal){
+                currentGame.fCorrect= true;
+            
+                currentGame.timeLeft= currentGame.delay+1;
                 
-                this.qCounter++
-                this.sendQuestion(this.questions[this.qCounter], this.ROOMCODE, io)
+                currentGame.qCounter++
+                currentGame.currQAnswer = sendQuestion(currentGame.questions[currentGame.qCounter], currentGame.ROOMCODE, io, currentGame.delay)
                 console.log("Sent next question")
                 
             }
             //if timer<=0 and its the last question then timer=0 and stop timer
-            else if(this.timeLeft <= 0 && this.qCounter+1==this.qTotal){
-                this.clearInterval(this.countdown)
-                console.log("Gameover for: "+this.ROOMCODE+" !")
+            else if(currentGame.timeLeft <= 0 && currentGame.qCounter+1==currentGame.qTotal){
+                clearInterval(currentGame.countdown)
+                console.log("Gameover for: "+currentGame.ROOMCODE+" !")
             }
-        },1000);
+        },1000, roomcode);
     }
     answer(data, socket, io) {
+        var currentGame = currentGames.get(this.ROOMCODE)
         console.log("Data given: " + data.answer)
-        console.log("Server data given: " + this.currQAnswer)
+        console.log("Server data given: " + currentGame.currQAnswer)
         //if answered incorrectly, run checkForCorrect(socket) at the end of timer
-        console.log("qCounter: " + this.qCounter + "\nqTotal: " + this.qTotal)
-        console.log("fCorrect: " + this.fCorrect)
-        if(data.answer !== this.currQAnswer) {
-            setTimeout(function(){this.checkForCorrect(socket, io)},(this.timeLeft*1000)-500)  //last change made
+        console.log("qCounter: " + currentGame.qCounter + "\nqTotal: " + currentGame.qTotal)
+        console.log("fCorrect: " + currentGame.fCorrect)
+        if(data.answer !== currentGame.currQAnswer) {
+            var roomcode = this.ROOMCODE;
+            setTimeout(function(roomcode){
+                var currentGame = currentGames.get(roomcode)
+                checkForCorrect(socket, io, currentGame.fCorrect, currentGame.prevQwinner, currentGame.countdown, currentGame.hostSocket, currentGame.leaderboard, currentGame.ROOMCODE)
+            },(currentGame.timeLeft*1000)-500, roomcode)  //last change made
         }
         //if first to answer correctly (before last question) then set to previous Q winner
-        if(data.answer === this.currQAnswer && this.qCounter+1<this.qTotal && this.fCorrect=== true) {
-            this.fCorrect=false;
-            this.prevQwinner= socket.id;
+        if(data.answer == currentGame.currQAnswer && currentGame.qCounter+1<currentGame.qTotal && currentGame.fCorrect== true) {
+            currentGame.fCorrect=false;
+            currentGame.prevQwinner= socket.id;
         }
         //if first to answer correctly at last question then win
-        if (data.answer==this.currQAnswer && this.qCounter+1==this.qTotal && this.fCorrect==true) {
-            this.fCorrect=false
+        if (data.answer==currentGame.currQAnswer && currentGame.qCounter+1==currentGame.qTotal && currentGame.fCorrect==true) {
+            currentGame.fCorrect=false
             io.to(socket.id).emit("winGame");
 
             var users = rooms.get(this.ROOMCODE)
             if(users.length===1){
-                this.removeFromGame(this.hostSocket,false,io)
+                removeFromGame(currentGame.hostSocket,false,io, currentGame.leaderboard, currentGame.ROOMCODE, currentGame.prevQwinner)
             }
             
         }
         
         //if  not first answer correctly at last question then lose
-        else if (data.answer==this.currQAnswer && this.qCounter+1==this.qTotal && this.fCorrect!==true) {
+        else if (data.answer==currentGame.currQAnswer && currentGame.qCounter+1==currentGame.qTotal && currentGame.fCorrect!==true) {
             io.to(socket.id).emit("loseGame");
             
             var users = rooms.get(this.ROOMCODE)
             if(users.length===1){
-                this.removeFromGame(this.hostSocket,false, io)
+                removeFromGame(currentGame.hostSocket,false, io, currentGame.leaderboard, currentGame.ROOMCODE, currentGame.prevQwinner)
             }
         }
     }
-    sendQuestion(question, roomCode, io) {
-        var users = rooms.get(roomCode)
-        this.currQAnswer = entities.decode(question.correct_answer);
-        for (let user in users) {
-            console.log("Sending to: " + users[user][0])
-            io.to(users[user][0]).emit('questionSent', question)
-            io.to(users[user][0]).emit('timerStart',this.delay) //start timer on client side
-            console.log("Correct answer: " + this.currQAnswer)
-        }
-    }
+    
     getQuestions(url1, callback) {
         console.log("Loading The Q's & the A's")
         //this is an async call so your old code won't wait for this to complete before returning 
@@ -226,16 +228,7 @@ class Host{
         });
         //return response
     }
-    removeFrom2DArray(array1, toRemove) {
-        var retArray = [];
-        console.log("To Remove: " + toRemove)
-        for (item in array1) {
-            if (array1[item][0] != toRemove) {
-                retArray.push(array1[item]);
-            }
-        }
-        return retArray
-    }
+    
     createURL(amount, difficulty, category) {
         var url1 = "https://opentdb.com/api.php"
         var amount = "?amount=" + amount;
@@ -248,64 +241,91 @@ class Host{
         url1 = url1 + difficultyUrl;
         return url1;
     }
-    checkForCorrect(socket, io) {
-        console.log("CHECKING FOR CORRECT ANSWERS")
     
-        //if no one answered correctly, first to answer previous question wins game
-        if(this.fCorrect===true){
-            console.log("prevQwinner= "+this.prevQwinner)
-            console.log("socket.id= "+socket.id)
-            if(this.prevQwinner===null || this.prevQwinner!==socket.id){
-                this.removeFromGame(socket,false, io)
-                users = rooms.get(this.ROOMCODE)
-                if(users.length===1){
-                    this.clearInterval(this.countdown)
-                    this.removeFromGame(this.hostSocket,false, io)
-                }
-            }
-            else {
-                console.log("prevQwinner= "+this.prevQwinner)
-                this.clearInterval(this.countdown)//remove
-                this.removeFromGame(socket,true, io)
-                this.removeFromGame(this.hostSocket,false, io)
+}
+
+function checkForCorrect(socket, io, fCorrect, prevQwinner, countdown, hostSocket, leaderboard, ROOMCODE) {
+    console.log("CHECKING FOR CORRECT ANSWERS")
+
+    //if no one answered correctly, first to answer previous question wins game
+    if(fCorrect===true){
+        console.log("prevQwinner= "+ prevQwinner)
+        console.log("socket.id= "+socket.id)
+        if(prevQwinner===null || prevQwinner!==socket.id){
+            removeFromGame(socket,false, io, leaderboard, ROOMCODE, prevQwinner)
+            users = rooms.get(ROOMCODE)
+            if(users.length===1){
+                clearInterval(countdown)
+                removeFromGame(hostSocket,false, io, leaderboard, ROOMCODE, prevQwinner)
             }
         }
-        //else if anyone answered correctly then remove user
         else {
-            this.removeFromGame(socket,false, io)
+            console.log("prevQwinner= "+prevQwinner)
+            clearInterval(countdown)//remove
+            removeFromGame(socket,true, io, leaderboard, ROOMCODE, prevQwinner)
+            removeFromGame(hostSocket,false, io, leaderboard, ROOMCODE, prevQwinner)
         }
     }
-    removeFromGame(socket,win, io) {
-        //remove player and emit win or lose depending on the boolean given
-        users = rooms.get(this.ROOMCODE)
-        updatedUsers = this.removeFrom2DArray(users, socket.id)
-        for (item in users) {
-            if(users[item][0] == socket.id){
-                //leaderboard = removeFromArray(leaderboard, users[item][1])
-                if(socket.id != users[0][0]){
-                    this.leaderboard.set(users[item][1],false) //set user as "false" in leaderboard to indicate loss
-                    io.to(users[0][0]).emit('setLeaderboard',Array.from(this.leaderboard))
-                }
-                else {
-                    io.to(users[0][0]).emit('setLeaderboard',Array.from(this.leaderboard))
-                }
-            }
-        }
-        console.log("Leaderboard: " + this.leaderboard)
-        rooms.set(this.ROOMCODE, updatedUsers)
-        users = rooms.get(this.ROOMCODE)
-        console.log("USERS: " + users)
-        if(win===true) {
-            io.to(this.prevQwinner).emit("winGame");
-            socket.disconnect();
-        }
-        else {
-            io.to(socket.id).emit("loseGame");
-            socket.disconnect();
-        }
+    //else if anyone answered correctly then remove user
+    else {
+        removeFromGame(socket,false, io, leaderboard, ROOMCODE, prevQwinner)
     }
 }
 
+function sendQuestion(question, roomCode, io, delay) {
+    var users = rooms.get(roomCode)
+    var currQAnswer = entities.decode(question.correct_answer);
+    for (let user in users) {
+        console.log("Sending to: " + users[user][0])
+        io.to(users[user][0]).emit('questionSent', question)
+        io.to(users[user][0]).emit('timerStart',delay) //start timer on client side
+        console.log("Correct answer: " + currQAnswer)
+    }
+    console.log("returning currQAnswer")
+    return currQAnswer
+}
+
+
+function removeFrom2DArray(array1, toRemove) {
+    var retArray = [];
+    console.log("To Remove: " + toRemove)
+    for (item in array1) {
+        if (array1[item][0] != toRemove) {
+            retArray.push(array1[item]);
+        }
+    }
+    return retArray
+}
+
+function removeFromGame(socket, win, io, leaderboard, ROOMCODE, prevQwinner) {
+    //remove player and emit win or lose depending on the boolean given
+    users = rooms.get(ROOMCODE)
+    updatedUsers = removeFrom2DArray(users, socket.id)
+    for (item in users) {
+        if(users[item][0] == socket.id){
+            //leaderboard = removeFromArray(leaderboard, users[item][1])
+            if(socket.id != users[0][0]){
+                leaderboard.set(users[item][1],false) //set user as "false" in leaderboard to indicate loss
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard))
+            }
+            else {
+                io.to(users[0][0]).emit('setLeaderboard',Array.from(leaderboard))
+            }
+        }
+    }
+    console.log("Leaderboard: " + leaderboard)
+    rooms.set(ROOMCODE, updatedUsers)
+    users = rooms.get(ROOMCODE)
+    console.log("USERS: " + users)
+    if(win===true) {
+        io.to(prevQwinner).emit("winGame");
+        socket.disconnect();
+    }
+    else {
+        io.to(socket.id).emit("loseGame");
+        socket.disconnect();
+    }
+}
 /*
 if (this.mongo) {
 //This function generates & returns a username, and puts it in the alreadyUsed array to avoid duplicates.

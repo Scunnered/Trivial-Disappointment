@@ -43,7 +43,7 @@ $(document).ready(function() {
         else {
             setQuestion(question);
         }
-        disableButtonsHost();
+        hostUI()
         changeBackground(question.category);
     })
 
@@ -59,6 +59,7 @@ $(document).ready(function() {
         console.log(clientSocket.id);
     });
     clientSocket.on('questionSent', function (question) {
+        onShowQuestion();
         if (question.type === "boolean") {
             setQuestionBool(question);
         }
@@ -87,6 +88,17 @@ $(document).ready(function() {
         console.log(data);
         setWarning(data);
     })
+    $("#showQuestions").click(function(){
+        onJoinGame()
+        $("#question").html("Did you know that andras is now 21?").show()
+        $("#timer").html("15").show()
+        $("#username").html("Andras").show()
+        $("#choice1").html("question1.correct_answer").show()
+        $("#choice2").html("question1.incorrect_answers[0]").show()
+        $("#choice3").html("question1.incorrect_answers[1]").show()
+        $("#choice4").html("question1.incorrect_answers[2]").show()
+
+    });
     $("#choice1").click(function(){
         if (!clicked) {
             clientSocket.emit('answer', { answer: $("#choice1").text()});
@@ -211,11 +223,13 @@ function timer(data) {
 }
 
 function loseGame() {
+    hideAll()
     changeBackgroundResult(false)
     resetGame()
 }
 
 function winGame() {
+    hideAll()
     changeBackgroundResult(true)
     resetGame()
 }
@@ -239,10 +253,10 @@ function setLeaderboard(leaderboard) {
         console.log("UPDATING LEADERBOARD")
         //if the user is set to "false", their colour is set to red, else blue & their username is added back into the wrapper
         if(val!=true) {
-            $("#usersWrapper").append( $("<p></p>").text(key).css("color","red").css('display','inline-block') );
+            $("#usersWrapper").append( $("<p id = 'users'></p>").text(key).css("color","red").css('display','inline-block') );
         }
         else {
-            $("#usersWrapper").append( $("<p></p>").text(key).css("color","blue").css('display','inline-block') );
+            $("#usersWrapper").append( $("<p id = 'users'></p>").text(key).css("color","blue").css('display','inline-block') );
         }
     }
 }
