@@ -71,9 +71,21 @@ button {
     width: 100% !important;
 }
 
-
 #footer {
     position: absolute;
+}
+
+#warning, #displayCode {
+    margin: 0% 0% 2% 10%;
+    border: 2px solid #333;
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+    display: block;
+    left: 10%;
+    width: 80%;
+    background-color: white;
+    font-weight: bold;
 }
 
 /*Style for host button*/
@@ -89,6 +101,15 @@ button {
     display: inline-block;
     width: 28.5%;
     text-align: center;
+    font-family: Quicksand, sans-serif;
+    font-weight: bold;
+    color: #222;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+#joinGame{
+    border: 2px solid #333;
 }
 
 /*Style for host options*/
@@ -97,6 +118,14 @@ button {
     display: inline-block;
     width: 20%;
     text-align: center;
+}
+
+#categories, #difficulty, #amount{
+    font-family: Quicksand, sans-serif;
+    font-weight: bold;
+    color: #222;
+    border: 1px solid #333;
+    border-radius: 4px;
 }
 
 /*Sytle for game information*/
@@ -114,13 +143,6 @@ button {
 }
 
 #usersWrapper{
-    margin: 0% 2% 2% 2%;
-    display: inline-block;
-    text-align: left;
-    width: 90%;
-}
-
-#warning, #displayCode{
     margin: 0% 2% 2% 2%;
     display: inline-block;
     text-align: left;
@@ -162,7 +184,7 @@ button {
     }
 
     #hostGame, #startGame {
-        width: 41%;
+        width: 85%;
         margin: 0% 4% 4% 4%;
     }
 

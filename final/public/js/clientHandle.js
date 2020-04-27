@@ -167,7 +167,7 @@ function setWarning(data) {
     if (data == "No such host exists") {
         showJoinGameButtons();
     }
-    setTimeout(function(){$("#warning").text("");},5000);
+    setTimeout(function(){$("#warning").text("Warning");},5000);
 }
 
 function setQuestion(question1) {
