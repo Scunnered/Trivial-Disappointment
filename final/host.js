@@ -72,7 +72,7 @@ class Host{
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (this.mongo) {
-                var user = this.generateUsername(currentGame.db, currentGame.alreadyUsed);
+                var user = generateUsername(currentGame.db, currentGame.alreadyUsed);
             }
             else {
                 var user = "user" + this.testnum
@@ -84,7 +84,7 @@ class Host{
             console.log(data.custUsername)
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
-                    var user = this.generateUsername(currentGame.db, tcurrentGamehis.alreadyUsed);
+                    var user = generateUsername(currentGame.db, currentGame.alreadyUsed);
                 }
                 else {
                     var user = "user" + this.testnum
@@ -247,43 +247,45 @@ class Host{
         return url1;
     }
 
-    generateUsername(db, alreadyUsed){
-        db.collection('colours').find().toArray(function(err, result1) {
+    
+}
+
+function generateUsername(db, alreadyUsed){
+    db.collection('colours').find().toArray(function(err, result1) {
+        if (err) throw err;
+        db.collection('animals').find().toArray(function(err, result2) {
             if (err) throw err;
-            db.collection('animals').find().toArray(function(err, result2) {
-                if (err) throw err;
-                //Nested find().toArray() because of the use of two collections.
-    
-                do{
-                    //initializes output to be returned later & boolean of wether generated username is a duplicate
-                    var output = "";
-                    var used = false;
-    
-                    //adds random colour & name to output, thus making the username
-                    output += result1[Math.floor(Math.random() * result1.length)].colour;
-                    output += result2[Math.floor(Math.random() * result2.length)].name;
-                
-                    //conpares it to each username already generated, and if it already exits, repeates the while loop
-                    for(var i=0;i<alreadyUsed.length;i++){
-                        if(this.alreadyUsed[i]===output){
-                            used = true;
-                        }
+            //Nested find().toArray() because of the use of two collections.
+
+            do{
+                //initializes output to be returned later & boolean of wether generated username is a duplicate
+                var output = "";
+                var used = false;
+
+                //adds random colour & name to output, thus making the username
+                output += result1[Math.floor(Math.random() * result1.length)].colour;
+                output += result2[Math.floor(Math.random() * result2.length)].name;
+            
+                //conpares it to each username already generated, and if it already exits, repeates the while loop
+                for(var i=0;i<alreadyUsed.length;i++){
+                    if(this.alreadyUsed[i]===output){
+                        used = true;
                     }
                 }
-                while(used) //This only repeats if there is a duplicate
-    
-                //adds non-duplicate to the array of already used usernames
-                alreadyUsed.push(output)
-            });
+            }
+            while(used) //This only repeats if there is a duplicate
+
+            //adds non-duplicate to the array of already used usernames
+            alreadyUsed.push(output)
         });
-    
-        //returns the just now added username
-        return alreadyUsed[alreadyUsed.length-1];
-    }
-    resetUsername(){
-        //empties already used array to allow new game to have new usernames
-        alreadyUsed.splice(0, alreadyUsed.length)
-    }
+    });
+
+    //returns the just now added username
+    return alreadyUsed[alreadyUsed.length-1];
+}
+function resetUsername(){
+    //empties already used array to allow new game to have new usernames
+    alreadyUsed.splice(0, alreadyUsed.length)
 }
 
 function checkForCorrect(socket, io, fCorrect, prevQwinner, countdown, hostSocket, leaderboard, ROOMCODE) {
