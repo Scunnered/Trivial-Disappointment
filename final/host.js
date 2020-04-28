@@ -20,7 +20,6 @@ class Host{
         this.maxUsers = 100;
         this.mongo = true;
         this.testnum = 0;
-        this.db = null;
     }
     start() {
         console.log(this.selections)
@@ -42,7 +41,7 @@ class Host{
             console.log("currentGame in mongodb\n" + currentGame)
             if(err) throw err;
             currentGame.db = database;
-        }), roomcode;
+        }, roomcode);
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
         this.getQuestions(url1, function(returnedQs, hostObject){
