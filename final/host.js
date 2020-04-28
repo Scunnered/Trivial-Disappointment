@@ -3,6 +3,7 @@ const Entities = require('html-entities').XmlEntities;
 const entities = new Entities();
 var rooms = new Map();
 var currentGames = new Map();
+const MongoClient = require('mongodb').MongoClient;
 
 class Host{
     
@@ -34,9 +35,8 @@ class Host{
         this.ROOMCODE = this.roomcode.toString();
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
-        const MongoClient = require('mongodb').MongoClient;
         const url = "mongodb://localhost:27017/coloured-animals";
-        MongoClient.connect(url, function(err, database ){
+        MongoClient.connect(url, function(err, database){
             if(err) throw err;
             this.db = database;
         });
