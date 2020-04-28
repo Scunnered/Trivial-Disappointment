@@ -36,6 +36,7 @@ class Host{
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         const url = "mongodb://localhost:27017/coloured-animals";
+        var roomcode = this.ROOMCODE;
         MongoClient.connect(url, function(err, database, roomcode){
             var currentGame = currentGames.get(roomcode)
             if(err) throw err;
