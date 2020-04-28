@@ -70,7 +70,7 @@ class Host{
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (this.mongo) {
-                var user = this.generateUsername();
+                var user = this.generateUsername(this.db, this.alreadyUsed);
             }
             else {
                 var user = "user" + this.testnum
@@ -82,7 +82,7 @@ class Host{
             console.log(data.custUsername)
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
-                    var user = this.generateUsername();
+                    var user = this.generateUsername(this.db, this.alreadyUsed);
                 }
                 else {
                     var user = "user" + this.testnum
@@ -245,10 +245,10 @@ class Host{
         return url1;
     }
 
-    generateUsername(){
-        this.db.collection('colours').find().toArray(function(err, result1) {
+    generateUsername(db, alreadyUsed){
+        db.collection('colours').find().toArray(function(err, result1) {
             if (err) throw err;
-            this.db.collection('animals').find().toArray(function(err, result2) {
+            db.collection('animals').find().toArray(function(err, result2) {
                 if (err) throw err;
                 //Nested find().toArray() because of the use of two collections.
     
@@ -271,16 +271,16 @@ class Host{
                 while(used) //This only repeats if there is a duplicate
     
                 //adds non-duplicate to the array of already used usernames
-                this.alreadyUsed.push(output)
+                alreadyUsed.push(output)
             });
         });
     
         //returns the just now added username
-        return this.alreadyUsed[this.alreadyUsed.length-1];
+        return alreadyUsed[alreadyUsed.length-1];
     }
     resetUsername(){
         //empties already used array to allow new game to have new usernames
-        this.alreadyUsed.splice(0, this.alreadyUsed.length)
+        alreadyUsed.splice(0, alreadyUsed.length)
     }
 }
 
