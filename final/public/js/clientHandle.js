@@ -14,26 +14,19 @@ $(document).ready(function() {
     hostSocket = io();
 
     $("#hostGame").click(function(){
-        hostSocket.emit('sendSelects', { selections: getSelections() });
+        hostSocket.emit("createHost", {roomcode: getRoomCodeServer(), selections: getSelections()})
     });
     $("#startGame").click(function(){
-        hostSocket.emit('begin', { game: "started"});
+        hostSocket.emit('begin', { game: "started", roomcode: getRoomCodeServer()});
     });
     $("#joinGame").click(function(data){
+        console.log(data)
         if (getUsername() === null) {
-            clientSocket.emit('sendRoomCode', { roomCode: getRoomCode()});
+            clientSocket.emit('sendRoomCode', { roomcode: getRoomCode()});
         }
         else {
-            clientSocket.emit('sendRoomCode', { roomCode: getRoomCode(), custUsername: getUsername()});
+            clientSocket.emit('sendRoomCode', { roomcode: getRoomCode(), custUsername: getUsername()});
         }
-    });
-
-    //create all listeners
-    //this one is listening for a "WARNING" that shoudl be sent from your server
-    
-    hostSocket.on('WARNING', function (data) {
-            console.log(data);
-            setWarning(data);
     });
 
     hostSocket.on('questionSent', function (question) {
@@ -47,6 +40,19 @@ $(document).ready(function() {
         changeBackground(question.category);
     })
 
+    hostSocket.on('timerStart', function(data) {
+        console.log("Timer starting")
+        timer(data);
+    })
+
+    //create all listeners
+    //this one is listening for a "WARNING" that should be sent from your server
+
+    hostSocket.on('WARNING', function (data) {
+            console.log(data);
+            setWarning(data);
+    });
+
     hostSocket.on("setLeaderboard", function(data) {
         console.log("UPDATE LEADERBOARD")
         setLeaderboard(data);
@@ -58,7 +64,9 @@ $(document).ready(function() {
         $("#username").html(username)
         console.log(clientSocket.id);
     });
+
     clientSocket.on('questionSent', function (question) {
+        console.log(question)
         onShowQuestion();
         if (question.type === "boolean") {
             setQuestionBool(question);
@@ -68,6 +76,7 @@ $(document).ready(function() {
         }
         changeBackground(question.category)
     })
+    
     clientSocket.on('timerStart', function(data) {
         console.log("Timer starting")
         timer(data);
@@ -77,9 +86,11 @@ $(document).ready(function() {
         loseGame();
         hideButtons()
     })
+
     clientSocket.on('resetGame', function() {
         resetGame();
     })
+
     clientSocket.on('winGame', function () {
         winGame();
         hideButtons()
@@ -88,38 +99,27 @@ $(document).ready(function() {
         console.log(data);
         setWarning(data);
     })
-    $("#showQuestions").click(function(){
-        onJoinGame()
-        $("#question").html("Did you know that andras is now 21?").show()
-        $("#timer").html("15").show()
-        $("#username").html("Andras").show()
-        $("#choice1").html("question1.correct_answer").show()
-        $("#choice2").html("question1.incorrect_answers[0]").show()
-        $("#choice3").html("question1.incorrect_answers[1]").show()
-        $("#choice4").html("question1.incorrect_answers[2]").show()
-
-    });
     $("#choice1").click(function(){
         if (!clicked) {
-            clientSocket.emit('answer', { answer: $("#choice1").text()});
+            clientSocket.emit('answer', { answer: $("#choice1").text(), roomcode: getRoomCode()});
         }        
         clicked=true;
     });
     $("#choice2").click(function(){
         if (!clicked) {
-            clientSocket.emit('answer', { answer: $("#choice2").text()});
+            clientSocket.emit('answer', { answer: $("#choice2").text(), roomcode: getRoomCode()});
         }        
         clicked=true;
     });
     $("#choice3").click(function(){
         if (!clicked) {
-            clientSocket.emit('answer', { answer: $("#choice3").text()});
+            clientSocket.emit('answer', { answer: $("#choice3").text(), roomcode: getRoomCode()});
         }        
         clicked=true;
     });
     $("#choice4").click(function(){
         if (!clicked) {
-            clientSocket.emit('answer', { answer: $("#choice4").text()});
+            clientSocket.emit('answer', { answer: $("#choice4").text(), roomcode: getRoomCode()});
         }
         clicked=true;
     });
@@ -129,9 +129,15 @@ function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();
     var selectedCat = $("#categories").children("option:selected").val();
     var selectedDiff = $("#difficulty").children("option:selected").val();
-    var toSendRoomCode = roomCode;
-    var jsonFile = makeJSON(selectedAmount, selectedDiff, selectedCat, toSendRoomCode);
+    var jsonFile = makeJSON(selectedAmount, selectedDiff, selectedCat);
     return jsonFile;
+}
+
+function getRoomCodeServer() {
+    var hostRoomCodeWrong = $("#displayCode").text();
+    var hostRoomCode = hostRoomCodeWrong.split(": ")[1];
+    console.log(hostRoomCode)
+    return hostRoomCode
 }
 
 function getRoomCode() {
@@ -176,20 +182,34 @@ function shuffle(array) {
 function setWarning(data) {
     $("#warning").text(data);
     console.log(data)
-    if (data == "No such host exists") {
-        showJoinGameButtons();
+    if (data == "No such host exists" || data == "Make sure the room code is correct.") {
+        incorrectJoin();
+    }
+    //Post host game button press
+    //Warning, start game, room code
+    if (data == "Questions loaded. Wait for some players to join!") {
+        qsLoaded();
+    }
+    if (data == "You have joined a game. Wait for the host to begin.") {
+        onJoinGame();
+    }
+    if (data == "Game started.") {
+        onStartGame();
+    }
+    if (data == "Game Over.") {
+        gameOverScreen();
     }
     setTimeout(function(){$("#warning").text("Warning");},5000);
 }
 
 function setQuestion(question1) {
-    shuffle(buttArr)
-    $("#question").html(question1.question)
-    $(buttArr[0]).html(question1.correct_answer).show()
+    shuffle(buttArr);
+    $("#question").html(question1.question);
+    $(buttArr[0]).html(question1.correct_answer).show();
     correctButton = buttArr[0];
-    $(buttArr[1]).html(question1.incorrect_answers[0]).show()
-    $(buttArr[2]).html(question1.incorrect_answers[1]).show()
-    $(buttArr[3]).html(question1.incorrect_answers[2]).show()
+    $(buttArr[1]).html(question1.incorrect_answers[0]).show();
+    $(buttArr[2]).html(question1.incorrect_answers[1]).show();
+    $(buttArr[3]).html(question1.incorrect_answers[2]).show();
 }
 
 function setQuestionBool(question1) {
@@ -235,28 +255,24 @@ function winGame() {
 }
 
 function resetGame() {
-    var correctButton = "";
-    var clientSocket;
-    var hostSocket;
-    var username;
-    var clicked= false;
+    correctButton = "";
+    clientSocket;
+    hostSocket;
+    username;
+    clicked= false;
 }
 
 function setLeaderboard(leaderboard) {
-    //take the leaderboard data and make it a map back from an array
     leaderboard= new Map(leaderboard)
     
-    //empty all the child components inside the wrapper
-    $("#usersWrapper").empty();
-    //for each user in leaderboard
+    $("#leaderboard").empty();
     for(let [key,val] of leaderboard) {
         console.log("UPDATING LEADERBOARD")
-        //if the user is set to "false", their colour is set to red, else blue & their username is added back into the wrapper
         if(val!=true) {
-            $("#usersWrapper").append( $("<p id = 'users'></p>").text(key).css("color","red").css('display','inline-block') );
+            $("#leaderboard").append( $("<p class= 'users'></p>").text(key).css("color","red"));
         }
         else {
-            $("#usersWrapper").append( $("<p id = 'users'></p>").text(key).css("color","blue").css('display','inline-block') );
+            $("#leaderboard").append( $("<p class= 'users'></p>").text(key).css("color","blue"));
         }
     }
 }

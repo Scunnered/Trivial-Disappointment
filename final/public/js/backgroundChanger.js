@@ -39,3 +39,7 @@ function changeBackgroundResult(win) {
         $("#backgroundImg").attr("src", "images/Loser.jpg")
     }
 }
+
+function gameOver() {
+    $("#backgroundImg").attr("src", "images/GameOver.jpg")
+}

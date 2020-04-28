@@ -29,9 +29,21 @@ $(document).ready(function() {
         }
     });
 
-    //create all listeners
-    //this one is listening for a "WARNING" that shoudl be sent from your server
     
+    hostSocket.on('questionSent', function (question) {
+        if (question.type === "boolean") {
+            setQuestionBool(question);
+        }
+        else {
+            setQuestion(question);
+        }
+        hostUI()
+        changeBackground(question.category);
+    })
+
+    //create all listeners
+    //this one is listening for a "WARNING" that should be sent from your server
+
     hostSocket.on('WARNING', function (data) {
             console.log(data);
             setWarning(data);
@@ -48,6 +60,7 @@ $(document).ready(function() {
         $("#username").html(username)
         console.log(clientSocket.id);
     });
+
     clientSocket.on('questionSent', function (question) {
         console.log(question)
         if (question.type === "boolean") {
@@ -56,7 +69,9 @@ $(document).ready(function() {
         else {
             setQuestion(question);
         }
+        changeBackground(question.category)
     })
+    
     clientSocket.on('timerStart', function(data) {
         console.log("Timer starting")
         timer(data);
@@ -64,10 +79,16 @@ $(document).ready(function() {
 
     clientSocket.on('loseGame', function () {
         loseGame();
+        hideButtons()
+    })
+
+    clientSocket.on('resetGame', function() {
+        resetGame();
     })
 
     clientSocket.on('winGame', function () {
         winGame();
+        hideButtons()
     })
     clientSocket.on('WARNING', function (data) {
         console.log(data);
@@ -103,7 +124,6 @@ function getSelections() {
     var selectedAmount = $("#amount").children("option:selected").val();
     var selectedCat = $("#categories").children("option:selected").val();
     var selectedDiff = $("#difficulty").children("option:selected").val();
-    var toSendRoomCode = roomCode;
     var jsonFile = makeJSON(selectedAmount, selectedDiff, selectedCat);
     return jsonFile;
 }
@@ -156,6 +176,11 @@ function shuffle(array) {
 
 function setWarning(data) {
     $("#warning").text(data);
+    console.log(data)
+    if (data == "No such host exists") {
+        showJoinGameButtons();
+    }
+    setTimeout(function(){$("#warning").text("Warning");},5000);
 }
 
 function setQuestion(question1) {
@@ -199,13 +224,24 @@ function timer(data) {
 }
 
 function loseGame() {
-    $("#resultImg").attr("src", "images/Loser.jpg")
+    hideAll()
+    changeBackgroundResult(false)
+    resetGame()
 }
 
 function winGame() {
-    $("#resultImg").attr("src", "images/Winner.jpg")
+    hideAll()
+    changeBackgroundResult(true)
+    resetGame()
 }
 
+function resetGame() {
+    correctButton = "";
+    clientSocket;
+    hostSocket;
+    username;
+    clicked= false;
+}
 
 function setLeaderboard(leaderboard) {
     leaderboard= new Map(leaderboard)
@@ -214,10 +250,10 @@ function setLeaderboard(leaderboard) {
     for(let [key,val] of leaderboard) {
         console.log("UPDATING LEADERBOARD")
         if(val!=true) {
-            $("#usersWrapper").append( $("<p></p>").text(key).css("color","red").css('display','inline-block') );
+            $("#usersWrapper").append( $("<p class= 'users'></p>").text(key).css("color","red").css('display','inline-block') );
         }
         else {
-            $("#usersWrapper").append( $("<p></p>").text(key).css("color","blue").css('display','inline-block') );
+            $("#usersWrapper").append( $("<p class= 'users'></p>").text(key).css("color","blue").css('display','inline-block') );
         }
     }
 }

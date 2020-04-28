@@ -9,13 +9,12 @@ button {
     border: 2px solid #333;
     border-radius: 4px;
     outline: none;
-	transition: all 0.2s ease;
     cursor: pointer;
     text-align: center;    
 }
 
 #choice1, #choice2, #choice3, #choice4 {
-    margin: 2% 6% 2% 6%;
+    margin: 2% 6% 0% 6%;
     display: inline-block;
     width: 88%;
     height: 8%;
@@ -32,6 +31,11 @@ button {
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
+    position: relative;
+}
+
+#choice1 {
+    margin-top: 6%;
 }
 
 .gameContent {
@@ -78,17 +82,19 @@ button {
     position: absolute;
 }
 
-#usersWrapper {
-    margin: 2% 2% 2% 2%;
+#leaderboard {
+    margin: 22% 2% 2% 2%;
+    padding-left: 2.5%;
     position: absolute;
-    border: 2px solid #333;
-    border-radius: 4px;
+    width: 96%;
 }
 
-#users {
+.users {
     font-family: Quicksand, sans-serif;
     font-weight: bold;
-    font-size: 165%;
+    font-size: 70%;
+    text-align: center;
+    display: inline-block;
 }
 
 #addUser {
@@ -97,13 +103,13 @@ button {
 }
 
 #warning, #displayCode {
+    position: relative;
     margin: 0% 0% 2% 10%;
     border: 2px solid #333;
     border-radius: 4px;
     outline: none;
     text-align: center;
     display: block;
-    left: 10%;
     width: 80%;
     background-color: white;
     font-weight: bold;
@@ -152,11 +158,19 @@ button {
     border: 1px solid #333;
     border-radius: 4px;
 }
-
 /*Style for game information*/
+#timerWrapper{
+    position: relative;
+    margin: 10% 0% 2% 10%;
+    outline: none;
+    text-align: center;
+    display: block;
+    width: 80%;
+    font-weight: bold;
+}
+
 #timer{
     display: inline-block;
-    margin: 4.5% 2% 3% 2%;
     text-align: center;
     font-family: Quicksand, sans-serif;
     font-weight: bold;
@@ -167,15 +181,14 @@ button {
 }
 
 #username{
-    display: inline-block;
-    margin: 10% 2% 2% 4%;
+    position: absolute;
+    margin: 10% 2% 4% 2%;
     text-align: left;
     font-family: Quicksand, sans-serif;
     font-weight: bold;
     font-size: 150%;
     color: #222;
     outline: none;
-    cursor: default;
 }
 
 #question{
@@ -188,7 +201,6 @@ button {
     font-weight: bold;
     font-size: 200%;
     color: #222;
-    background-color: white;
     border: 2px solid #333;
     border-radius: 4px;
     outline: none;
@@ -198,13 +210,6 @@ button {
 #questionWrapper {
     height: 10%;
     vertical-align: middle;
-}
-
-#usersWrapper{
-    margin: 0% 2% 2% 2%;
-    display: inline-block;
-    text-align: left;
-    width: 90%;
 }
 
 #backgroundImg{

@@ -61,31 +61,30 @@
         <div class = "sliding-background">
             <img src="images/bg2.jpg" alt="">
         </div>
-    
-
-    <!-- This is a quick testing zone for the API. Currently it has limited function -->
         <div class="gameContent">
-            <img id="backgroundImg" src="images/backgrounds/Cartoons and Animations.jpg" alt="Background Image">
+            <img id="backgroundImg" src="images/InactiveTD.jpg" alt="Background Image">
             <div id = "gameDiv">
-                <p id = "username"> </p>
-                <p id= "timer"></p>
-                <div id = "questionWrapper">
-                    <p id = "question"></p>
+                <p id = "username" alt = "Username"></p>
+                <div id = "timerWrapper">
+                    <p id= "timer" alt = "Timer"></p>
                 </div>
-                <div id= "usersWrapper"></div>
-                <button type="button" id = "choice1"></button>
-                <button type="button" id = "choice2"></button>
-                <button type="button" id = "choice3"></button>
-                <button type="button" id = "choice4"></button>
-                <button type="button" id = "hostGameShow">Host a Game</button>
+                <div id = "questionWrapper">
+                    <p id = "question" alt = "Question"></p>
+                </div>
+                <div id= "leaderboard"></div>
+                <button type="button" id = "choice1" alt = "Question answer #1"></button>
+                <button type="button" id = "choice2" alt = "Question answer #2"></button>
+                <button type="button" id = "choice3" alt = "Question answer #3"></button>
+                <button type="button" id = "choice4" alt = "Question answer #4"></button>
+                <button type="button" id = "hostGameShow" title = "Open host menu OR don't if you're just snooping around." alt = "Host Game button">Host a Game</button>
                 <form action="" class = "clientSelects">
                     <label for = "Room Code"></label>
-                    <input type="text" id = "usernameInput" placeholder="Username">
-                    <input type="text" id = "enteredCode" placeholder="Room Code">
-                    <button type="button" id = "joinGame">Join Game</button>
+                    <input title = "Enter a username OR leave it blank. A username will be generated." type="text" id = "usernameInput" maxlength = 10 placeholder="Username" alt = "Username Input">
+                    <input title = "Enter a room code OR don't if you don't wanna play."id = "enteredCode" maxlength = 6 type="number" min="100000" pattern="\d+" step="1" placeholder="Room Code" alt="Room Code Input">
+                    <button type="button" id = "joinGame" title = "Join the game OR don't if you don't want to personally." alt="Join Game Button">Join Game</button>
                 </form>
-                <p id = "displayCode" class = "hostSelects"></p>
-                <select id="categories" class = "hostSelects">
+                <p id = "displayCode" class = "hostSelects" title = "This code you give to your friends OR you open a new tab."></p>
+                <select id="categories" class = "hostSelects" title = "Here you chose your category OR don't." alt="Category selection">
                     <option value=0>Any Category</option>
                     <option value=9>General Knowledge</option>
                     <option value=10>Entertainment: Books</option>
@@ -112,21 +111,21 @@
                     <option value=31>Entertainment: Japanese Anime & Manga</option>
                     <option value=32>Entertainment: Cartoon & Animations</option>
                 </select>
-                <select id="difficulty" class = "hostSelects">
+                <select id="difficulty" class = "hostSelects" title = "This is the men are separated from the boys OR where you find out you're a boy." alt = "Difficulty selection">
                     <option value="easy" selected>Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
-                <select id="amount" class = "hostSelects">
+                <select id="amount" class = "hostSelects" title = "This is where you pick the length of the game." alt = "Number of questions selection">
                     <option value=10 selected>10 Questions</option>
                     <option value=15>15 Questions</option>
                     <option value=20>20 Questions</option>
                 </select>
 
-                <button type="button" id = "hostGame" class = "hostSelects">Host Game</button>
-                <button type="button" id = "startGame" class = "hostSelects">Start Game</button>
+                <button type="button" id = "hostGame" title= "Click to host a game OR don't, if you're not sure about the game settings." class = "hostSelects" alt = "Host Game button">Host Game</button>
+                <button type="button" id = "startGame" title= "Click to start a game OR dont, if you dont actually want to play." class = "hostSelects" alt = "Start Game button">Start Game</button>
                 
-                <p id = "warning">Warning</p>
+                <p id = "warning" title = "You have been warned." alt = "Warning">Warning</p>
                 
             </div>
         </div>
@@ -139,13 +138,11 @@
             <div class="row text-center">
                 <div class="col-md-12">
                     <div class="row brands">
-                      <div class="col-md-4"><a href="#"><img src="images/API.png" width="168" height="77" class="img-fluid"></a></div></div>
+                      <div class="col-md-4"><a href="#"><img src="images/API.png" width="168" height="77" class="img-fluid" alt = "Footer Image"></a></div></div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-md-12">
-                    <!--Testing Buttons-->
-                    <!--<button type="button" id = "showQuestions">show questions</button>-->
                     <button type="button" id = "addUser">Add Users</button>
                     <p id="copyright">&copy;RGU - Alex, Andras, Kacper and Ross <a href="#"></a></p>
                 </div>

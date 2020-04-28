@@ -167,6 +167,7 @@ class Host{
         var currentGame = currentGames.get(this.ROOMCODE)
         console.log("Data given: " + data.answer)
         console.log("Server data given: " + currentGame.currQAnswer)
+        socket.emit("WARNING", "You submitted your answer, wait for the timer to end for the next question OR TO MEET YOUR DOOM.");
         //if answered incorrectly, run checkForCorrect(socket) at the end of timer
         console.log("qCounter: " + currentGame.qCounter + "\nqTotal: " + currentGame.qTotal)
         console.log("fCorrect: " + currentGame.fCorrect)

@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $(".hostSelects").hide();
     $("#question").hide()
-    $("#timer").hide()
+    $("#timerWrapper").hide()
     $("#username").hide()
     hideButtons();
     $("#hostGameShow").click(function(){
@@ -13,51 +13,67 @@ $(document).ready(function() {
     })
 
     $("#addUser").click(function() {
-        for(let i = 0; i < 27; i++) {
-            $("#usersWrapper").append($("<p id = 'users'></p>").text("User").css("color","blue").css('display','inline-block'));
+        onJoinGame()
+        onShowQuestion()
+        for(let i = 0; i < 100; i++) {
+            $("#leaderboard").append($("<p class = 'users'></p>").text("Username10").css("color","blue").css('display','inline-block'));
         }
-        
     })
 
-    $("#joinGame").click(function() {
-        onJoinGame();
-    })
-
-    $("#hostGame").click(function() {
-        $("#hostGame").hide();
-        $("#startGame").show();
-    })
-
-    $("#startGame").click(function() {
-        $(".hostSelects").hide();
-        $("#question").show();
-    })
 })
+
+function onStartGame() {
+    $(".hostSelects").hide();
+    $("#question").show();
+    $("#warning").css({"margin": "41.7% 0% 2% 10%"} );
+    $("#leaderboard").css({"margin": "8% 2% 2% 2%", "font-size": "150%"} );
+}
 
 function onJoinGame() {
     $("#username").show()
     $(".hostSelects").hide();
-    $("#hostGame").hide();
     $("#hostGameShow").hide();
+    $("#leaderboard").hide()
     $("#usernameInput").hide();
     $("#enteredCode").hide();
     $("#joinGame").hide();
     $("#warning").show();
+    $("#warning").css({"margin": "55% 0% 2% 10%"} );
+}
+
+function qsLoaded() {
+    $("#username").hide()
+    $("#hostGame").hide();
+    $(".hostSelects").hide();
+    $("#displayCode").show()
+    $("#warning").show()
+    $("#startGame").show()
+    $("#startGame").css({"width":"80%", "margin": "0% 2% 2% 10%"} );
+}
+
+function gameOverScreen() {
+    gameOver();
+    $("#question").hide();
+    $("#timerWrapper").hide();
 }
 
 function onShowQuestion() {
+    $("#warning").css({"margin": "4.2% 0% 2% 10%"} );
+    $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
+    $("#question").css({"margin": "15% 2% 2% 2%"} );
+    $("#timerWrapper").show()
     showButtons();
     $("#question").show();
-    $("#timer").show();
 }
 
 function hostUI() {
     hideButtons();
-    $("#username").html("<br></br>").show()
+    $("#timerWrapper").show();
 }
 
-function showJoinGameButtons() {
+function incorrectJoin() {
     hideButtons();
+    $("#username").hide();
     $("#usernameInput").show();
     $("#enteredCode").show();
     $("#joinGame").show();
@@ -77,6 +93,8 @@ function hideAll() {
     $("#choice4").hide();
     $("#question").hide();
     $("#timer").hide();
+    $("#warning").hide();
+    $("#username").hide();
 }
 
 function showButtons() {
