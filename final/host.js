@@ -36,10 +36,11 @@ class Host{
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         const url = "mongodb://localhost:27017/coloured-animals";
+        var db = this.db;
         MongoClient.connect(url, function(err, database, db){
             if(err) throw err;
             db = database;
-        }), this.db;
+        }), db;
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
         this.getQuestions(url1, function(returnedQs, hostObject){
