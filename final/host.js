@@ -246,9 +246,9 @@ class Host{
     }
 
     generateUsername(){
-        db.collection('colours').find().toArray(function(err, result1) {
+        this.db.collection('colours').find().toArray(function(err, result1) {
             if (err) throw err;
-            db.collection('animals').find().toArray(function(err, result2) {
+            this.db.collection('animals').find().toArray(function(err, result2) {
                 if (err) throw err;
                 //Nested find().toArray() because of the use of two collections.
     
