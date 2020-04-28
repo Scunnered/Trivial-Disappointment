@@ -39,7 +39,6 @@ class Host{
         MongoClient.connect(url, function(err, database, roomcode){
             var currentGame = currentGames.get(roomcode)
             if(err) throw err;
-            console.log(database)
             currentGame.db = database;
         }, roomcode);
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
