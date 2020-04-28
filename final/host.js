@@ -39,6 +39,7 @@ class Host{
         MongoClient.connect(url, function(err, database, roomcode){
             var currentGame = currentGames.get(roomcode)
             if(err) throw err;
+            console.log(database)
             currentGame.db = database;
             console.log("currentGame in mongodb\n" + currentGame)
         }, roomcode);
