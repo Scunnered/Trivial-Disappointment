@@ -19,6 +19,7 @@ class Host{
         this.maxUsers = 100;
         this.mongo = true;
         this.testnum = 0;
+        this.db = null;
     }
     start() {
         console.log(this.selections)
@@ -37,7 +38,7 @@ class Host{
         const url = "mongodb://localhost:27017/coloured-animals";
         MongoClient.connect(url, function(err, database ){
             if(err) throw err;
-            db = database;
+            this.db = database;
         });
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
