@@ -29,18 +29,18 @@ class Host{
         console.log("SERVER ID" + this.socket.id)
         this.hostSocket = this.socket;
         rooms.set(this.roomcode.toString(), [[this.socket.id, "host"]])
-        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map()})
+        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map(), db: null})
         var currentGame = currentGames.get(this.ROOMCODE)
         console.log(currentGame)
         this.ROOMCODE = this.roomcode.toString();
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)
         const url = "mongodb://localhost:27017/coloured-animals";
-        var db = this.db;
-        MongoClient.connect(url, function(err, database, db){
+        MongoClient.connect(url, function(err, database, roomcode){
+            var currentGame = currentGames.get(roomcode)
             if(err) throw err;
-            db = database;
-        }), db;
+            currentGame.db = database;
+        }), roomcode;
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
         this.getQuestions(url1, function(returnedQs, hostObject){
@@ -71,7 +71,7 @@ class Host{
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (this.mongo) {
-                var user = this.generateUsername(this.db, this.alreadyUsed);
+                var user = this.generateUsername(currentGame.db, currentGame.alreadyUsed);
             }
             else {
                 var user = "user" + this.testnum
@@ -83,7 +83,7 @@ class Host{
             console.log(data.custUsername)
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
-                    var user = this.generateUsername(this.db, this.alreadyUsed);
+                    var user = this.generateUsername(currentGame.db, tcurrentGamehis.alreadyUsed);
                 }
                 else {
                     var user = "user" + this.testnum
