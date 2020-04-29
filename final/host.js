@@ -40,8 +40,8 @@ class Host{
             var currentGame = currentGames.get(roomcode)
             if(err) throw err;
             currentGame.db = database;
-            console.log(database)
-            console.log(currentGame.db)
+            console.log("Database: " + database)
+            console.log("Current Game Database: " + currentGame.db)
         }, roomcode);
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
