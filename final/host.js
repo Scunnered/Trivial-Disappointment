@@ -65,7 +65,7 @@ class Host{
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (this.mongo) {
-                var user = generateUsername(currentGame.db, currentGame.alreadyUsed);
+                var user = generateUsername(currentGame.db, this.alreadyUsed);
             }
             else {
                 var user = "user" + this.testnum
@@ -77,7 +77,7 @@ class Host{
             console.log(data.custUsername)
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
-                    var user = generateUsername(currentGame.db, currentGame.alreadyUsed);
+                    var user = generateUsername(currentGame.db, this.alreadyUsed);
                 }
                 else {
                     var user = "user" + this.testnum
@@ -266,7 +266,7 @@ function generateUsername(db, alreadyUsed){
             
                 //conpares it to each username already generated, and if it already exits, repeates the while loop
                 for(var i=0;i<alreadyUsed.length;i++){
-                    if(this.alreadyUsed[i]===output){
+                    if(alreadyUsed[i]===output){
                         used = true;
                     }
                 }
