@@ -21,6 +21,7 @@ class Host{
         this.mongo = true;
         this.testnum = 0;
         this.db = db;
+        this.tempUsername;
     }
     start() {
         console.log(this.selections)
@@ -66,7 +67,10 @@ class Host{
             console.log("Username being made by database")
             if (this.mongo) {
                 console.log("ALREADY USED: " + this.alreadyUsed)
-                var user = generateUsername(this.db, this.alreadyUsed);
+                this.generateUsername(this.db, this.alreadyUsed, function(username, hostObject) {
+                    hostObject.tempUsername = username;
+                });
+                var user = hostObject.tempUsername;
                 console.log("ALREADY USED: " + this.alreadyUsed)
             }
             else {
@@ -80,12 +84,15 @@ class Host{
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
                     console.log("ALREADY USED: " + this.alreadyUsed)
-                    var user = generateUsername(this.db, this.alreadyUsed);
+                    this.generateUsername(this.db, this.alreadyUsed, function(username, hostObject) {
+                        hostObject.tempUsername = username;
+                    });
+                    var user = hostObject.tempUsername;
                     console.log("ALREADY USED: " + this.alreadyUsed)
                 }
                 else {
                     var user = "user" + this.testnum
-                    this.testnum++
+                    this.testnum++;
                 }
             }
             else {
@@ -249,42 +256,44 @@ class Host{
         return url1;
     }
 
+    generateUsername(db, alreadyUsed, callback){
+        var hostObject = this;
+        db.collection('colours').find().toArray(function(err, result1) {
+            if (err) throw err;
+            db.collection('animals').find().toArray(function(err, result2) {
+                if (err) throw err;
+                //Nested find().toArray() because of the use of two collections.
+    
+                do{
+                    //initializes output to be returned later & boolean of wether generated username is a duplicate
+                    var output = "";
+                    var used = false;
+    
+                    //adds random colour & name to output, thus making the username
+                    output += result1[Math.floor(Math.random() * result1.length)].colour;
+                    output += result2[Math.floor(Math.random() * result2.length)].name;
+                
+                    //conpares it to each username already generated, and if it already exits, repeates the while loop
+                    for(var i=0;i<alreadyUsed.length;i++){
+                        if(alreadyUsed[i]===output){
+                            used = true;
+                        }
+                    }
+                }
+                while(used) //This only repeats if there is a duplicate
+    
+                //adds non-duplicate to the array of already used usernames
+                alreadyUsed.push(output)
+            });
+        });
+    
+        //returns the just now added username
+        //return alreadyUsed[alreadyUsed.length-1];
+        callback(alreadyUsed[alreadyUsed.length-1], hostObject);
+    }
     
 }
 
-function generateUsername(db, alreadyUsed){
-    db.collection('colours').find().toArray(function(err, result1) {
-        if (err) throw err;
-        db.collection('animals').find().toArray(function(err, result2) {
-            if (err) throw err;
-            //Nested find().toArray() because of the use of two collections.
-
-            do{
-                //initializes output to be returned later & boolean of wether generated username is a duplicate
-                var output = "";
-                var used = false;
-
-                //adds random colour & name to output, thus making the username
-                output += result1[Math.floor(Math.random() * result1.length)].colour;
-                output += result2[Math.floor(Math.random() * result2.length)].name;
-            
-                //conpares it to each username already generated, and if it already exits, repeates the while loop
-                for(var i=0;i<alreadyUsed.length;i++){
-                    if(alreadyUsed[i]===output){
-                        used = true;
-                    }
-                }
-            }
-            while(used) //This only repeats if there is a duplicate
-
-            //adds non-duplicate to the array of already used usernames
-            alreadyUsed.push(output)
-        });
-    });
-
-    //returns the just now added username
-    return alreadyUsed[alreadyUsed.length-1];
-}
 function resetUsername(){
     //empties already used array to allow new game to have new usernames
     alreadyUsed.splice(0, alreadyUsed.length)
