@@ -7,7 +7,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 class Host{
     
-    constructor(roomcode, selections, socket) {
+    constructor(roomcode, selections, socket, db) {
         this.roomcode = roomcode;
         this.selections = selections;
         this.socket = socket;
@@ -20,6 +20,7 @@ class Host{
         this.maxUsers = 100;
         this.mongo = true;
         this.testnum = 0;
+        this.db = db;
     }
     start() {
         console.log(this.selections)
@@ -28,21 +29,12 @@ class Host{
         console.log("SERVER ID" + this.socket.id)
         this.hostSocket = this.socket;
         rooms.set(this.roomcode.toString(), [[this.socket.id, "host"]])
-        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map(), db: null})
+        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map(), db: this.db})
         var currentGame = currentGames.get(this.ROOMCODE)
         console.log(currentGame)
         this.ROOMCODE = this.roomcode.toString();
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
-        console.log(url1)
-        const url = "mongodb://localhost:27017/coloured-animals";
-        var roomcode = this.ROOMCODE;
-        MongoClient.connect(url, function(err, database, roomcode){
-            var currentGame = currentGames.get(roomcode)
-            if(err) throw err;
-            currentGame.db = database;
-            console.log("Database: " + database)
-            console.log("Current Game Database: " + currentGame.db)
-        }, roomcode);
+        console.log(url1)        
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
         this.getQuestions(url1, function(returnedQs, hostObject){
