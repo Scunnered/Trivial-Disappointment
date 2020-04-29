@@ -27,7 +27,6 @@ button {
     border-radius: 4px;
     background: none;
     outline: none;
-	transition: all 0.2s ease;
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
@@ -39,7 +38,7 @@ button {
 }
 
 .gameContent {
-    height: 78%;
+    height: 77%;
     width: 60%;
     position: absolute;
     z-index: 0;
@@ -116,12 +115,12 @@ button {
 }
 
 #displayCode{
-    margin: 47% 0% 2% 10%;                    
+    margin: 40% 0% 2% 10%;                    
 }
 
 /*Style for host button*/
 #hostGameShow {
-    margin: 47% 2% 2% 2%;
+    margin: 40% 2% 2% 2%;
     display: block;
     text-align: left;
 }
@@ -229,13 +228,68 @@ button {
 }
 
 @media (max-width : 769px) {
+    button{
+
+    }
+
     #choice1, #choice2, #choice3, #choice4 {
+        margin: 2% 6% 0% 6%;
+        text-align: center;
+        font-family: Quicksand, sans-serif;
+        font-weight: bold;
+        font-size: 140%;
+    }
+
+    #choice1 {
+        margin-top: 7%;
     }
     
+    .gameContent {
+        height: 60%;
+        width: 90%;
+        left: 5%;
+        top: 10%;
+    }
+
+    #gameDiv {
+        height: 100%;
+    }
+
+    #backgroundImg {
+        width: 100%;
+        height: 100%;
+    }
+
     #hostGameShow {
-        margin: 4% 4% 4% 4%;
+        visibility: hidden;
     }
     
+    #displayCode{
+        margin: 40% 0% 2% 10%;                    
+    }
+
+    #username{
+        margin: 2% 2% 4% 2%;
+    }
+
+    #question{
+        margin: 21% 2% 2% 2% !important;
+        padding: 2% 0% 2% 0%;
+        font-size: 150%;
+    }
+
+    #timerWrapper{
+        margin: 0% 0% 2% 10%;
+    }
+
+    #timer{
+        margin: 6.4% 4% 4% 4%;
+    }
+
+    #warning{
+
+    }
+
     #usernameInput, #enteredCode, #joinGame {
         width: 24%;
         margin: 0% 4% 4% 4%;
@@ -248,10 +302,6 @@ button {
 
     #hostGame, #startGame {
         width: 85%;
-        margin: 0% 4% 4% 4%;
-    }
-
-    #username, #timer, #question{
         margin: 0% 4% 4% 4%;
     }
 }

@@ -3,7 +3,8 @@ const Entities = require('html-entities').XmlEntities;
 const entities = new Entities();
 var rooms = new Map();
 var currentGames = new Map();
-const MongoClient = require('mongodb').MongoClient;
+
+//Fix mongodb with arrays
 
 class Host{
     
@@ -18,7 +19,7 @@ class Host{
         this.countdown; //initialised for future clearInterval from outside timer
         this.hostSocket;
         this.maxUsers = 100;
-        this.mongo = true;
+        this.mongo = false;
         this.testnum = 0;
         this.db = db;
         this.tempUsername;

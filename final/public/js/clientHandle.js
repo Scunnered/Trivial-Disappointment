@@ -67,12 +67,13 @@ $(document).ready(function() {
 
     clientSocket.on('questionSent', function (question) {
         console.log(question)
-        onShowQuestion();
         if (question.type === "boolean") {
             setQuestionBool(question);
+            onBoolShostionBool();
         }
         else {
             setQuestion(question);
+            onShowQuestion();
         }
         changeBackground(question.category)
     })
@@ -198,6 +199,7 @@ function setWarning(data) {
     }
     if (data == "Game Over.") {
         gameOverScreen();
+        hostSocket.emit("KILL", {roomcode: getRoomCodeServer()})
     }
     setTimeout(function(){$("#warning").text("Warning");},5000);
 }
@@ -205,21 +207,19 @@ function setWarning(data) {
 function setQuestion(question1) {
     shuffle(buttArr);
     $("#question").html(question1.question);
-    $(buttArr[0]).html(question1.correct_answer).show();
+    $(buttArr[0]).html(question1.correct_answer);
     correctButton = buttArr[0];
-    $(buttArr[1]).html(question1.incorrect_answers[0]).show();
-    $(buttArr[2]).html(question1.incorrect_answers[1]).show();
-    $(buttArr[3]).html(question1.incorrect_answers[2]).show();
+    $(buttArr[1]).html(question1.incorrect_answers[0]);
+    $(buttArr[2]).html(question1.incorrect_answers[1]);
+    $(buttArr[3]).html(question1.incorrect_answers[2]);
 }
 
 function setQuestionBool(question1) {
     shuffle(boolArr)
     $("#question").html(question1.question)
-    $("#choice1").hide()
     $(boolArr[0]).html(question1.correct_answer)
     correctButton = buttArr[1];
     $(boolArr[1]).html(question1.incorrect_answers[0])
-    $("#choice4").hide()
 }
 
 function timer(data) {

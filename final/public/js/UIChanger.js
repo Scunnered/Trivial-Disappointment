@@ -14,7 +14,7 @@ $(document).ready(function() {
 
     $("#addUser").click(function() {
         onJoinGame()
-        onShowQuestion()
+        onShowQuestionBool()
         for(let i = 0; i < 100; i++) {
             $("#leaderboard").append($("<p class = 'users'></p>").text("Username10").css("color","blue").css('display','inline-block'));
         }
@@ -25,7 +25,7 @@ $(document).ready(function() {
 function onStartGame() {
     $(".hostSelects").hide();
     $("#question").show();
-    $("#warning").css({"margin": "41.7% 0% 2% 10%"} );
+    $("#warning").css({"margin": "35% 0% 2% 10%"} );
     $("#leaderboard").css({"margin": "8% 2% 2% 2%", "font-size": "150%"} );
 }
 
@@ -38,7 +38,7 @@ function onJoinGame() {
     $("#enteredCode").hide();
     $("#joinGame").hide();
     $("#warning").show();
-    $("#warning").css({"margin": "55% 0% 2% 10%"} );
+    $("#warning").css({"margin": "47% 0% 2% 10%"} );
 }
 
 function qsLoaded() {
@@ -58,11 +58,29 @@ function gameOverScreen() {
 }
 
 function onShowQuestion() {
-    $("#warning").css({"margin": "4.2% 0% 2% 10%"} );
+    if($(window).width <= 769){
+        console.log($(window).width)
+        $("#warning").css({"margin": "1% 0% 2% 10%"} );
+    }
+    else{
+        console.log($(window).width)
+        $("#warning").css({"margin": "2.5% 0% 2% 10%"} );
+    }
     $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
     $("#question").css({"margin": "15% 2% 2% 2%"} );
     $("#timerWrapper").show()
     showButtons();
+    $("#question").show();
+}
+
+function onShowQuestionBool() {
+    showBoolButtons()
+    $("#choice2").css({"margin": "10% 0% 2% 5%"} );
+    $("#choice3").css({"margin": "4% 0% 2% 5%"} );
+    $("#warning").css({"margin": "9.8% 0% 2% 10%"} );
+    $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
+    $("#question").css({"margin": "15% 2% 2% 2%"} );
+    $("#timerWrapper").show()
     $("#question").show();
 }
 
@@ -102,4 +120,11 @@ function showButtons() {
     $("#choice2").show();
     $("#choice3").show();
     $("#choice4").show();
+}
+
+function showBoolButtons() {
+    $("#choice1").hide()
+    $("#choice2").show()
+    $("#choice3").show()
+    $("#choice4").hide()
 }

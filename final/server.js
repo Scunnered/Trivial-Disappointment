@@ -7,18 +7,20 @@ const Host = require('./host')
 var db = null;
 var hosts = new Map();
 const MongoClient = require('mongodb').MongoClient;
+var mongo = false;
 const url = "mongodb://localhost:27017/coloured-animals";
 
 app.use(express.static('public'))
 
 server.listen(8080);
-
-MongoClient.connect(url, function(err, database){
-    console.log("Database Loading")
-    if(err) throw err;
-    db = database;
-    console.log("Database Loaded")
-});
+if (mongo) {
+    MongoClient.connect(url, function(err, database){
+        console.log("Database Loading")
+        if(err) throw err;
+        db = database;
+        console.log("Database Loaded")
+    });
+}
 
 //Result:
 //It works, no changes in the questions not being sent through the first time though. 
@@ -49,5 +51,9 @@ io.on('connection', function (socket) {
         if (hosts.get(data.roomcode) !== undefined) {
             hosts.get(data.roomcode).answer(data, socket, io);
         }
+    })
+    socket.on("KILL", function (data) {
+        console.log("Killing Server: " + data.roomcode)
+        hosts.delete(data.roomcode);
     })
 })
