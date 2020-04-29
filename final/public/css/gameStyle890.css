@@ -1,0 +1,74 @@
+@media (max-width : 890px) {
+    button{
+        margin: 2% 6% 0% 6%;
+    }
+
+    #choice1, #choice2, #choice3, #choice4 {
+        margin: 2% 6% 0% 6%;
+        text-align: center;
+        font-family: Quicksand, sans-serif;
+        font-weight: bold;
+        font-size: 140%;
+    }
+
+    #choice1 {
+        margin-top: 7%;
+    }
+    
+    .gameContent {
+        height: 60%;
+        width: 90%;
+        left: 5%;
+        top: 10%;
+    }
+
+    #gameDiv {
+        height: 100%;
+    }
+
+    #backgroundImg {
+        width: 100%;
+        height: 100%;
+    }
+
+    #hostGameShow {
+        visibility: hidden;
+    }
+    
+    #displayCode{
+        margin: 40% 0% 2% 10%;                    
+    }
+
+    #username{
+        margin: 6% 2% 4% 2%;
+    }
+
+    #question{
+        margin: 15% 2% 2% 2% !important;
+        padding: 2% 0% 2% 0%;
+        font-size: 150%;
+    }
+
+    #timerWrapper{
+        margin: 0% 0% 2% 10%;
+    }
+
+    #timer{
+        margin: 6% 4% 4% 4%;
+    }
+
+    #usernameInput, #enteredCode, #joinGame {
+        width: 24%;
+        margin: 0% 4% 4% 4%;
+    }
+    
+    #categories, #difficulty, #amount{
+        width: 24%;
+        margin: 0% 4% 4% 4%;
+    }
+
+    #hostGame, #startGame {
+        width: 85%;
+        margin: 0% 4% 4% 4%;
+    }
+}

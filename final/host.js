@@ -19,7 +19,7 @@ class Host{
         this.countdown; //initialised for future clearInterval from outside timer
         this.hostSocket;
         this.maxUsers = 100;
-        this.mongo = true;
+        this.mongo = false;
         this.testnum = 0;
         this.db = db;
         this.tempUsername;
@@ -73,6 +73,7 @@ class Host{
             else {
                 var user = "user" + this.testnum
                 this.testnum++
+                dealwithuser(user, this);
             }
         }
         else {
@@ -89,16 +90,21 @@ class Host{
                 else {
                     var user = "user" + this.testnum
                     this.testnum++;
+                    dealwithuser(user, this);
                 }
             }
             else {
-                user = data.custUsername
+                var user = data.custUsername
                 this.alreadyUsed.push(user)
+                dealwithuser(user, this);
             }
         }
         function dealwithuser(username, hostObject){
+            var currentGame = currentGames.get(hostObject.ROOMCODE)
             var user = username;
             socket.emit('joinGame', { Client: 'joining', username: user});
+            console.log(hostObject.ROOMCODE)
+            console.log(clientRoomCode)
             if (hostObject.ROOMCODE == clientRoomCode) {
                 console.log("connecting")
                 console.log("Before!!\n" + rooms)

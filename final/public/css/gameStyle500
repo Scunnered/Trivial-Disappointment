@@ -1,0 +1,115 @@
+@media (max-width : 500px) {    
+    button{
+        margin: 2% 6% 0% 6%;
+    }
+
+    #choice1, #choice2, #choice3, #choice4 {
+        margin: 2% 2% 2% 2%;
+        text-align: center;
+        font-family: Quicksand, sans-serif;
+        font-weight: bold;
+        font-size: 120%;
+        width: 96%;
+        height: 15%;
+    }
+
+    #choice1 {
+        margin-top: 7%;
+    }
+    
+    .gameContent {
+        background-color: transparent;
+        border: none;
+        top: 3%;
+    }
+
+    #gameDiv {
+        background-color: transparent;
+        height: 100%;
+        border: none;
+    }
+
+    #backgroundImg {
+        display: none;
+        object-fit: cover;
+    }
+
+    #hostGameShow {
+        display: none;
+    }
+
+    #leaderboard {
+        display: none;
+    }
+
+    .clientSelects {
+        top: 0%;
+        margin: 0% 0% 2% 0%; 
+    }
+    
+    #displayCode{
+        margin: 40% 0% 2% 10%;                    
+    }
+
+    #username{
+        position: relative;
+        margin: 10% 10% 4% 10%;
+        font-size: 150%;
+        text-align: center;
+        width: 80%;
+    }
+
+    #questionWrapper {
+        display: none;
+        position: relative;
+        margin: 35% 2% 2% 2%;
+    }
+
+    #question{
+        padding: 2% 0% 2% 0%;
+        font-size: 100%;
+    }
+
+    #timerWrapper{
+        margin: 13% 5% 2% 5%;
+        text-align: right;
+        position: absolute;
+    }
+
+    #timer{
+        margin: 0% 0% 4% 0%;
+        text-align: right;
+    }
+
+    #warning{
+        width: 95%;
+        margin: 8% 2.5% 8% 2.5%;
+        left: 0%;
+    }
+
+    #usernameInput, #enteredCode{
+        display: block;
+        margin: 8% 2.5% 8% 2.5%;
+        padding: 4% 5% 4% 5%;
+        width: 95%;
+        height: 40%;
+    }
+
+    #joinGame{
+        display: block;
+        margin: 8% 2.5% 8% 2.5%;
+        padding: 6% 5% 6% 5%;
+        width: 95%;
+        height: 40%;
+    }
+    
+    #categories, #difficulty, #amount{
+        width: 24%;
+        margin: 0% 4% 4% 4%;
+    }
+
+    #hostGame, #startGame {
+        width: 85%;
+        margin: 0% 4% 4% 4%;
+    }
+}

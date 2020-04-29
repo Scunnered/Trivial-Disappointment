@@ -7,7 +7,7 @@ const Host = require('./host')
 var db = null;
 var hosts = new Map();
 const MongoClient = require('mongodb').MongoClient;
-var mongo = true;
+var mongo = false;
 const url = "mongodb://localhost:27017/coloured-animals";
 
 app.use(express.static('public'))

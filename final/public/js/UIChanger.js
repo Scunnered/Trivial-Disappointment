@@ -73,15 +73,18 @@ function onShowQuestion() {
         $("#questionWrapper").css({"display": "inline"})
         $("#choice2").css({"margin-top": "2%"} );
     }
-    else if($(window).width() <= 890 && $(window).width() >= 500){
+    else if($(window).width() <= 890){
         $("#warning").css({"margin": "0% 0% 2% 10%"} );
         $("#choice2").css({"margin-top": "2%"} );
         $("#question").css({"margin": "2% 2% 2% 2%"} );
     }
     else{
+        $("#choice2").css({"margin": "2% 6% 0% 6%"} );
+        $("#choice3").css({"margin": "2% 6% 0% 6%"} );
         $("#warning").css({"margin": "2.5% 0% 2% 10%"} );
         $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
         $("#question").css({"margin": "2% 2% 2% 2%"} );
+        $("#questionWrapper").css({"margin": "15% 0% 0% 0%"} );
     }
     $("#timerWrapper").show()
     showButtons();
@@ -100,7 +103,7 @@ function onShowQuestionBool() {
     else {
         $("#choice2").css({"margin": "10% 0% 2% 5%"} );
         $("#choice3").css({"margin": "4% 0% 2% 5%"} );
-        $("#warning").css({"margin": "9.8% 0% 2% 10%"} );
+        $("#warning").css({"margin": "6.4% 0% 2% 10%"} );
         $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
         $("#question").css({"margin": "15% 2% 0% 2%"} );
     }
