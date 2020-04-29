@@ -298,7 +298,7 @@ class Host{
         //return alreadyUsed[alreadyUsed.length-1];
         console.log(2);
         console.log(this.alreadyUsed[this.alreadyUsed.length-1]);
-        callback(this.alreadyUsed[alreadyUsed.length-1], hostObject);
+        callback(this.alreadyUsed[this.alreadyUsed.length-1], hostObject);
     }
     
 }
