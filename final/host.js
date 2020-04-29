@@ -65,7 +65,9 @@ class Host{
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (this.mongo) {
+                console.log("ALREADY USED: " + this.alreadyUsed)
                 var user = generateUsername(this.db, this.alreadyUsed);
+                console.log("ALREADY USED: " + this.alreadyUsed)
             }
             else {
                 var user = "user" + this.testnum
@@ -77,7 +79,9 @@ class Host{
             console.log(data.custUsername)
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
+                    console.log("ALREADY USED: " + this.alreadyUsed)
                     var user = generateUsername(this.db, this.alreadyUsed);
+                    console.log("ALREADY USED: " + this.alreadyUsed)
                 }
                 else {
                     var user = "user" + this.testnum
