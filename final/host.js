@@ -70,6 +70,7 @@ class Host{
                 this.generateUsername(function(username, hostObject) {
                     hostObject.tempUsername = username;
                 });
+                console.log("TEMPUSERNAME: " + this.tempUsername)
                 var user = this.tempUsername;
                 console.log("ALREADY USED: " + this.alreadyUsed)
             }
@@ -87,6 +88,7 @@ class Host{
                     this.generateUsername(function(username, hostObject) {
                         hostObject.tempUsername = username;
                     });
+                    console.log("TEMPUSERNAME: " + this.tempUsername)
                     var user = this.tempUsername;
                     console.log("ALREADY USED: " + this.alreadyUsed)
                 }
