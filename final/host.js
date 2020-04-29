@@ -291,7 +291,7 @@ class Host{
     
         //returns the just now added username
         //return alreadyUsed[alreadyUsed.length-1];
-        Console.log(alreadyUsed[alreadyUsed.length-1]);
+        console.log(alreadyUsed[alreadyUsed.length-1]);
         callback(alreadyUsed[alreadyUsed.length-1], hostObject);
     }
     
