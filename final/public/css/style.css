@@ -107,6 +107,22 @@ hr {
     border-radius: 4em;
 }
 
+#playButton {
+    margin: 2% 6% 2% 6%;
+    display: inline-block;
+    text-align: center;
+    font-family: Quicksand, sans-serif;
+    font-weight: bold;
+    color: #222;
+    border: 2px solid #333;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    width: 90%;
+    visibility: hidden;
+}
+
 button {
     outline: none !important;
 }
@@ -466,4 +482,13 @@ button {
 #copyright a {
     color: #AAA;
     text-decoration: underline;
+}
+
+@media (max-width : 384px) {
+    #main-logo{
+        font-size: 114%;
+    }
+    #playButton {
+        visibility: visible;
+    }
 }

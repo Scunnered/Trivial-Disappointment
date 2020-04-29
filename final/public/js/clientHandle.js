@@ -69,7 +69,7 @@ $(document).ready(function() {
         console.log(question)
         if (question.type === "boolean") {
             setQuestionBool(question);
-            onBoolShostionBool();
+            onShowQuestionBool();
         }
         else {
             setQuestion(question);
@@ -245,12 +245,18 @@ function timer(data) {
 function loseGame() {
     hideAll()
     changeBackgroundResult(false)
+    if($(window).width() <= 500){
+        showBackground()
+    }
     resetGame()
 }
 
 function winGame() {
     hideAll()
     changeBackgroundResult(true)
+    if($(window).width() <= 500){
+        showBackground()
+    }
     resetGame()
 }
 

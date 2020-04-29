@@ -32,8 +32,6 @@ class Host{
         this.hostSocket = this.socket;
         rooms.set(this.roomcode.toString(), [[this.socket.id, "host"]])
         currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map()})
-        var currentGame = currentGames.get(this.ROOMCODE)
-        console.log(currentGame)
         this.ROOMCODE = this.roomcode.toString();
         var url1 = this.createURL(selects.AMOUNT, selects.DIFFICULTY, selects.CATEGORY)
         console.log(url1)        
@@ -59,7 +57,6 @@ class Host{
     }
     sendRoomCode(data, socket, io) {
         var currentGame = currentGames.get(this.ROOMCODE)
-        console.log(currentGame)
         console.log("in send room code")
         //var clientRoomCode = JSON.parse(data.roomcode).toString();
         console.log(data)
@@ -181,9 +178,6 @@ class Host{
         console.log("qCounter: " + currentGame.qCounter + "\nqTotal: " + currentGame.qTotal)
         console.log("fCorrect: " + currentGame.fCorrect)
 
-        console.log("!!!!!!!!!"+data.answer !== currentGame.currQAnswer)
-        console.log(data.answer)
-        console.log(currentGame.currQAnswer)
         if(data.answer !== currentGame.currQAnswer) {
             console.log(data.answer !== currentGame.currQAnswer)
             var roomcode = this.ROOMCODE;
