@@ -19,7 +19,7 @@ class Host{
         this.countdown; //initialised for future clearInterval from outside timer
         this.hostSocket;
         this.maxUsers = 100;
-        this.mongo = false;
+        this.mongo = true;
         this.testnum = 0;
         this.db = db;
         this.tempUsername;
@@ -67,6 +67,7 @@ class Host{
                 console.log("ALREADY USED: " + this.alreadyUsed)
                 this.generateUsername(function(username, hostObject) {
                     hostObject.tempUsername = username;
+                    //dealwithuser(username);
                 });
                 console.log("TEMPUSERNAME: " + this.tempUsername)
                 var user = this.tempUsername;
@@ -100,6 +101,9 @@ class Host{
                 this.alreadyUsed.push(user)
             }
         }
+       // function dealwithuser(username){
+
+        //}
         socket.emit('joinGame', { Client: 'joining', username: user});
         if (this.ROOMCODE == clientRoomCode) {
             console.log("connecting")
