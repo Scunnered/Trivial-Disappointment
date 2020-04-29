@@ -67,7 +67,7 @@ class Host{
                 console.log("ALREADY USED: " + this.alreadyUsed)
                 this.generateUsername(function(username, hostObject) {
                     hostObject.tempUsername = username;
-                    dealwithuser(username);
+                    dealwithuser(username, hostObject);
                 });
             }
             else {
