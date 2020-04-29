@@ -272,7 +272,9 @@ class Host{
                     //adds random colour & name to output, thus making the username
                     output += result1[Math.floor(Math.random() * result1.length)].colour;
                     output += result2[Math.floor(Math.random() * result2.length)].name;
-                
+                    
+                    console.log(output);
+
                     //conpares it to each username already generated, and if it already exits, repeates the while loop
                     for(var i=0;i<alreadyUsed.length;i++){
                         if(alreadyUsed[i]===output){
@@ -289,6 +291,7 @@ class Host{
     
         //returns the just now added username
         //return alreadyUsed[alreadyUsed.length-1];
+        Console.log(alreadyUsed[alreadyUsed.length-1]);
         callback(alreadyUsed[alreadyUsed.length-1], hostObject);
     }
     
