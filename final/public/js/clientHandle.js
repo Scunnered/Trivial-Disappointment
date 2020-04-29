@@ -237,7 +237,7 @@ function timer(data) {
         }
         else if(timeLeft <= 0 && clicked!=true){
             clearInterval(countdown)
-            clientSocket.emit('answer', { answer: ""});
+            clientSocket.emit('answer', { answer: "", roomcode: getRoomCode()});
         }
     },1000);
 }

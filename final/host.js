@@ -40,6 +40,8 @@ class Host{
             var currentGame = currentGames.get(roomcode)
             if(err) throw err;
             currentGame.db = database;
+            console.log(database)
+            console.log(currentGame.db)
         }, roomcode);
         //your get questions may take a while to retun so we can immediatly emit anything or create your array.
         //what we do is create a call back function...
@@ -172,7 +174,12 @@ class Host{
         //if answered incorrectly, run checkForCorrect(socket) at the end of timer
         console.log("qCounter: " + currentGame.qCounter + "\nqTotal: " + currentGame.qTotal)
         console.log("fCorrect: " + currentGame.fCorrect)
+
+        console.log("!!!!!!!!!"+data.answer !== currentGame.currQAnswer)
+        console.log(data.answer)
+        console.log(currentGame.currQAnswer)
         if(data.answer !== currentGame.currQAnswer) {
+            console.log(data.answer !== currentGame.currQAnswer)
             var roomcode = this.ROOMCODE;
             setTimeout(function(roomcode){
                 var currentGame = currentGames.get(roomcode)
