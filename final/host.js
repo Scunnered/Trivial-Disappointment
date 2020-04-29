@@ -67,11 +67,8 @@ class Host{
                 console.log("ALREADY USED: " + this.alreadyUsed)
                 this.generateUsername(function(username, hostObject) {
                     hostObject.tempUsername = username;
-                    //dealwithuser(username);
+                    dealwithuser(username);
                 });
-                console.log("TEMPUSERNAME: " + this.tempUsername)
-                var user = this.tempUsername;
-                console.log("ALREADY USED: " + this.alreadyUsed)
             }
             else {
                 var user = "user" + this.testnum
@@ -86,10 +83,8 @@ class Host{
                     console.log("ALREADY USED: " + this.alreadyUsed)
                     this.generateUsername(function(username, hostObject) {
                         hostObject.tempUsername = username;
+                        dealwithuser(username);
                     });
-                    console.log("TEMPUSERNAME: " + this.tempUsername)
-                    var user = this.tempUsername;
-                    console.log("ALREADY USED: " + this.alreadyUsed)
                 }
                 else {
                     var user = "user" + this.testnum
@@ -101,31 +96,31 @@ class Host{
                 this.alreadyUsed.push(user)
             }
         }
-       // function dealwithuser(username){
-
-        //}
-        socket.emit('joinGame', { Client: 'joining', username: user});
-        if (this.ROOMCODE == clientRoomCode) {
-            console.log("connecting")
-            console.log("Before!!\n" + rooms)
-            var users = rooms.get(clientRoomCode.toString())
-            if (users.length <= this.maxUsers) {
-                users.push([socket.id, user])
-                currentGame.leaderboard.set(user,true) //add new user to map with "true" to indicate participation
-                io.to(users[0][0]).emit('setLeaderboard',Array.from(currentGame.leaderboard)) //!!!! IO
-                console.log(users)
-                rooms.set(clientRoomCode.toString(), users)
-                console.log("After!!\n" + rooms)
-                socket.emit("WARNING", "You have joined a game. Wait for the host to begin.")
+        function dealwithuser(username){
+            var user = username;
+            socket.emit('joinGame', { Client: 'joining', username: user});
+            if (this.ROOMCODE == clientRoomCode) {
+                console.log("connecting")
+                console.log("Before!!\n" + rooms)
+                var users = rooms.get(clientRoomCode.toString())
+                if (users.length <= this.maxUsers) {
+                    users.push([socket.id, user])
+                    currentGame.leaderboard.set(user,true) //add new user to map with "true" to indicate participation
+                    io.to(users[0][0]).emit('setLeaderboard',Array.from(currentGame.leaderboard)) //!!!! IO
+                    console.log(users)
+                    rooms.set(clientRoomCode.toString(), users)
+                    console.log("After!!\n" + rooms)
+                    socket.emit("WARNING", "You have joined a game. Wait for the host to begin.")
+                }
+                else {
+                    socket.emit("WARNING", "Too many players in current game")
+                    socket.disconnect()
+                }
             }
             else {
-                socket.emit("WARNING", "Too many players in current game")
-                socket.disconnect()
+                console.log("no such host exists")
+                socket.emit("WARNING", "No such host exists")
             }
-        }
-        else {
-            console.log("no such host exists")
-            socket.emit("WARNING", "No such host exists")
         }
     }
     begin(data, io) {
