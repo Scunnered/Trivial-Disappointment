@@ -83,7 +83,7 @@ class Host{
                     console.log("ALREADY USED: " + this.alreadyUsed)
                     this.generateUsername(function(username, hostObject) {
                         hostObject.tempUsername = username;
-                        dealwithuser(username);
+                        dealwithuser(username, hostObject);
                     });
                 }
                 else {
@@ -96,14 +96,14 @@ class Host{
                 this.alreadyUsed.push(user)
             }
         }
-        function dealwithuser(username){
+        function dealwithuser(username, hostObject){
             var user = username;
             socket.emit('joinGame', { Client: 'joining', username: user});
-            if (this.ROOMCODE == clientRoomCode) {
+            if (hostObject.ROOMCODE == clientRoomCode) {
                 console.log("connecting")
                 console.log("Before!!\n" + rooms)
                 var users = rooms.get(clientRoomCode.toString())
-                if (users.length <= this.maxUsers) {
+                if (users.length <= hostObject.maxUsers) {
                     users.push([socket.id, user])
                     currentGame.leaderboard.set(user,true) //add new user to map with "true" to indicate participation
                     io.to(users[0][0]).emit('setLeaderboard',Array.from(currentGame.leaderboard)) //!!!! IO
