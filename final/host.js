@@ -29,7 +29,7 @@ class Host{
         console.log("SERVER ID" + this.socket.id)
         this.hostSocket = this.socket;
         rooms.set(this.roomcode.toString(), [[this.socket.id, "host"]])
-        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map(), db: this.db})
+        currentGames.set(this.roomcode, {timeLeft: 0, qCounter: 0, qTotal: 0, fCorrect: true, delay:15, questions: null, currQAnswer: null, ROOMCODE: this.roomcode, prevQwinner: null, hostSocket: this.hostSocket, countdown: null, leaderboard: new Map()})
         var currentGame = currentGames.get(this.ROOMCODE)
         console.log(currentGame)
         this.ROOMCODE = this.roomcode.toString();
@@ -65,7 +65,7 @@ class Host{
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
             if (this.mongo) {
-                var user = generateUsername(currentGame.db, this.alreadyUsed);
+                var user = generateUsername(this.db, this.alreadyUsed);
             }
             else {
                 var user = "user" + this.testnum
@@ -77,7 +77,7 @@ class Host{
             console.log(data.custUsername)
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
-                    var user = generateUsername(currentGame.db, this.alreadyUsed);
+                    var user = generateUsername(this.db, this.alreadyUsed);
                 }
                 else {
                     var user = "user" + this.testnum
