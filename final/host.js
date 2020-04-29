@@ -11,7 +11,7 @@ class Host{
         this.roomcode = roomcode;
         this.selections = selections;
         this.socket = socket;
-        this.alreadyUsed = ["host"];
+        this.alreadyUsed = [];
         this.questions = null;
         this.ROOMCODE;
         this.prevQwinner= null;
