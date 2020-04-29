@@ -67,7 +67,7 @@ class Host{
             console.log("Username being made by database")
             if (this.mongo) {
                 console.log("ALREADY USED: " + this.alreadyUsed)
-                this.generateUsername(this.db, this.alreadyUsed, function(username, hostObject) {
+                this.generateUsername(function(username, hostObject) {
                     hostObject.tempUsername = username;
                 });
                 var user = this.tempUsername;
@@ -84,7 +84,7 @@ class Host{
             if (this.alreadyUsed.includes(data.custUsername)) {
                 if (this.mongo) {
                     console.log("ALREADY USED: " + this.alreadyUsed)
-                    this.generateUsername(this.db, this.alreadyUsed, function(username, hostObject) {
+                    this.generateUsername(function(username, hostObject) {
                         hostObject.tempUsername = username;
                     });
                     var user = this.tempUsername;
@@ -256,11 +256,11 @@ class Host{
         return url1;
     }
 
-    generateUsername(db, alreadyUsed, callback){
+    generateUsername(callback){
         var hostObject = this;
-        db.collection('colours').find().toArray(function(err, result1) {
+        this.db.collection('colours').find().toArray(function(err, result1) {
             if (err) throw err;
-            db.collection('animals').find().toArray(function(err, result2) {
+            this.db.collection('animals').find().toArray(function(err, result2) {
                 if (err) throw err;
                 //Nested find().toArray() because of the use of two collections.
     
@@ -277,8 +277,8 @@ class Host{
                     console.log(output);
 
                     //conpares it to each username already generated, and if it already exits, repeates the while loop
-                    for(var i=0;i<alreadyUsed.length;i++){
-                        if(alreadyUsed[i]===output){
+                    for(var i=0;i<this.alreadyUsed.length;i++){
+                        if(this.alreadyUsed[i]===output){
                             used = true;
                         }
                     }
@@ -286,15 +286,19 @@ class Host{
                 while(used) //This only repeats if there is a duplicate
     
                 //adds non-duplicate to the array of already used usernames
-                alreadyUsed.push(output)
+                this.alreadyUsed.push(output)
+
+                
             });
+
+            
         });
     
         //returns the just now added username
         //return alreadyUsed[alreadyUsed.length-1];
         console.log(2);
-        console.log(alreadyUsed[alreadyUsed.length-1]);
-        callback(alreadyUsed[alreadyUsed.length-1], hostObject);
+        console.log(this.alreadyUsed[this.alreadyUsed.length-1]);
+        callback(this.alreadyUsed[alreadyUsed.length-1], hostObject);
     }
     
 }
