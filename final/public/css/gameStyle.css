@@ -254,11 +254,11 @@ button {
     }
 
     #username{
-        margin: 2% 2% 4% 2%;
+        margin: 6% 2% 4% 2%;
     }
 
     #question{
-        margin: 21% 2% 2% 2% !important;
+        margin: 15% 2% 2% 2% !important;
         padding: 2% 0% 2% 0%;
         font-size: 150%;
     }
@@ -268,7 +268,7 @@ button {
     }
 
     #timer{
-        margin: 6.4% 4% 4% 4%;
+        margin: 6% 4% 4% 4%;
     }
 
     #usernameInput, #enteredCode, #joinGame {

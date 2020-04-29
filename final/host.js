@@ -285,17 +285,16 @@ class Host{
                 //adds non-duplicate to the array of already used usernames
                 hostObject.alreadyUsed.push(output)
 
-                
+                //returns the just now added username
+        //return alreadyUsed[alreadyUsed.length-1];
+        console.log(2);
+        console.log(hostObject.alreadyUsed[hostObject.alreadyUsed.length-1]);
+        callback(hostObject.alreadyUsed[hostObject.alreadyUsed.length-1], hostObject);
             });
 
             
         });
     
-        //returns the just now added username
-        //return alreadyUsed[alreadyUsed.length-1];
-        console.log(2);
-        console.log(hostObject.alreadyUsed[hostObject.alreadyUsed.length-1]);
-        callback(hostObject.alreadyUsed[hostObject.alreadyUsed.length-1], hostObject);
     }
     
 }

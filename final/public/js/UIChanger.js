@@ -12,9 +12,16 @@ $(document).ready(function() {
         $("#startGame").hide();
     })
 
-    $("#addUser").click(function() {
-        winGame()
+    $("#showNormal").click(function() {
+        onJoinGame()
+        onShowQuestion()
     })
+
+    $("#showBool").click(function() {
+        onJoinGame()
+        onShowQuestionBool()
+    })
+
 
 })
 
@@ -68,11 +75,13 @@ function onShowQuestion() {
     }
     else if($(window).width() <= 890 && $(window).width() >= 500){
         $("#warning").css({"margin": "0% 0% 2% 10%"} );
+        $("#choice2").css({"margin-top": "2%"} );
+        $("#question").css({"margin": "2% 2% 2% 2%"} );
     }
     else{
         $("#warning").css({"margin": "2.5% 0% 2% 10%"} );
         $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
-        $("#question").css({"margin": "15% 2% 2% 2%"} );
+        $("#question").css({"margin": "2% 2% 2% 2%"} );
     }
     $("#timerWrapper").show()
     showButtons();
