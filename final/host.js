@@ -25,7 +25,7 @@ class Host{
         //This variable holds the maximum amount of users that can access a single game.
         this.maxUsers = 100;
         //This variable was used for testing outside of codio to turn on and off mongo functionality that doesn't work in local node.js instances.
-        this.mongo = false;
+        this.mongo = true;
         //This variable was used for testing without the use of mongodb for creating unique usernames
         this.testnum = 0;
     }
