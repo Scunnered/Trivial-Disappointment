@@ -1,4 +1,6 @@
-/*Style for the buttons*/
+/*Style sheet for the game itself*/
+
+/*Style for buttons*/
 button {
     margin: 2% 6% 2% 6%;
     display: inline-block;
@@ -13,6 +15,7 @@ button {
     text-align: center;    
 }
 
+/*test buttons*/
 #testButtons {
     display: inline-block;
     position: absolute;
@@ -23,21 +26,14 @@ button {
     display: inline;
 }
 
+/*Style for the four buttons to anwer questions with*/
 #choice1, #choice2, #choice3, #choice4 {
     margin: 2% 6% 0% 6%;
     display: inline-block;
     width: 88%;
     height: 8%;
-    text-align: center;
-    font-family: Quicksand, sans-serif;
-    font-weight: bold;
     font-size: 165%;
-    color: #222;
-    border: 2px solid #333;
     border-radius: 4px;
-    background: none;
-    outline: none;
-    cursor: pointer;
     text-align: center;
     vertical-align: middle;
     position: relative;
@@ -47,6 +43,7 @@ button {
     margin-top: 6%;
 }
 
+/*Style for entire game*/
 .gameContent {
     height: 77%;
     width: 60%;
@@ -59,6 +56,7 @@ button {
     background-color: white;
 }
 
+/*Style for game buttons/content*/
 #gameDiv {
     position: relative;
     z-index: 2;
@@ -71,6 +69,7 @@ button {
     top: 0%;
 }
 
+/*background image*/
 #backgroundImg {
     z-index: 1;
     margin: none;
@@ -86,10 +85,12 @@ button {
     top: 0%;
 }
 
+/*Style for the footer in the game*/
 #footer {
     position: absolute;
 }
 
+/*Style for leaderboard*/
 #leaderboard {
     margin: 22% 2% 2% 2%;
     position: absolute;
@@ -98,6 +99,7 @@ button {
     text-align: center;
 }
 
+/*Style for each user in leaderboard*/
 .users {
     font-family: Quicksand, sans-serif;
     font-weight: bold;
@@ -106,11 +108,7 @@ button {
     display: inline-block;
 }
 
-#addUser {
-    position: absolute;
-    display: inline-block;
-}
-
+/*Style for warning and room code*/
 #warning, #displayCode {
     position: relative;
     margin: 0% 0% 2% 10%;
@@ -167,6 +165,7 @@ button {
     border: 1px solid #333;
     border-radius: 4px;
 }
+
 /*Style for game information*/
 #timerWrapper{
     position: relative;
@@ -200,6 +199,7 @@ button {
     outline: none;
 }
 
+/*Style for question*/
 #question{
     position: relative;
     margin: 2% 2% 2% 2%;

@@ -8,7 +8,7 @@ var quotes = [{
 }, {
   "quote": "Bragging rights the game"
 }, {
-  "quote": "Big brain energy the game"
+  "quote": "Big Brain Energy the game"
 }, {
   "quote": "The reason why your dad doesn't like you"
 }, {
@@ -17,32 +17,34 @@ var quotes = [{
   "quote": "Not a jackbox game"
 }, {
   "quote": "A project by four guys who don't know what the hell is going on"
-	}, {
-  "quote": "Truly awful 9.5 / 10 - IGN"
+}, {
+  "quote": "Truly awful 7.5 / 8 - IGN"
+}, {
+  "quote": "Couldn't have done this without John, a God amongst men." //thanks again for all the help
+}, {
+  "quote": "Something to keep you mildly entertained during the 2020 quarantine." 
 }];
-
-var chosenQuote;
 
 // function to load and display a new quote
 function newQuote() {
-  	var quoteID = Math.floor(Math.random() * (quotes.length));
-  	$("#insertQuote").html(quotes[quoteID].quote);
+  var quoteID = Math.floor(Math.random() * (quotes.length));
+  $("#insertQuote").html(quotes[quoteID].quote);
 	return quotes[quoteID].quote
 }
 
 function openWindow(quote) {
-	var tweetUrl = "https://twitter.com/intent/tweet?" + "&text=" + encodeURIComponent("'" + quote + "'\n-Trivial Disappointment (@TrivialDis)")
-	window.open(tweetUrl, "_blank");
+	var tweetUrl = "https://twitter.com/intent/tweet?&text=" + encodeURIComponent("'" + quote + "'\n-Trivial Disappointment (@TrivialDis)")
+	window.open(tweetUrl, "_blank"); //allows users to tweet the quote shown on the main page from a new tab
 }
 
 // wait for page load before displaying content
 $(document).ready(function() {
   // load an initial quote
-  	chosenQuote = newQuote();
+  var chosenQuote = newQuote();
 
 	$('#insertQuote').click(function() {
 
-		openWindow(chosenQuote)
+	  openWindow(chosenQuote)
 
 	}); 
 

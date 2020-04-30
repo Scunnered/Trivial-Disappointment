@@ -8,25 +8,22 @@ var db = null;
 var hosts = new Map();
 const MongoClient = require('mongodb').MongoClient;
 var mongo = false;
-const url = "mongodb://localhost:27017/coloured-animals";
+const url = "mongodb://localhost:27017/coloured-animals"; //pulls in colours and animals from MongoDB
 
 app.use(express.static('public'))
 
-server.listen(8080);
+server.listen(8080); //listens on host 8080
 if (mongo) {
     MongoClient.connect(url, function(err, database){
-        console.log("Database Loading")
+        console.log("Database Loading") //loading
         if(err) throw err;
         db = database;
-        console.log("Database Loaded")
+        console.log("Database Loaded") //loaded
     });
 }
 
-//Result:
-//It works, no changes in the questions not being sent through the first time though. 
-//The host game button still needs to be pressed twice to work. 
 io.on('connection', function (socket) {
-    socket.on("createHost", function (data) {
+    socket.on("createHost", function (data) { //This creates a host and sdisplays string
         console.log(data)
         console.log(data.roomcode)
         hosts.set(data.roomcode.toString(), new Host(data.roomcode, data.selections, socket, db))
@@ -35,7 +32,7 @@ io.on('connection', function (socket) {
     })
     socket.on('sendRoomCode', function (data) {
         if (hosts.get(data.roomcode) == undefined) {
-            socket.emit("WARNING", "Make sure the room code is correct.");
+            socket.emit("WARNING", "Make sure the room code is correct."); //displays a warning if room code is wrong
         }
         else {
             hosts.get(data.roomcode).sendRoomCode(data, socket, io);
@@ -43,13 +40,13 @@ io.on('connection', function (socket) {
     })
     socket.on('begin', function (data) {
         if (hosts.get(data.roomcode) !== undefined) {
-            hosts.get(data.roomcode).begin(data, io);
+            hosts.get(data.roomcode).begin(io); //starts begin function
         }
         
     })
     socket.on('answer', function (data) {
         if (hosts.get(data.roomcode) !== undefined) {
-            hosts.get(data.roomcode).answer(data, socket, io);
+            hosts.get(data.roomcode).answer(data.answer, socket, io);
         }
     })
     socket.on("KILL", function (data) {

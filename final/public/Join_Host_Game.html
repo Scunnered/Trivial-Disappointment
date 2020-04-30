@@ -19,10 +19,12 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/slidingbackground.css" rel="stylesheet">
 
+    <!-- Game Stylesheet -->
     <link href="css/gameStyle.css" rel="stylesheet">
     <link href="css/gameStyle500.css" rel="stylesheet">
     <link href="css/gameStyle890.css" rel="stylesheet">
 
+    <!-- Javascript files -->
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="js/APItest.js"></script>
     <script src="js/clientHandle.js"></script>
@@ -34,8 +36,10 @@
 <body>
     <!-- header-->
     <header id="main-header">
+        <!--Navigation bar-->
         <nav class="navbar fixed-top navbar-expand-lg navbar-light">
             <div class="container">
+                <!--Logo-->
                 <a id="main-logo" class="navbar-brand" href="index.html">Dynamic Deb Wevelopment</a>
                 <div id = testButtons>
                     <button type="button" id = "showBool">Show Bool</button>
@@ -44,6 +48,7 @@
                 <!-- Hamburger menu-->
                 <button id="hamburger" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 </button>
+                <!--Navigation buttons-->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"></li>
@@ -67,29 +72,42 @@
         <div class = "sliding-background">
             <img src="images/bg2.jpg" alt="">
         </div>
+        <!--main content/game-->
         <div class="gameContent">
+            <!--Background Image-->
             <img id="backgroundImg" src="images/backgrounds/Cartoons and Animations.jpg" alt="Background Image">
             <div id = "gameDiv">
+                <!--Username & timer display-->
                 <p id = "username" alt = "Username"></p>
                 <div id = "timerWrapper">
                     <p id= "timer" alt = "Timer"></p>
                 </div>
+                <!--Question display-->
                 <div id = "questionWrapper">
                     <p id = "question" alt = "Question"></p>
                 </div>
+                <!--Leaderboard showing all players in a game-->
                 <div id= "leaderboard"></div>
+                <!--Buttons to answer questions with-->
                 <button type="button" id = "choice1" alt = "Question answer #1"></button>
                 <button type="button" id = "choice2" alt = "Question answer #2"></button>
                 <button type="button" id = "choice3" alt = "Question answer #3"></button>
                 <button type="button" id = "choice4" alt = "Question answer #4"></button>
+                <!--Allows user to host a game-->
                 <button type="button" id = "hostGameShow" title = "Open host menu OR don't if you're just snooping around." alt = "Host Game button">Host a Game</button>
                 <form action="" class = "clientSelects">
+                    <!--Shows roomcode needed to join a hosts game-->
                     <label for = "Room Code"></label>
+                    <!--Username Input-->
                     <input title = "Enter a username OR leave it blank. A username will be generated." type="text" id = "usernameInput" maxlength = 10 placeholder="Username" alt = "Username Input">
+                    <!--Roomcode Unput-->
                     <input title = "Enter a room code OR don't if you don't wanna play."id = "enteredCode" maxlength = 6 type="number" min="100000" pattern="\d+" step="1" placeholder="Room Code" alt="Room Code Input">
+                    <!--Join game button-->
                     <button type="button" id = "joinGame" title = "Join the game OR don't if you don't want to personally." alt="Join Game Button">Join Game</button>
                 </form>
+                <!--Shows roomcode needed to join a hosts game-->
                 <p id = "displayCode" class = "hostSelects" title = "This code you give to your friends OR you open a new tab."></p>
+                <!--Select Categories for questions in the game-->
                 <select id="categories" class = "hostSelects" title = "Here you chose your category OR don't." alt="Category selection">
                     <option value=0>Any Category</option>
                     <option value=9>General Knowledge</option>
@@ -117,20 +135,25 @@
                     <option value=31>Entertainment: Japanese Anime & Manga</option>
                     <option value=32>Entertainment: Cartoon & Animations</option>
                 </select>
+                <!--Select difficulty for the game-->
                 <select id="difficulty" class = "hostSelects" title = "This is the men are separated from the boys OR where you find out you're a boy." alt = "Difficulty selection">
                     <option value="easy" selected>Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
+                <!--Select max number of questions-->
                 <select id="amount" class = "hostSelects" title = "This is where you pick the length of the game." alt = "Number of questions selection">
                     <option value=10 selected>10 Questions</option>
                     <option value=15>15 Questions</option>
                     <option value=20>20 Questions</option>
                 </select>
 
+                <!--Host game button-->
                 <button type="button" id = "hostGame" title= "Click to host a game OR don't, if you're not sure about the game settings." class = "hostSelects" alt = "Host Game button">Host Game</button>
+                <!--Start game button-->
                 <button type="button" id = "startGame" title= "Click to start a game OR dont, if you dont actually want to play." class = "hostSelects" alt = "Start Game button">Start Game</button>
                 
+                <!--Displays warnings-->
                 <p id = "warning" title = "You have been warned." alt = "Warning">Warning</p>
                 
             </div>
@@ -144,7 +167,8 @@
             <div class="row text-center">
                 <div class="col-md-12">
                     <div class="row brands">
-                      <div class="col-md-4"><a href="#"><img src="images/API.png" width="168" height="77" class="img-fluid" alt = "Footer Image"></a></div></div>
+                        <!--Footer image-->
+                        <div class="col-md-4"><a href="#"><img src="images/API.png" width="168" height="77" class="img-fluid" alt = "Footer Image"></a></div></div>
                 </div>
             </div>
             <div class="row text-center">

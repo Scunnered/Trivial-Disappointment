@@ -1,8 +1,12 @@
+/*Style for different sized screen. Kept in different file to avoid confusion*/
+
 @media (max-width : 890px) {
+    /*Style for buttons*/
     button{
         margin: 2% 6% 0% 6%;
     }
 
+    /*Style for the four buttons to anwer questions with*/
     #choice1, #choice2, #choice3, #choice4 {
         margin: 2% 6% 0% 6%;
         text-align: center;
@@ -15,6 +19,7 @@
         margin-top: 7%;
     }
     
+    /*Style for entire game*/
     .gameContent {
         height: 60%;
         width: 90%;
@@ -22,33 +27,35 @@
         top: 10%;
     }
 
+    /*Style for game buttons/content*/
     #gameDiv {
         height: 100%;
     }
 
+    /*background image*/
     #backgroundImg {
         width: 100%;
         height: 100%;
     }
 
+    /*Style for host button*/
     #hostGameShow {
         visibility: hidden;
     }
     
+    /*Style for room code*/
     #displayCode{
         margin: 40% 0% 2% 10%;                    
     }
 
-    #username{
-        margin: 6% 2% 4% 2%;
-    }
-
+    /*Style for question*/
     #question{
         margin: 15% 2% 2% 2% !important;
         padding: 2% 0% 2% 0%;
         font-size: 150%;
     }
 
+    /*Style for game information*/
     #timerWrapper{
         margin: 0% 0% 2% 10%;
     }
@@ -57,11 +64,17 @@
         margin: 6% 4% 4% 4%;
     }
 
+    #username{
+        margin: 6% 2% 4% 2%;
+    }
+
+    /*Style for join/username options*/
     #usernameInput, #enteredCode, #joinGame {
         width: 24%;
         margin: 0% 4% 4% 4%;
     }
     
+    /*Style for host options*/
     #categories, #difficulty, #amount{
         width: 24%;
         margin: 0% 4% 4% 4%;

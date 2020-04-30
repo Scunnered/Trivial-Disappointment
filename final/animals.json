@@ -1,5 +1,6 @@
 //Contains all the animal names used to make usernames during a game. 
 //This file is just to make populating the database fast and easy
+
 {"name":"Alligator"}
 {"name":"Ant"}
 {"name":"Bear"}

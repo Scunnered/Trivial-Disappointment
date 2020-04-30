@@ -1,4 +1,4 @@
-/* Refrance site - https://stackoverflow.com/questions/31626852/how-to-add-konami-code-in-a-website-based-on-html */
+/* Reference site - https://stackoverflow.com/questions/31626852/how-to-add-konami-code-in-a-website-based-on-html */
 
 $(document).keydown(function(event){
     KonamiCode(event.keyCode) 
@@ -8,8 +8,8 @@ var position = 0;
 var wrongPosition = 0;
 
 function KonamiCode(keyCode){
-    var kCode = [38,38,40,40,37,39,37,39,66,65];
-    var wrongKCode = [38,38,40,40,37,39,37,39,65,66];
+    var kCode = [38,38,40,40,37,39,37,39,66,65]; //Input for the correct konami code
+    var wrongKCode = [38,38,40,40,37,39,37,39,65,66]; //input for incorrect konami code
     if(keyCode==kCode[position]){
         position++
         if(position==10){
