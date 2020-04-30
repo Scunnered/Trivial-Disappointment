@@ -16,7 +16,7 @@
     }
 
     #choice1 {
-        margin-top: 7%;
+        margin-top: 6%;
     }
     
     /*Style for entire game*/
@@ -50,22 +50,23 @@
 
     /*Style for question*/
     #question{
-        margin: 15% 2% 2% 2% !important;
+        margin: 10% 2% 2% 2% !important;
         padding: 2% 0% 2% 0%;
         font-size: 150%;
     }
 
     /*Style for game information*/
     #timerWrapper{
+        position: absolute;
         margin: 0% 0% 2% 10%;
     }
 
     #timer{
-        margin: 6% 4% 4% 4%;
+        margin: 8% 4% 4% 4%;
     }
 
     #username{
-        margin: 6% 2% 4% 2%;
+        margin: 10% 2% 4% 2%;
     }
 
     /*Style for join/username options*/

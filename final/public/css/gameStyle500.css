@@ -54,7 +54,7 @@
     /*Style for join/username options*/
     .clientSelects {
         top: 0%;
-        margin: 0% 0% 2% 0%; 
+        margin: 0% 0% 2% 0%;
     }
 
     /*Style for room code*/
@@ -104,17 +104,17 @@
     /*Style for join/username options*/
     #usernameInput, #enteredCode{
         display: block;
-        margin: 8% 2.5% 8% 2.5%;
-        padding: 4% 5% 4% 5%;
-        width: 95%;
+        margin: 8% 2.5% 8% 2.5% !important;
+        padding: 4% 0% 4% 0%;
+        width: 95% !important;
         height: 40%;
     }
 
     #joinGame{
         display: block;
-        margin: 8% 2.5% 8% 2.5%;
-        padding: 6% 5% 6% 5%;
-        width: 95%;
+        margin: 8% 2.5% 8% 2.5% !important;
+        padding: 6% 0% 6% 0%;
+        width: 95% !important;
         height: 40%;
     }
     

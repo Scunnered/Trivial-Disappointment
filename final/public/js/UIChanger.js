@@ -17,11 +17,15 @@ $(document).ready(function() {
     $("#showNormal").click(function() {
         onJoinGame()
         onShowQuestion()
+        $("#timer").text("15")
+        $("#username").text("Username")
     })
 
     $("#showBool").click(function() {
         onJoinGame()
         onShowQuestionBool()
+        $("#timer").text("15")
+        $("#username").text("Username")
     })
 })
 
@@ -75,23 +79,31 @@ function gameOverScreen() {
 function onShowQuestion() {
     //Modifies CSS elements of certain elements when joining game based on screen size
     if($(window).width() <= 500){
-        $("#username").css({"position": "absolute", "margin": "13% 2% 4% 2%", "text-align":"left"} )
+        $("#username").css({"position": "absolute", "margin": "7% 2% 4% 2%", "text-align":"left"} )
         $("#warning").css({"margin": "0% 2.5% 2% 2.5%"} );
         $("#questionWrapper").css({"display": "inline"})
         $("#choice2").css({"margin-top": "2%"} );
+        $("button").css({"margin-left": "2.4%"});
+        $("question").css({"margin-left": "0%"});
+        $("#warning").css({"margin-left": "2.4%"} );
+
     }
     else if($(window).width() <= 890){
         $("#warning").css({"margin": "0% 0% 2% 10%"} );
-        $("#choice2").css({"margin-top": "2%"} );
+        $("#choice2").css({"margin": "2% 6% 0% 6%"} );
+        $("#choice3").css({"margin": "2% 6% 0% 6%"} );
         $("#question").css({"margin": "2% 2% 2% 2%"} );
+        $("#timerWrapper").css({"margin": "3% 0% 2% 10%"} ); 
+        $("#warning").css({"margin": "0% 0% 2% 10%"} );       
+        $("#questionWrapper").css({"margin": "15% 0% 2% 0%"})
     }
     else{
         $("#choice2").css({"margin": "2% 6% 0% 6%"} );
         $("#choice3").css({"margin": "2% 6% 0% 6%"} );
-        $("#warning").css({"margin": "2.5% 0% 2% 10%"} );
-        $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
+        $("#warning").css({"margin": "0.5% 0% 2% 10%"} );
+        $("#timerWrapper").css({"margin": "10% 0% 2% 10%"} );
         $("#question").css({"margin": "2% 2% 2% 2%"} );
-        $("#questionWrapper").css({"margin": "15% 0% 0% 0%"} );
+        $("#questionWrapper").css({"margin": "0% 0% 0% 0%"} );
     }
     $("#timerWrapper").show()
     showButtons();
@@ -103,17 +115,30 @@ function onShowQuestionBool() {
     showBoolButtons()
     //Modifies CSS elements of certain elements when joining game based on screen size
     if($(window).width() <= 500){
-        $("#username").css({"position": "absolute", "margin": "13% 2% 4% 2%", "text-align":"left"} )
+        $("#username").css({"position": "absolute", "margin": "7% 2% 4% 2%", "text-align":"left"} )
         $("#warning").css({"margin": "0% 2.5% 2% 2.5%"} );
-        $("#questionWrapper").css({"display": "inline", "margin": "10% 0% 9% 5%"})
+        $("#questionWrapper").css({"display": "inline", "margin": "10% 0% 9% 0%"})
         $("#choice2").css({"margin-top": "9%"} );
+        $("button").css({"margin-left": "2.4%"});
+        $("question").css({"margin-left": "0%"});
+        $("#warning").css({"margin-left": "2.4%"} );
+    }
+    else if($(window).width() <= 890){
+        $("#warning").css({"margin": "0% 0% 2% 10%"} );
+        $("#choice2").css({"margin": "9% 0% 2% 5%"} );
+        $("#choice3").css({"margin": "4% 0% 2% 5%"} );
+        $("#question").css({"margin": "2% 2% 2% 2%"} );
+        $("#timerWrapper").css({"margin": "3% 0% 2% 10%"} );
+        $("#warning").css({"margin": "5.8% 0% 2% 10%"} );
+        $("#questionWrapper").css({"margin": "15% 0% 2% 0%"})
     }
     else {
         $("#choice2").css({"margin": "10% 0% 2% 5%"} );
         $("#choice3").css({"margin": "4% 0% 2% 5%"} );
-        $("#warning").css({"margin": "6.4% 0% 2% 10%"} );
-        $("#timerWrapper").css({"margin": "10% 0% 2% 10%", "position": "absolute"} );
-        $("#question").css({"margin": "15% 2% 0% 2%"} );
+        $("#warning").css({"margin": "4.4% 0% 2% 10%"} );
+        $("#timerWrapper").css({"margin": "10% 0% 2% 10%"} );
+        $("#question").css({"margin": "2% 2% 0% 2%"} );
+        $("#questionWrapper").css({"margin": "0% 0% 0% 0%"} );
     }
     $("#timerWrapper").show()
     $("#question").show();

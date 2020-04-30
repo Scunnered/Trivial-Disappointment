@@ -15,16 +15,6 @@ button {
     text-align: center;    
 }
 
-/*test buttons*/
-#testButtons {
-    display: inline-block;
-    position: absolute;
-}
-
-#showBool, #showNormal {
-    position: relative;
-    display: inline;
-}
 
 /*Style for the four buttons to anwer questions with*/
 #choice1, #choice2, #choice3, #choice4 {
@@ -169,7 +159,7 @@ button {
 /*Style for game information*/
 #timerWrapper{
     position: relative;
-    margin: 12% 0% 2% 10%;
+    margin: 10% 0% 2% 10%;
     outline: none;
     text-align: center;
     display: block;
@@ -217,6 +207,7 @@ button {
 }
 
 #questionWrapper {
+    position: relative;
     height: 10%;
     vertical-align: middle;
 }

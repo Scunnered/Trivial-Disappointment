@@ -1,7 +1,7 @@
 //Request npm module for the api call to opentdb.com
 const request = require('request');
 //Entities npm module for decoding html entities that opentdb returns on occasion. This stops issues with the correct answer being incorrect due to these html entities.
-const Entities = require('html-entities').XmlEntities;
+const Entities = require('html-entities').AllHtmlEntities;
 const entities = new Entities();
 //This rooms variable holds all the users that are attached to a room code. It uses a 2d array as value with the socket ID of the user and the username of the user
 var rooms = new Map();
@@ -164,7 +164,7 @@ class Host{
         var users = rooms.get(this.ROOMCODE)
         console.log("AMOUNT OF USERS: " + users.length)
         //Only be able to start the game if a user actually joins.
-        if (users.length > 1) {
+        if (users.length > 1) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CHANGE
             //Letting the host know that the game has begun
             this.hostSocket.emit("WARNING", "Game started.")
             //Creating an instance of currentgame to get all of the variables we need to use here
