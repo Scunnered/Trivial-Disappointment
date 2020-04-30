@@ -1,4 +1,4 @@
-//THIS REQUIRES "npm install express, npm install socket.io, npm install mongodb, npm install request, npm install html-entities"
+//THIS REQUIRES "npm install express, npm install socket.io, npm install mongodb@2.2.33, npm install request, npm install html-entities"
 const express = require('express');
 const app = require('express')();
 const server = require('http').Server(app);

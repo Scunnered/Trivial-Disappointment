@@ -164,7 +164,7 @@ class Host{
         var users = rooms.get(this.ROOMCODE)
         console.log("AMOUNT OF USERS: " + users.length)
         //Only be able to start the game if a user actually joins.
-        if (users.length > 2) {
+        if (users.length >= 3) {
             //Letting the host know that the game has begun
             this.hostSocket.emit("WARNING", "Game started.")
             //Creating an instance of currentgame to get all of the variables we need to use here

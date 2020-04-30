@@ -12,21 +12,7 @@ $(document).ready(function() {
         $(".hostSelects").show();
         $("#startGame").hide();
     })
-
-    //testing buttons
-    $("#showNormal").click(function() {
-        onJoinGame()
-        onShowQuestion()
-        $("#timer").text("15")
-        $("#username").text("Username")
-    })
-
-    $("#showBool").click(function() {
-        onJoinGame()
-        onShowQuestionBool()
-        $("#timer").text("15")
-        $("#username").text("Username")
-    })
+    
 })
 
 //Hides and shows GUI elements when a game is started on the host side
@@ -73,6 +59,7 @@ function gameOverScreen() {
     gameOver();
     $("#question").hide();
     $("#timerWrapper").hide();
+    $("#warning").css({"margin-top":"50%"})
 }
 
 //Hides and shows GUI elements when questions are given to players
