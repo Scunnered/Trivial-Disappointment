@@ -203,7 +203,7 @@ class Host{
         }
         else {
             //Emit to the host that the lobby is empty if there is only 1 user (the host) and that they cannot start a game
-            this.hostSocket.emit("WARNING", "The lobby is empty, you cannot start a game.")
+            this.hostSocket.emit("WARNING", "There isn't enough players in the lobby yet (You need 2 minimum), you cannot start a game.")
         }
         
     }
