@@ -1,5 +1,5 @@
 # CM2104 Group Project Repository
-Mroup Gembers:
+Group Gembers:
   Alex Kaminski,
   András Sárdi,
   Kacper Kutarnia
