@@ -41,6 +41,7 @@ $(document).ready(function() {
         hostUI()
         changeBackground(question.category);
     })
+    
     //listen for "questionSent"; start timer on host side
     hostSocket.on('timerStart', function(data) {
         console.log("Timer starting")
@@ -148,7 +149,6 @@ function getRoomCode() {
     var clientRoomCode = $("#enteredCode").val();
     return clientRoomCode
 }
-
 //get custom username, if no username given set null and return
 function getUsername() {
     if (!$("#usernameInput").val()) {
@@ -207,7 +207,6 @@ function setWarning(data) {
     }
     setTimeout(function(){$("#warning").text("Warning");},5000);
 }
-
 //sets questions on the client's side
 function setQuestion(question1) {
     shuffle(buttArr);
@@ -218,7 +217,6 @@ function setQuestion(question1) {
     $(buttArr[2]).html(question1.incorrect_answers[1]);
     $(buttArr[3]).html(question1.incorrect_answers[2]);
 }
-
 //sets boolean questions on the client's side
 function setQuestionBool(question1) {
     shuffle(boolArr)
@@ -227,7 +225,6 @@ function setQuestionBool(question1) {
     correctButton = buttArr[1];
     $(boolArr[1]).html(question1.incorrect_answers[0])
 }
-
 //client side timer
 function timer(delay) {
     console.log(delay)

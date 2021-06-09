@@ -16,7 +16,7 @@ button {
 }
 
 
-/*Style for the four buttons to anwer questions with*/
+/*Style for the four buttons to answer questions with*/
 #choice1, #choice2, #choice3, #choice4 {
     margin: 2% 6% 0% 6%;
     display: inline-block;

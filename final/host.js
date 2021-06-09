@@ -7,6 +7,7 @@ const entities = new Entities();
 var rooms = new Map();
 //This currentGames holds all the room code local variables that have to be globally accessed by this Host class making sure that they cannot be changed by any other host running alongside this host.
 var currentGames = new Map();
+const UserGen = require('./usernameGeneration')
 
 //Our host class that instantiates an object for every hosted game.
 class Host{
@@ -25,9 +26,11 @@ class Host{
         //This variable holds the maximum amount of users that can access a single game.
         this.maxUsers = 100;
         //This variable was used for testing outside of codio to turn on and off mongo functionality that doesn't work in local node.js instances.
-        this.mongo = true;
+        this.mongo = false;
         //This variable was used for testing without the use of mongodb for creating unique usernames
         this.testnum = 0;
+        
+        this.userGen = new UserGen();
     }
     //This function runs whenever a server wants to start a hosting session
     start() {
@@ -69,22 +72,12 @@ class Host{
         //This checks for the validity of the username data that the user sent, if there is no username, one will be generated using our mongoDB database.
         if (data.custUsername === undefined) {
             console.log("Username being made by database")
-            //If mongo is turned on
-            if (this.mongo) {
-                console.log("ALREADY USED: " + this.alreadyUsed)
-                //This is a callback function that runs the generation of a username for if the users
-                this.generateUsername(function(username, hostObject) {
-                    //This function deals with the creation and addition of the user into the game
-                    dealwithuser(username, hostObject);
-                });
-            }
-            //This runs if mongo is not turned on
-            else {
-                //Makes a simple username for the user
-                var user = "user" + this.testnum
-                this.testnum++
-                dealwithuser(user, this);
-            }
+            console.log("ALREADY USED: " + this.alreadyUsed)
+            //This is a callback function that runs the generation of a username for if the users
+            this.generateUsername(function(username, hostObject) {
+                //This function deals with the creation and addition of the user into the game
+                dealwithuser(username, hostObject);
+            });
         }
         //This else deals with the user if they entered their own username
         else {
@@ -92,18 +85,10 @@ class Host{
             console.log(data.custUsername)
             //This checks if the alreadyUsed array has got the custom username that the user entered
             if (this.alreadyUsed.includes(data.custUsername)) {
-                //If mongo is enabled generate a username and then deal with creating the user
-                if (this.mongo) {
-                    console.log("ALREADY USED: " + this.alreadyUsed)
-                    this.generateUsername(function(username, hostObject) {
-                        dealwithuser(username, hostObject);
-                    });
-                }
-                else {
-                    var user = "user" + this.testnum
-                    this.testnum++;
-                    dealwithuser(user, this);
-                }
+                console.log("ALREADY USED: " + this.alreadyUsed)
+                this.generateUsername(function(username, hostObject) {
+                    dealwithuser(username, hostObject);
+                });
             }
             //If mongo doesn't exist create a simple username
             else {
@@ -275,6 +260,7 @@ class Host{
                 //if we get here we have a successfull retrival of the questions from the api.
                 console.log("Result from API: ")
                 var response = data.results;
+                console.log(response);
                 var hostObject = this;
                 //so we just call our callback with the results
                 callback(response, hostObject);
@@ -298,43 +284,35 @@ class Host{
     //This function generates & returns a username, and puts it in the alreadyUsed array to avoid duplicates.
     generateUsername(callback){
         var hostObject = this;
-        hostObject.db.collection('colours').find().toArray(function(err, result1) {
-            if (err) throw err;
-            hostObject.db.collection('animals').find().toArray(function(err, result2) {
-                if (err) throw err;
-                //Nested find().toArray() because of the use of two collections.
-    
-                do{
-                    //initializes output to be returned later & boolean of wether generated username is a duplicate
-                    var output = "";
-                    var used = false;
-    
-                    //adds random colour & name to output, thus making the username
-                    output += result1[Math.floor(Math.random() * result1.length)].colour;
-                    output += result2[Math.floor(Math.random() * result2.length)].name;
-                    
-                    console.log(1);
-                    console.log(output);
+        var output = "";
+        do{
+            //initializes output to be returned later & boolean of wether generated username is a duplicate
+            
+            var used = false;
 
-                    //conpares it to each username already generated, and if it already exits, repeates the do while loop
-                    for(var i=0;i<hostObject.alreadyUsed.length;i++){
-                        if(hostObject.alreadyUsed[i]===output){
-                            used = true;
-                        }
-                    }
+            //adds random colour & name to output, thus making the username
+            output = hostObject.userGen.returnUsername();
+
+            console.log(1);
+            console.log(output);
+
+            //conpares it to each username already generated, and if it already exits, repeates the do while loop
+            for(var i=0;i<hostObject.alreadyUsed.length;i++){
+                if(hostObject.alreadyUsed[i]===output){
+                    used = true;
                 }
-                while(used) //This only repeats if there is a duplicate
+            }
+        }
+        while(used) //This only repeats if there is a duplicate
     
-                //adds non-duplicate to the array of already used usernames
-                hostObject.alreadyUsed.push(output)
+        //adds non-duplicate to the array of already used usernames
+        hostObject.alreadyUsed.push(output)
 
-                //returns the just now added username
+        //returns the just now added username
         //return alreadyUsed[alreadyUsed.length-1];
         console.log(2);
         console.log(hostObject.alreadyUsed[hostObject.alreadyUsed.length-1]);
         callback(hostObject.alreadyUsed[hostObject.alreadyUsed.length-1], hostObject);
-            });
-        });
     }
 }
 //used for checking the answers at the end of the countdown
